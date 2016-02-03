@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ScoutingApp2386/ScoutingApp2386.iml" filepath="$PROJECT_DIR$/ScoutingApp2386/ScoutingApp2386.iml" />
       <module fileurl="file://$PROJECT_DIR$/TrojanScout.iml" filepath="$PROJECT_DIR$/TrojanScout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

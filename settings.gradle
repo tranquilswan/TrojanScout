@@ -1,1 +1,1 @@
-include ':app', 'ScoutingApp2386'
+include 'ScoutingApp2386'
