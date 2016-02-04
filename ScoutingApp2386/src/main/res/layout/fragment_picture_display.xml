@@ -4,23 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.gearbox.scoutingappredux.IntroPageFragment">
+    tools:context="com.example.gearbox.scoutingappredux.PictureDisplayFragment">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Team"
-        android:id="@+id/btnAddTeam"/>
+        android:id="@+id/btnBack"
+        android:text="Back"/>
 
-    <Button
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Trade Data"/>
+        android:layout_height="match_parent"
+        android:id="@+id/imgFullSize"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvwExistingTeams">
-
-    </ListView>
 </LinearLayout>
