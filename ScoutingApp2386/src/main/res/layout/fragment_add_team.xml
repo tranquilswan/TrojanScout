@@ -1,4 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,6 +38,7 @@
         android:id="@+id/edtTeamNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Team#"
         android:textAlignment="center" />
 
@@ -40,18 +47,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/ic_launcher" />
 
     <Button
         android:id="@+id/btnTakePicture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:nestedScrollingEnabled="false"
         android:text="Take Picture" />
 
     <EditText
         android:id="@+id/edtDriveSystem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Drive System"
         android:textAlignment="center" />
 
@@ -59,18 +70,20 @@
         android:id="@+id/edtFuncMech"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:hint="Func Mech Type"
         android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/chkUpperGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:text="Upper Goal" />
 
@@ -78,6 +91,7 @@
             android:id="@+id/chkLowerGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:text="Lower Goal" />
     </LinearLayout>
@@ -88,17 +102,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vision"
             android:id="@+id/radVisionYes"
-            android:layout_weight="1"/>
-        <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Vision"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Vision" />
+        <RadioButton
             android:id="@+id/radVisionNo"
-            android:layout_weight="1"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="No Vision" />
     </RadioGroup>
 
     <RadioGroup
@@ -106,25 +122,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Autonomous"
             android:id="@+id/radAutonomousYes"
-            android:layout_weight="1"/>
-        <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Autonomous"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="Autonomous" />
+        <RadioButton
             android:id="@+id/radAutonomousNo"
-            android:layout_weight="1"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="No Autonomous" />
     </RadioGroup>
 
     <Button
+        android:id="@+id/btnSaveTeam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSaveTeam"
-        android:text="Save Team"
-        android:onClick=""/>
+        android:text="Save Team" />
 
     <!--<EditText-->
     <!--android:layout_width="match_parent"-->
@@ -140,3 +157,5 @@
     <!--android:id="@+id/edtTeamNum"-->
     <!--android:textAlignment="center" />-->
 </LinearLayout>
+
+</ScrollView>

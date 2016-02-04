@@ -4,11 +4,10 @@ package com.example.gearbox.scoutingappredux;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.app.FragmentManager;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 
 /**
@@ -30,11 +29,11 @@ public class IntroPageFragment extends Fragment {
         // Inflate the layout for this fragment
 
         fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG);
+        //fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG);
 
         final View view = inflater.inflate(R.layout.fragment_intro_page, container, false);
 
-        Button btnAddTeam = (Button) view.findViewById(R.id.btnAddTeam);
+        FloatingActionButton btnAddTeam = (FloatingActionButton) view.findViewById(R.id.btnAddTeam);
 
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
             @Override
