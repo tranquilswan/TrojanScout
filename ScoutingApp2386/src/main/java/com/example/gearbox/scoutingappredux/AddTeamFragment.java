@@ -10,7 +10,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -39,7 +41,6 @@ public class AddTeamFragment extends Fragment {
     FragmentManager fm;
     ImageView imgThumbnail;
     Button btnTakePicture;
-    private Uri outputFileUri;
 
     public AddTeamFragment() {
         // Required empty public constructor
@@ -80,7 +81,12 @@ public class AddTeamFragment extends Fragment {
         });
 
         //View the taken pictures
-        ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+        imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        String path = directory.toString();
+        loadImageFromStorage(path, view);
         imgThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +96,20 @@ public class AddTeamFragment extends Fragment {
 
 
         return view;
+    }
+
+    //method for retrieving image from external storage and displaying as thumnail in startup.
+    private void loadImageFromStorage(String path, View view) {
+
+        try {
+            File f = new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView img = (ImageView) view.findViewById(R.id.imgThumbnail);
+            img.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void RequestWritePermission() {
@@ -137,46 +157,6 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-    //Method to get the Uri
-   /* private Uri getFileUri(){
-        //new Folder
-        File folder
-                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-        //If the folder doesnt't exist
-        if(!folder.exists()){
-            //and cannot be made
-            if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
-                return null;
-            }
-        }
-
-        //if you cannot write to the folder---THE ERROR IS HERE---
-        //Proper permissions in the manifest, still don't know whats up
-        if(!folder.canWrite()){
-            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-            return null;
-        }
-
-        //String fileName
-          //      = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-            //    .format(new Date()) + ".jpg";
-        String fileName = "test.jpg";
-        File file = new File(folder, fileName);
-        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-        return Uri.fromFile(file);
-    }
-
-    //To check if an app is available to to what is required (take pic in this case)
-    private boolean inIntentHandlerAvailable(Intent intent){
-        PackageManager pm = getActivity().getPackageManager();
-
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        //return true if list.size is greater than
-        return (list.size() > 0);
-    }
-*/
     //taking the picture
     public void takePicture() {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -56,6 +56,8 @@ public class PictureDisplayFragment extends Fragment {
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
         ImageView imgFullSize = (ImageView) view.findViewById(R.id.imgFullSize);
         imgFullSize.setImageBitmap(bitmap); */
+
+        //Specifies where the image is stored and passes to method for loading
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
@@ -64,6 +66,7 @@ public class PictureDisplayFragment extends Fragment {
         return view;
     }
 
+    //method for retrieving image from external storage
     private void loadImageFromStorage(String path, View view) {
 
         try {
