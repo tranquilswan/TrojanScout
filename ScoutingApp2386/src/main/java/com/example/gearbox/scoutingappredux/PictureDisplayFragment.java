@@ -3,15 +3,20 @@ package com.example.gearbox.scoutingappredux;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -45,7 +50,31 @@ public class PictureDisplayFragment extends Fragment {
             }
         });
 
+      /*  String photoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.jpg";;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
+        ImageView imgFullSize = (ImageView) view.findViewById(R.id.imgFullSize);
+        imgFullSize.setImageBitmap(bitmap); */
+        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        String path = directory.toString();
+        loadImageFromStorage(path, view);
         return view;
+    }
+
+    private void loadImageFromStorage(String path, View view) {
+
+        try {
+            File f = new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView img = (ImageView) view.findViewById(R.id.imgFullSize);
+            img.setImageBitmap(b);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
