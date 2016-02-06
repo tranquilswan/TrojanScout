@@ -21,15 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -50,10 +43,6 @@ public class AddTeamFragment extends Fragment {
     FragmentManager fm;
     Button btnTakePicture;
     private Uri outputFileUri;
-
-    int visionExist;
-    int autonomousExists;
-
 
     public AddTeamFragment() {
         // Required empty public constructor
@@ -92,34 +81,14 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
-
-        btnSaveTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Team team = createTeam();
-
-                TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
-
-                teamDS.saveTeam(team);
-
-                Toast.makeText(getActivity().getApplicationContext(), "Team added to database", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         //View the taken pictures
-        ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
-        imgThumbnail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Bundle picLoc = new Bundle();
-                picLoc.putString("picLocation", outputFileUri.toString());
-                final PictureDisplayFragment pdf = new PictureDisplayFragment();
-                pdf.setArguments(picLoc);
-                fm.beginTransaction().replace(R.id.fragContainer, new PictureDisplayFragment(), PictureDisplayFragment.TAG).commit();
-            }
-        });
+//        ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+//        imgThumbnail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                fm.beginTransaction().replace(R.id.fragContainer, new PictureDisplayFragment(), PictureDisplayFragment.TAG).commit();
+//            }
+//        });
 
 
         return view;
@@ -168,63 +137,6 @@ public class AddTeamFragment extends Fragment {
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
-
-    private Team createTeam(){
-        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
-        EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
-        EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
-        CheckBox chkUpperGoal = (CheckBox) getView().findViewById(R.id.chkUpperGoal);
-        CheckBox chkLowerGoal = (CheckBox) getView().findViewById(R.id.chkLowerGoal);
-        final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
-        final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
-
-        int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
-
-        String driveSystemInfo = edtDriveSyst.getText().toString();
-        String funcMechInfo = edtFuncMech.getText().toString();
-
-        String goalType;
-        if(chkUpperGoal.isChecked() && chkLowerGoal.isChecked()){
-            goalType = "Upper and Lower";
-        }else if(chkLowerGoal.isChecked()){
-            goalType = "Lower";
-        }else if(chkUpperGoal.isChecked()){
-            goalType = "Upper";
-        }else{
-            goalType = "None Selected";
-        }
-
-        //int visionExist;
-
-        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpVision.getCheckedRadioButtonId();
-
-                if(checkedId == R.id.radVisionYes){
-                    visionExist = 1;
-                }else if(checkedId == R.id.radVisionNo){
-                    visionExist = 0;
-                }
-            }
-        });
-
-        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpAutonomous.getCheckedRadioButtonId();
-
-                if(checkedId == R.id.radAutonomousYes){
-                    autonomousExists = 1;
-                }else if(checkedId == R.id.radAutonomousNo){
-                    autonomousExists = 0;
-                }
-            }
-        });
-
-        return new Team(teamNum, "LocPlaceHolder", driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
-
     }
 
     //Method to get the Uri
