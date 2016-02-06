@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.Team;
 
@@ -49,7 +50,7 @@ public class TeamDataSource {
     //DDL statement for table creation
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
-                    ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENTS, " +
+                    ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TEAM_NUM_COLUMN + " INTEGER, " +
                     PIC_LOC_COLUMN + " TEXT, " +
                     DRIVE_SYSTEM_COLUMN + " TEXT, " +
@@ -80,21 +81,30 @@ public class TeamDataSource {
 
         team.setmDBid(teamId);
         mDatabase.close();
+
         return teamId;
     }
 
-//    public List<Team> getTeams(){
-//        ArrayList<Team> teams = new ArrayList<>();
-//
-//        mDatabase = mDbOpenHelper.getReadableDatabase();
-//
-//        Cursor cursor = mDatabase.query(TABLE_NAME,null, null, null, null, null, null, )
-//    }
+    public List<Team> getTeams(){
+        ArrayList<Team> teams = new ArrayList<>();
 
+        mDatabase = mDbOpenHelper.getReadableDatabase();
 
+        Cursor cursor = mDatabase.query(TABLE_NAME, null, null, null, null, null, TEAM_NUM_COLUMN);
 
-
-
-
-
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(ID_COLUMN_POSITION);
+            int teamNum = cursor.getInt(TEAM_NUM_ID_COLUMN_POSITION);
+            String picLoc = cursor.getString(PIC_ID_COLUMN_POSITION);
+            String driveSystem = cursor.getString(DRIVE_SYSTEM_COLUMN_POSITION);
+            String funcMech = cursor.getString(FUCN_MECH_TYPE_COLUMN_POSITION);
+            String goalType = cursor.getString(GOAL_TYPE_COLUMN_POSITION);
+            int vision = cursor.getInt(VISION_COLUMN_POSITION);
+            int autonomous = cursor.getInt(AUTONOMOUS_COLUMN_POSITION);
+            teams.add(new Team(id, teamNum, picLoc,driveSystem, funcMech, goalType, vision, autonomous));
+        }
+        cursor.close();
+        mDatabase.close();
+        return teams;
+    }
 }
