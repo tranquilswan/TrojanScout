@@ -1,13 +1,13 @@
 package com.example.gearbox.scoutingappredux;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,6 +28,32 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+        final int minVersionThreshold = 1;
+
+        try {
+            //This part checks wether current app  is less than the threshold app version
+            //If YES the exits app and kills all processes
+            //If NO then continues with everything else.
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            int verCode = pInfo.versionCode;
+            if (verCode < minVersionThreshold) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Wrong App Version")
+                        .setMessage("The current app version is below the minimum required version. Please update the app")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG).commit();

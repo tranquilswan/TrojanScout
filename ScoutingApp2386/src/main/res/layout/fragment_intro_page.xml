@@ -7,10 +7,10 @@
     tools:context="com.example.gearbox.scoutingappredux.IntroPageFragment">
 
     <Button
+        android:id="@+id/btnAddTeam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Team"
-        android:id="@+id/btnAddTeam"/>
+        android:text="Add Team" />
 
     <Button
         android:layout_width="match_parent"
@@ -18,9 +18,9 @@
         android:text="Trade Data"/>
 
     <ListView
+        android:id="@+id/lvwExistingTeams"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvwExistingTeams">
+        android:layout_height="wrap_content">
 
     </ListView>
 </LinearLayout>
