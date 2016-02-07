@@ -24,9 +24,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
@@ -49,10 +47,9 @@ public class AddTeamFragment extends Fragment {
     final int PERMISSION_REQUEST_CODE = 5;
     FragmentManager fm;
     Button btnTakePicture;
-    private Uri outputFileUri;
-
     int visionExist;
     int autonomousExists;
+    private Uri outputFileUri;
 
 
     public AddTeamFragment() {
@@ -114,10 +111,18 @@ public class AddTeamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final Bundle picLoc = new Bundle();
-                picLoc.putString("picLocation", outputFileUri.toString());
-                final PictureDisplayFragment pdf = new PictureDisplayFragment();
-                pdf.setArguments(picLoc);
-                fm.beginTransaction().replace(R.id.fragContainer, new PictureDisplayFragment(), PictureDisplayFragment.TAG).commit();
+                //Does'nt throw a null error
+                //Only executes if picture already taken
+                if (outputFileUri != null) {
+                    picLoc.putString("picLocation", outputFileUri.toString());
+                    final PictureDisplayFragment pdf = new PictureDisplayFragment();
+                    pdf.setArguments(picLoc);
+                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
+                }
+                //Info given to the user
+                else {
+                    Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
