@@ -12,6 +12,7 @@
         android:hint="Team#"
         android:inputType="number"
         android:textAlignment="center"
+        android:maxLength="5"
         android:imeOptions="actionDone"/>
 
 
@@ -46,7 +47,7 @@
         android:id="@+id/edtFuncMech"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Func Mech Type"
+        android:hint="Functional Mechanism"
         android:imeOptions="actionDone"
         android:inputType="textAutoComplete"/>
 

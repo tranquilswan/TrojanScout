@@ -94,13 +94,20 @@ public class AddTeamFragment extends Fragment {
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //if ()
                 Team team = createTeam();
+
 
                 TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
 
                 teamDS.saveTeam(team);
 
-                Toast.makeText(getActivity().getApplicationContext(), "Team added to database", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
+
+                fm.beginTransaction()
+                        .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                        .commit();
 
             }
         });
@@ -184,52 +191,59 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
 
-        int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
+        //if (edtTeamNum.getText().toString().equalsIgnoreCase("")) {
 
-        String driveSystemInfo = edtDriveSyst.getText().toString();
-        String funcMechInfo = edtFuncMech.getText().toString();
 
-        String goalType;
-        if(chkUpperGoal.isChecked() && chkLowerGoal.isChecked()){
-            goalType = "Upper and Lower";
-        }else if(chkLowerGoal.isChecked()){
-            goalType = "Lower";
-        }else if(chkUpperGoal.isChecked()){
-            goalType = "Upper";
-        }else{
-            goalType = "None Selected";
-        }
+            int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
 
-        //int visionExist;
+            String driveSystemInfo = edtDriveSyst.getText().toString();
+            String funcMechInfo = edtFuncMech.getText().toString();
 
-        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpVision.getCheckedRadioButtonId();
-
-                if(checkedId == R.id.radVisionYes){
-                    visionExist = 1;
-                }else if(checkedId == R.id.radVisionNo){
-                    visionExist = 0;
-                }
+            String goalType;
+            if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
+                goalType = "Upper and Lower";
+            } else if (chkLowerGoal.isChecked()) {
+                goalType = "Lower";
+            } else if (chkUpperGoal.isChecked()) {
+                goalType = "Upper";
+            } else {
+                goalType = "None Selected";
             }
-        });
 
-        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpAutonomous.getCheckedRadioButtonId();
+            //int visionExist;
 
-                if(checkedId == R.id.radAutonomousYes){
-                    autonomousExists = 1;
-                }else if(checkedId == R.id.radAutonomousNo){
-                    autonomousExists = 0;
+            rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    checkedId = rgpVision.getCheckedRadioButtonId();
+
+                    if (checkedId == R.id.radVisionYes) {
+                        visionExist = 1;
+                    } else if (checkedId == R.id.radVisionNo) {
+                        visionExist = 0;
+                    }
                 }
-            }
-        });
+            });
 
-        return new Team(teamNum, "LocPlaceHolder", driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
+            rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    checkedId = rgpAutonomous.getCheckedRadioButtonId();
 
+                    if (checkedId == R.id.radAutonomousYes) {
+                        autonomousExists = 1;
+                    } else if (checkedId == R.id.radAutonomousNo) {
+                        autonomousExists = 0;
+                    }
+                }
+            });
+
+            return new Team(teamNum, "LocPlaceHolder", driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
+//        }else {
+//            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        return null;
     }
 
     //Method to get the Uri
