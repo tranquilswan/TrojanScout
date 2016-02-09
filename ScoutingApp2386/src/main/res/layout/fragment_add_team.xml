@@ -71,6 +71,39 @@
             android:text="Lower Goal" />
     </LinearLayout>
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:id="@+id/rgpGoalScoring">-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/radUpperGoal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Upper" />-->
+        <!--<RadioButton-->
+            <!--android:id="@+id/radLowerGoal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Lower"/>-->
+        <!--<RadioButton-->
+            <!--android:id="@+id/radBothGoal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Both"/>-->
+        <!--<RadioButton-->
+            <!--android:id="@+id/radNoGoal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="None"-->
+            <!--android:checked="true"/>-->
+    <!--</LinearLayout>-->
+
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -88,7 +121,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="No Vision" />
+            android:text="No Vision"
+            android:checked="true"/>
     </RadioGroup>
 
     <RadioGroup
@@ -107,7 +141,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="No Autonomous" />
+            android:text="No Autonomous"
+            android:checked="true"/>
     </RadioGroup>
 
     <LinearLayout
