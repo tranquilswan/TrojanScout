@@ -15,12 +15,21 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Trade Data"/>
+        android:text="Trade Data"
+        android:enabled="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Teams"
+        android:id="@+id/btnViewTeams"/>
+
 
     <ListView
         android:id="@+id/lvwExistingTeams"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
 
     </ListView>
 </LinearLayout>
