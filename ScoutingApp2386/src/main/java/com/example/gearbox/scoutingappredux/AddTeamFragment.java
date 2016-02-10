@@ -3,7 +3,6 @@ package com.example.gearbox.scoutingappredux;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -91,33 +90,24 @@ public class AddTeamFragment extends Fragment {
         });
 
         Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
-        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
 
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!edtTeamNum.getText().toString().equals("")) {
+                //if ()
+                Team team = createTeam();
 
 
-                    Team team = createTeam();
+                TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
 
-                    TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
+                teamDS.saveTeam(team);
 
-                    teamDS.saveTeam(team);
+                Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
-
-                    fm.beginTransaction()
-                            .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
-                            .commit();
-                }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Input Missing")
-                            .setMessage("Enter a team number!")
-                            .setPositiveButton("OK", null)
-                            .show();
-                }
+                fm.beginTransaction()
+                        .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                        .commit();
 
             }
         });
