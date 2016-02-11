@@ -15,6 +15,14 @@
         android:maxLength="5"
         android:imeOptions="actionDone"/>
 
+    <EditText
+        android:id="@+id/edtTeamName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name (School or Team)"
+        android:imeOptions="actionDone"
+        android:textAlignment="center"
+        android:inputType="textAutoComplete"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,6 +49,7 @@
         android:layout_height="wrap_content"
         android:hint="Drive System"
         android:imeOptions="actionDone"
+        android:textAlignment="center"
         android:inputType="textAutoComplete"/>
 
     <EditText
@@ -49,61 +58,61 @@
         android:layout_height="wrap_content"
         android:hint="Functional Mechanism"
         android:imeOptions="actionDone"
+        android:textAlignment="center"
         android:inputType="textAutoComplete"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/chkUpperGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Upper Goal" />
-
-        <CheckBox
-            android:id="@+id/chkLowerGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lower Goal" />
-    </LinearLayout>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:id="@+id/rgpGoalScoring">-->
+        <!--android:orientation="horizontal">-->
 
-        <!--<RadioButton-->
-            <!--android:id="@+id/radUpperGoal"-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/chkUpperGoal"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_weight="1"-->
-            <!--android:text="Upper" />-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/radLowerGoal"-->
+            <!--android:text="Upper Goal" />-->
+
+        <!--<CheckBox-->
+            <!--android:id="@+id/chkLowerGoal"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_weight="1"-->
-            <!--android:text="Lower"/>-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/radBothGoal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="Both"/>-->
-        <!--<RadioButton-->
-            <!--android:id="@+id/radNoGoal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="None"-->
-            <!--android:checked="true"/>-->
+            <!--android:text="Lower Goal" />-->
     <!--</LinearLayout>-->
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/rgpGoalScoring">
+
+        <RadioButton
+            android:id="@+id/radUpperGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Upper" />
+        <RadioButton
+            android:id="@+id/radLowerGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lower"/>
+        <RadioButton
+            android:id="@+id/radBothGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Both"/>
+        <RadioButton
+            android:id="@+id/radNoGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="None"
+            android:checked="true"/>
+    </RadioGroup>
 
     <RadioGroup
         android:layout_width="match_parent"
