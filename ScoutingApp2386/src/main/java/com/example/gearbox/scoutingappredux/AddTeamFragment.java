@@ -46,6 +46,7 @@ public class AddTeamFragment extends Fragment {
     Button btnTakePicture;
     int visionExist;
     int autonomousExists;
+    String goalType;
     private File outputFileLoc;
 
 
@@ -157,7 +158,6 @@ public class AddTeamFragment extends Fragment {
         });
 
 
-
         return view;
     }
 
@@ -206,63 +206,81 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-    private Team createTeam(){
+    private Team createTeam() {
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
-        CheckBox chkUpperGoal = (CheckBox) getView().findViewById(R.id.chkUpperGoal);
-        CheckBox chkLowerGoal = (CheckBox) getView().findViewById(R.id.chkLowerGoal);
+//        CheckBox chkUpperGoal = (CheckBox) getView().findViewById(R.id.chkUpperGoal);
+//        CheckBox chkLowerGoal = (CheckBox) getView().findViewById(R.id.chkLowerGoal);
+        final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
+        EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
 
         //if (edtTeamNum.getText().toString().equalsIgnoreCase("")) {
 
 
-            int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
+        int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
 
-            String driveSystemInfo = edtDriveSyst.getText().toString();
-            String funcMechInfo = edtFuncMech.getText().toString();
+        String driveSystemInfo = edtDriveSyst.getText().toString();
+        String funcMechInfo = edtFuncMech.getText().toString();
+        String teamName = edtTeamName.getText().toString();
 
-            String goalType;
-            if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
-                goalType = "Upper and Lower";
-            } else if (chkLowerGoal.isChecked()) {
-                goalType = "Lower";
-            } else if (chkUpperGoal.isChecked()) {
-                goalType = "Upper";
-            } else {
-                goalType = "None Selected";
+//        //final String goalType;
+//        if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
+//            goalType = "Upper and Lower";
+//        } else if (chkLowerGoal.isChecked()) {
+//            goalType = "Lower";
+//        } else if (chkUpperGoal.isChecked()) {
+//            goalType = "Upper";
+//        } else {
+//            goalType = "None Selected";
+//        }
+
+        rgpGoalScoring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkedId = rgpGoalScoring.getCheckedRadioButtonId();
+                if(checkedId == R.id.radUpperGoal){
+                    goalType = "Upper";
+                }else if(checkedId == R.id.radLowerGoal){
+                    goalType = "Lower";
+                }else if (checkedId == R.id.radBothGoal){
+                    goalType = "Both";
+                }else if (checkedId == R.id.radNoGoal){
+                    goalType = "None";
+                }
             }
+        });
+        //int visionExist;
 
-            //int visionExist;
+        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkedId = rgpVision.getCheckedRadioButtonId();
 
-            rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpVision.getCheckedRadioButtonId();
-
-                    if (checkedId == R.id.radVisionYes) {
-                        visionExist = 1;
-                    } else if (checkedId == R.id.radVisionNo) {
-                        visionExist = 0;
-                    }
+                if (checkedId == R.id.radVisionYes) {
+                    visionExist = 1;
+                } else if (checkedId == R.id.radVisionNo) {
+                    visionExist = 0;
                 }
-            });
+            }
+        });
 
-            rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpAutonomous.getCheckedRadioButtonId();
+        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkedId = rgpAutonomous.getCheckedRadioButtonId();
 
-                    if (checkedId == R.id.radAutonomousYes) {
-                        autonomousExists = 1;
-                    } else if (checkedId == R.id.radAutonomousNo) {
-                        autonomousExists = 0;
-                    }
+                if (checkedId == R.id.radAutonomousYes) {
+                    autonomousExists = 1;
+                } else if (checkedId == R.id.radAutonomousNo) {
+                    autonomousExists = 0;
                 }
-            });
+            }
+        });
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
 //        }else {
 //            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
 //        }
@@ -310,7 +328,7 @@ public class AddTeamFragment extends Fragment {
     } */
 
     //taking the picture
-    public void takePicture(View view){
+    public void takePicture(View view) {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 
@@ -323,7 +341,7 @@ public class AddTeamFragment extends Fragment {
 
     // @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
+        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
             /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
             imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
