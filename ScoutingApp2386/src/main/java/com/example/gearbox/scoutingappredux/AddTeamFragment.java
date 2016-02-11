@@ -62,7 +62,9 @@ public class AddTeamFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
         btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
         btnTakePicture.setEnabled(false);
-        EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+        btnSaveTeam.setEnabled(false);
+        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
         edtTeamNum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,10 +74,12 @@ public class AddTeamFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 1)
+                if (s.length() >= 1) {
                     btnTakePicture.setEnabled(true);
-                else {
+                    btnSaveTeam.setEnabled(true);
+                }else {
                     btnTakePicture.setEnabled(false);
+                    btnSaveTeam.setEnabled(false);
                 }
             }
 
@@ -107,7 +111,7 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+
 
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
