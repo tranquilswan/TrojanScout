@@ -120,6 +120,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team: " + getmTeamNum() + ", Name: " + getmTeamName();
+        return "Team: " + getmTeamNum() + ", Name: " + getmTeamName() + " V: " + isVisionExist();
     }
 }

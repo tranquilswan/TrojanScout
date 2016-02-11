@@ -210,15 +210,10 @@ public class AddTeamFragment extends Fragment {
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
-//        CheckBox chkUpperGoal = (CheckBox) getView().findViewById(R.id.chkUpperGoal);
-//        CheckBox chkLowerGoal = (CheckBox) getView().findViewById(R.id.chkLowerGoal);
         final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
         EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
-
-        //if (edtTeamNum.getText().toString().equalsIgnoreCase("")) {
-
 
         int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
 
@@ -237,48 +232,73 @@ public class AddTeamFragment extends Fragment {
 //            goalType = "None Selected";
 //        }
 
-        rgpGoalScoring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpGoalScoring.getCheckedRadioButtonId();
-                if(checkedId == R.id.radUpperGoal){
-                    goalType = "Upper";
-                }else if(checkedId == R.id.radLowerGoal){
-                    goalType = "Lower";
-                }else if (checkedId == R.id.radBothGoal){
-                    goalType = "Both";
-                }else if (checkedId == R.id.radNoGoal){
-                    goalType = "None";
-                }
-            }
-        });
+//        rgpGoalScoring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                checkedId = rgpGoalScoring.getCheckedRadioButtonId();
+//                if(checkedId == R.id.radUpperGoal){
+//                    goalType = "Upper";
+//                }else if(checkedId == R.id.radLowerGoal){
+//                    goalType = "Lower";
+//                }else if (checkedId == R.id.radBothGoal){
+//                    goalType = "Both";
+//                }else if (checkedId == R.id.radNoGoal){
+//                    goalType = "None";
+//                }
+//            }
+//        });
         //int visionExist;
 
-        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpVision.getCheckedRadioButtonId();
+//        visionExist = rgpVision.getCheckedRadioButtonId();
 
-                if (checkedId == R.id.radVisionYes) {
-                    visionExist = 1;
-                } else if (checkedId == R.id.radVisionNo) {
-                    visionExist = 0;
-                }
-            }
-        });
+        if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes){
+            visionExist = 1;
+        }else if(rgpVision.getCheckedRadioButtonId() == R.id.radVisionNo){
+            visionExist = 0;
+        }
+        Toast.makeText(getActivity(), "Auto Val1: " + autonomousExists, Toast.LENGTH_LONG).show();
+        if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousYes){
+            autonomousExists = 1;
+        }else if(rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousNo){
+            autonomousExists = 0;
+        }
+        Toast.makeText(getActivity(), "Auto Val2: " + autonomousExists, Toast.LENGTH_LONG).show();
 
-        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedId = rgpAutonomous.getCheckedRadioButtonId();
 
-                if (checkedId == R.id.radAutonomousYes) {
-                    autonomousExists = 1;
-                } else if (checkedId == R.id.radAutonomousNo) {
-                    autonomousExists = 0;
-                }
-            }
-        });
+        if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radUpperGoal){
+            goalType = "Upper";
+        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radLowerGoal){
+            goalType = "Lower";
+        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radBothGoal){
+            goalType = "Both";
+        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radNoGoal){
+            goalType = "None";
+        }
+//        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                checkedId = rgpVision.getCheckedRadioButtonId();
+//
+//                if (checkedId == R.id.radVisionYes) {
+//                    visionExist = 1;
+//                } else if (checkedId == R.id.radVisionNo) {
+//                    visionExist = 0;
+//                }
+//            }
+//        });
+
+//        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                checkedId = rgpAutonomous.getCheckedRadioButtonId();
+//
+//                if (checkedId == R.id.radAutonomousYes) {
+//                    autonomousExists = 1;
+//                } else if (checkedId == R.id.radAutonomousNo) {
+//                    autonomousExists = 0;
+//                }
+//            }
+//        });
 
         return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
 //        }else {
@@ -288,44 +308,44 @@ public class AddTeamFragment extends Fragment {
 //        return null;
     }
 
-    //Method to get the Uri
-   /* private Uri getFileUri(){
-        //new Folder
-        File folder
-                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
-
-        //If the folder doesnt't exist
-        if(!folder.exists()){
-            //and cannot be made
-            if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
-                return null;
-            }
-        }
-
-        //if you cannot write to the folder---THE ERROR IS HERE---
-        //Proper permissions in the manifest, still don't know whats up
-        if(!folder.canWrite()){
-            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-            return null;
-        }
-
-        String fileName
-                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-                .format(new Date()) + ".jpg";
-        File file = new File(folder, fileName);
-        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-        return Uri.fromFile(file);
-    } */
-
-    //To check if an app is available to to what is required (take pic in this case)
-   /* private boolean inIntentHandlerAvailable(Intent intent){
-        PackageManager pm = getActivity().getPackageManager();
-
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        //return true if list.size is greater than
-        return (list.size() > 0);
-    } */
+//    //Method to get the Uri
+//   /* private Uri getFileUri(){
+//        //new Folder
+//        File folder
+//                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
+//
+//        //If the folder doesnt't exist
+//        if(!folder.exists()){
+//            //and cannot be made
+//            if(!folder.mkdirs()){
+//                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
+//                return null;
+//            }
+//        }
+//
+//        //if you cannot write to the folder---THE ERROR IS HERE---
+//        //Proper permissions in the manifest, still don't know whats up
+//        if(!folder.canWrite()){
+//            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
+//            return null;
+//        }
+//
+//        String fileName
+//                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
+//                .format(new Date()) + ".jpg";
+//        File file = new File(folder, fileName);
+//        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
+//        return Uri.fromFile(file);
+//    } */
+//
+//    //To check if an app is available to to what is required (take pic in this case)
+//   /* private boolean inIntentHandlerAvailable(Intent intent){
+//        PackageManager pm = getActivity().getPackageManager();
+//
+//        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//        //return true if list.size is greater than
+//        return (list.size() > 0);
+//    } */
 
     //taking the picture
     public void takePicture(View view) {
