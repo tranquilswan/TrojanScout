@@ -20,14 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -207,105 +204,47 @@ public class AddTeamFragment extends Fragment {
     }
 
     private Team createTeam() {
+        //UI Element References
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
+        EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
         final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
-        final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
-        EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
+        final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
 
+        //Getting the input form the UI Elements
         int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
-
         String driveSystemInfo = edtDriveSyst.getText().toString();
         String funcMechInfo = edtFuncMech.getText().toString();
         String teamName = edtTeamName.getText().toString();
 
-//        //final String goalType;
-//        if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
-//            goalType = "Upper and Lower";
-//        } else if (chkLowerGoal.isChecked()) {
-//            goalType = "Lower";
-//        } else if (chkUpperGoal.isChecked()) {
-//            goalType = "Upper";
-//        } else {
-//            goalType = "None Selected";
-//        }
-
-//        rgpGoalScoring.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                checkedId = rgpGoalScoring.getCheckedRadioButtonId();
-//                if(checkedId == R.id.radUpperGoal){
-//                    goalType = "Upper";
-//                }else if(checkedId == R.id.radLowerGoal){
-//                    goalType = "Lower";
-//                }else if (checkedId == R.id.radBothGoal){
-//                    goalType = "Both";
-//                }else if (checkedId == R.id.radNoGoal){
-//                    goalType = "None";
-//                }
-//            }
-//        });
-        //int visionExist;
-
-//        visionExist = rgpVision.getCheckedRadioButtonId();
-
-        if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes){
+        //Setting radio button values
+        if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes) {
             visionExist = 1;
-        }else if(rgpVision.getCheckedRadioButtonId() == R.id.radVisionNo){
+        } else if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionNo) {
             visionExist = 0;
         }
-        Toast.makeText(getActivity(), "Auto Val1: " + autonomousExists, Toast.LENGTH_LONG).show();
-        if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousYes){
+
+        //Setting radio button values
+        if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousYes) {
             autonomousExists = 1;
-        }else if(rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousNo){
+        } else if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousNo) {
             autonomousExists = 0;
         }
-        Toast.makeText(getActivity(), "Auto Val2: " + autonomousExists, Toast.LENGTH_LONG).show();
 
-
-        if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radUpperGoal){
+        //Setting radio button values
+        if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radUpperGoal) {
             goalType = "Upper";
-        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radLowerGoal){
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radLowerGoal) {
             goalType = "Lower";
-        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radBothGoal){
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radBothGoal) {
             goalType = "Both";
-        }else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radNoGoal){
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radNoGoal) {
             goalType = "None";
         }
-//        rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                checkedId = rgpVision.getCheckedRadioButtonId();
-//
-//                if (checkedId == R.id.radVisionYes) {
-//                    visionExist = 1;
-//                } else if (checkedId == R.id.radVisionNo) {
-//                    visionExist = 0;
-//                }
-//            }
-//        });
-
-//        rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                checkedId = rgpAutonomous.getCheckedRadioButtonId();
-//
-//                if (checkedId == R.id.radAutonomousYes) {
-//                    autonomousExists = 1;
-//                } else if (checkedId == R.id.radAutonomousNo) {
-//                    autonomousExists = 0;
-//                }
-//            }
-//        });
 
         return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
-//        }else {
-//            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        return null;
     }
 
 //    //Method to get the Uri
@@ -377,11 +316,7 @@ public class AddTeamFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-                /*try {
-                    saveToInternalSorage(imageBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
+
         }
     }
 
