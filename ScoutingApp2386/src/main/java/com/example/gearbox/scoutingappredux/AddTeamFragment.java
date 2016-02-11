@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -339,7 +338,7 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-    // @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
