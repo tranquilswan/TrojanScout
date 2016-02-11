@@ -35,6 +35,8 @@ public class TeamDataSource {
     public static final int VISION_COLUMN_POSITION = 6;
     public static final String AUTONOMOUS_COLUMN = "autonomousTF";
     public static final int AUTONOMOUS_COLUMN_POSITION = 7;
+    public static final String TEAM_NAME_COLUMN = "teamName";
+    public static final int  TEAM_NAME_COLUMN_POSITION = 8;
     //DDL statement for table creation
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
@@ -45,7 +47,8 @@ public class TeamDataSource {
                     FUNC_MECH_TYPE_COLUMN + " TEXT, " +
                     GOAL_TYPE_COLUMN + " INTEGER, " +
                     VISION_COLUMN + " INTEGER, " +
-                    AUTONOMOUS_COLUMN + " INTEGER)";
+                    AUTONOMOUS_COLUMN + " INTEGER, " +
+                    TEAM_NAME_COLUMN + " TEXT)";
     private SQLiteOpenHelper mDbOpenHelper;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -67,6 +70,7 @@ public class TeamDataSource {
         cv.put(GOAL_TYPE_COLUMN, team.getmGoalType());
         cv.put(VISION_COLUMN, team.isVisionExist());
         cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
+        cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
 
@@ -92,7 +96,8 @@ public class TeamDataSource {
             String goalType = cursor.getString(GOAL_TYPE_COLUMN_POSITION);
             int vision = cursor.getInt(VISION_COLUMN_POSITION);
             int autonomous = cursor.getInt(AUTONOMOUS_COLUMN_POSITION);
-            teams.add(new Team(id, teamNum, picLoc,driveSystem, funcMech, goalType, vision, autonomous));
+            String teamName = cursor.getString(TEAM_NAME_COLUMN_POSITION);
+            teams.add(new Team(id, teamNum, picLoc,driveSystem, funcMech, goalType, vision, autonomous, teamName));
         }
         cursor.close();
         mDatabase.close();
