@@ -2,14 +2,13 @@ package com.example.gearbox.scoutingappredux;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -28,8 +27,6 @@ import android.widget.Toast;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 /**
@@ -140,14 +137,21 @@ public class AddTeamFragment extends Fragment {
         imgThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Bundle picLoc = new Bundle();
+                //final Bundle picLoc = new Bundle();
                 //Does'nt throw a null error
                 //Only executes if picture already taken
                 if (outputFileLoc != null) {
-                    picLoc.putString("picLocation", outputFileLoc.toString());
-                    final PictureDisplayFragment pdf = new PictureDisplayFragment();
-                    pdf.setArguments(picLoc);
-                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
+//                    picLoc.putString("picLocation", outputFileLoc.toString());
+//                    final PictureDisplayFragment pdf = new PictureDisplayFragment();
+//                    pdf.setArguments(picLoc);
+//                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
+                    //Toast.makeText(getActivity(), "Sent Data", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.parse(outputFileLoc.toString()), "image/*");
+                    startActivity(intent);
+
                 }
                 //Info given to the user
                 else {
@@ -156,6 +160,16 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
+//        Bundle b = getArguments();
+//        if (b!=null){
+//            String FromWhere = b.getString("FromWhere");
+//            if (FromWhere.equals("PictureDisplayFragment")){
+//                Toast.makeText(getActivity(), FromWhere, Toast.LENGTH_SHORT).show();
+//                Team team = ((Team) getActivity().getApplicationContext());
+//                Toast.makeText(this.getActivity(),team.getmDriveSystem(),Toast.LENGTH_LONG).show();
+//
+//            }
+//        }
 
         return view;
     }
@@ -289,7 +303,18 @@ public class AddTeamFragment extends Fragment {
 
     //taking the picture
     public void takePicture(View view) {
+        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+        //The directory path can be used to save in the db...
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
+        String fileName = edtTeamNum.getText().toString() + ".jpg";
+        outputFileLoc = new File(directory, fileName);
+
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFileLoc));
+
 
 
         if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -300,53 +325,55 @@ public class AddTeamFragment extends Fragment {
     }
 
     // @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
-
-            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
-            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
-
-            ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-
-
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imgThumbnail.setImageBitmap(imageBitmap);
-            try {
-                saveToInternalSorage(imageBitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-                /*try {
-                    saveToInternalSorage(imageBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-        }
-    }
-
-    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
-        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
-        //The directory path can be used to save in the db...
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
-        String fileName = edtTeamNum.getText().toString() + ".jpg";
-        outputFileLoc = new File(directory, fileName);
-
-        //directory.mkdir();
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(outputFileLoc);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            fos.close();
-        }
-        return directory.getAbsolutePath();
-    }
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
+//
+//            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
+//            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
+//
+//            ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
+//
+//
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            imgThumbnail.setImageBitmap(imageBitmap);
+//            try {
+//                saveToInternalSorage(imageBitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//                /*try {
+//                    saveToInternalSorage(imageBitmap);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }*/
+//        }
+//    }
+//
+//    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
+//        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+//        //The directory path can be used to save in the db...
+//        // path to /data/data/yourapp/app_data/imageDir
+//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+//        // Create imageDir
+//        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
+//        String fileName = edtTeamNum.getText().toString() + ".jpg";
+//        outputFileLoc = new File(directory, fileName);
+//        Toast.makeText(getActivity(), outputFileLoc.toString(), Toast.LENGTH_LONG).show();
+//
+//
+//        //directory.mkdir();
+//
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(outputFileLoc);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            fos.close();
+//        }
+//        return directory.getAbsolutePath();
+//    }
 }

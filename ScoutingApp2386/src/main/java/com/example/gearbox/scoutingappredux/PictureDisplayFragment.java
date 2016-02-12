@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,8 +48,14 @@ public class PictureDisplayFragment extends Fragment {
         Button btnGoBack = (Button) view.findViewById(R.id.btnBack);
         btnGoBack.setOnClickListener(new View.OnClickListener() {
             FragmentManager fm = getFragmentManager();
+
+            //            final Bundle lol = new Bundle();
             @Override
             public void onClick(View v) {
+//                lol.putString("FromWhere", "PictureDisplayFragment");
+//                final AddTeamFragment pdf = new AddTeamFragment();
+//                pdf.setArguments(lol);
+//                fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
                 fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG)
                         .commit();
             }
