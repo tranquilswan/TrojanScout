@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -287,45 +286,6 @@ public class AddTeamFragment extends Fragment {
 //
 //        return null;
     }
-
-    //Method to get the Uri
-   /* private Uri getFileUri(){
-        //new Folder
-        File folder
-                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
-
-        //If the folder doesnt't exist
-        if(!folder.exists()){
-            //and cannot be made
-            if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
-                return null;
-            }
-        }
-
-        //if you cannot write to the folder---THE ERROR IS HERE---
-        //Proper permissions in the manifest, still don't know whats up
-        if(!folder.canWrite()){
-            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-            return null;
-        }
-
-        String fileName
-                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-                .format(new Date()) + ".jpg";
-        File file = new File(folder, fileName);
-        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-        return Uri.fromFile(file);
-    } */
-
-    //To check if an app is available to to what is required (take pic in this case)
-   /* private boolean inIntentHandlerAvailable(Intent intent){
-        PackageManager pm = getActivity().getPackageManager();
-
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        //return true if list.size is greater than
-        return (list.size() > 0);
-    } */
 
     //taking the picture
     public void takePicture(View view) {
