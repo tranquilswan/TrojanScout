@@ -21,7 +21,9 @@ public class Team {
 
     private int autonomousExist;
 
-    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance) {
+    private String mTeamName;
+
+    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName) {
         this.mDBid = mDBid;
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
@@ -30,9 +32,10 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
+        this.mTeamName = mTeamName;
     }
 
-    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance) {
+    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName ) {
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
         this.mDriveSystem = mDriveSystem;
@@ -40,6 +43,7 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
+        this.mTeamName = mTeamName;
     }
 
     public long getmDBid() {
@@ -105,4 +109,20 @@ public class Team {
     public void setAutonomousExist(int autonomousExist) {
         this.autonomousExist = autonomousExist;
     }
+
+
+    public String getmTeamName() {
+        return mTeamName;
+    }
+
+    public void setmTeamName(String mTeamName) {
+        this.mTeamName = mTeamName;
+    }
+
+    @Override
+    public String toString() {
+        //return "Team: " + getmTeamNum() + ", Name: " + getmTeamName();
+        return ""+getmTeamNum();
+    }
 }
+

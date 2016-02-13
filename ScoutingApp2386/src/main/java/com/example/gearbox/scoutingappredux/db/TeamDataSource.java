@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.Team;
@@ -22,30 +23,24 @@ public class TeamDataSource {
     private Context mContext;
 
     public static final String TABLE_NAME = "Team";
-
     public static final String ID_COLUMN = "_ID";
     public static final int ID_COLUMN_POSITION = 0;
-
     public static final String TEAM_NUM_COLUMN = "teamNum";
     public static final int TEAM_NUM_ID_COLUMN_POSITION = 1;
-
     public static final String PIC_LOC_COLUMN = "picLoc";
     public static final int PIC_ID_COLUMN_POSITION = 2;
-
     public static final String DRIVE_SYSTEM_COLUMN = "driveSystem";
     public static final int DRIVE_SYSTEM_COLUMN_POSITION = 3;
-
     public static final String FUNC_MECH_TYPE_COLUMN = "funcMech";
     public static final int FUCN_MECH_TYPE_COLUMN_POSITION = 4;
-
     public static final String GOAL_TYPE_COLUMN = "goalType";
     public static final int GOAL_TYPE_COLUMN_POSITION = 5;
-
     public static final String VISION_COLUMN = "visionTF";
     public static final int VISION_COLUMN_POSITION = 6;
-
     public static final String AUTONOMOUS_COLUMN = "autonomousTF";
     public static final int AUTONOMOUS_COLUMN_POSITION = 7;
+    public static final String TEAM_NAME_COLUMN = "teamName";
+    public static final int  TEAM_NAME_COLUMN_POSITION = 8;
 
     //DDL statement for table creation
     public static final String CREATE_TABLE =
@@ -57,7 +52,8 @@ public class TeamDataSource {
                     FUNC_MECH_TYPE_COLUMN + " TEXT, " +
                     GOAL_TYPE_COLUMN + " INTEGER, " +
                     VISION_COLUMN + " INTEGER, " +
-                    AUTONOMOUS_COLUMN + " INTEGER)";
+                    AUTONOMOUS_COLUMN + " INTEGER, " +
+                    TEAM_NAME_COLUMN + " TEXT)";
 
     public TeamDataSource(Context context){
         mDbOpenHelper = new DbOpenHelper(context);
@@ -76,6 +72,7 @@ public class TeamDataSource {
         cv.put(GOAL_TYPE_COLUMN, team.getmGoalType());
         cv.put(VISION_COLUMN, team.isVisionExist());
         cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
+        cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
 
@@ -85,14 +82,15 @@ public class TeamDataSource {
         return teamId;
     }
 
-    public List<Team> getTeams(){
+
+    public List<Team> getTeams() {
         ArrayList<Team> teams = new ArrayList<>();
 
         mDatabase = mDbOpenHelper.getReadableDatabase();
 
         Cursor cursor = mDatabase.query(TABLE_NAME, null, null, null, null, null, TEAM_NUM_COLUMN);
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             long id = cursor.getLong(ID_COLUMN_POSITION);
             int teamNum = cursor.getInt(TEAM_NUM_ID_COLUMN_POSITION);
             String picLoc = cursor.getString(PIC_ID_COLUMN_POSITION);
@@ -101,10 +99,51 @@ public class TeamDataSource {
             String goalType = cursor.getString(GOAL_TYPE_COLUMN_POSITION);
             int vision = cursor.getInt(VISION_COLUMN_POSITION);
             int autonomous = cursor.getInt(AUTONOMOUS_COLUMN_POSITION);
-            teams.add(new Team(id, teamNum, picLoc,driveSystem, funcMech, goalType, vision, autonomous));
+            String teamName = cursor.getString(TEAM_NAME_COLUMN_POSITION);
+            teams.add(new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName));
         }
         cursor.close();
         mDatabase.close();
         return teams;
     }
+
+//    public Team getTeam(int teamNum){
+//        Team team = null;
+//        mDatabase = mDbOpenHelper.getReadableDatabase();
+//        //Cursor cursor = mDatabase.query(TABLE_NAME, null, "teamNum=?", new String[teamNum], null, null, TEAM_NAME_COLUMN);
+//        Cursor rawCursor = null;
+//        String queryString = "SELECT * FROM Team WHERE teamNum = " + teamNum + ";";
+//        try{
+//            rawCursor
+//                    = mDatabase.rawQuery(queryString, null);
+//            if(rawCursor.getCount() > 0){
+//                rawCursor.moveToFirst();
+//                team.setmTeamNum(rawCursor.getInt(TEAM_NUM_COLUMN_POSITION));
+//                rawCursor.moveToNext();
+//                team.setmDriveSystem(rawCursor.getString(DRIVE_SYSTEM_COLUMN_POSITION));
+//                rawCursor.moveToNext();
+//
+////                long id = rawCursor.getLong(ID_COLUMN_POSITION);
+////                rawCursor.moveToNext();
+////                int teamNumb = rawCursor.getInt(TEAM_NUM_ID_COLUMN_POSITION);
+////                rawCursor.moveToNext();
+////                String picLoc = rawCursor.getString(PIC_ID_COLUMN_POSITION);
+////                String driveSystem = rawCursor.getString(DRIVE_SYSTEM_COLUMN_POSITION);
+////                String funcMech = rawCursor.getString(FUCN_MECH_TYPE_COLUMN_POSITION);
+////                String goalType = rawCursor.getString(GOAL_TYPE_COLUMN_POSITION);
+////                int vision = rawCursor.getInt(VISION_COLUMN_POSITION);
+////                int autonomous = rawCursor.getInt(AUTONOMOUS_COLUMN_POSITION);
+////                String teamName = rawCursor.getString(TEAM_NAME_COLUMN_POSITION);
+//
+////                return team = new Team(id, teamNumb, picLoc,driveSystem, funcMech, goalType, vision, autonomous, teamName);
+//                return team;
+//
+//            }
+//        }finally {
+//            rawCursor.close();
+//            mDatabase.close();
+//        }
+//
+//        return team;
+//    }
 }

@@ -3,38 +3,31 @@ package com.example.gearbox.scoutingappredux;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -50,7 +43,8 @@ public class AddTeamFragment extends Fragment {
     Button btnTakePicture;
     int visionExist;
     int autonomousExists;
-    private Uri outputFileUri;
+    String goalType;
+    private File outputFileLoc;
 
 
     public AddTeamFragment() {
@@ -66,6 +60,34 @@ public class AddTeamFragment extends Fragment {
         fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG);
 
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
+        btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
+        btnTakePicture.setEnabled(false);
+        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+        btnSaveTeam.setEnabled(false);
+        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+        edtTeamNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 1) {
+                    btnTakePicture.setEnabled(true);
+                    btnSaveTeam.setEnabled(true);
+                }else {
+                    btnTakePicture.setEnabled(false);
+                    btnSaveTeam.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
         //Go back to the main screen
@@ -82,7 +104,6 @@ public class AddTeamFragment extends Fragment {
         RequestWritePermission();
 
         //Taking Picture logic
-        btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,17 +111,15 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
-        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+
 
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!edtTeamNum.getText().toString().equals("")) {
-
-
+                if (outputFileLoc != null) {
                     Team team = createTeam();
+
 
                     TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
 
@@ -111,12 +130,8 @@ public class AddTeamFragment extends Fragment {
                     fm.beginTransaction()
                             .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
                             .commit();
-                }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Input Missing")
-                            .setMessage("Enter a team number!")
-                            .setPositiveButton("OK", null)
-                            .show();
+                } else {
+                    Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -130,8 +145,8 @@ public class AddTeamFragment extends Fragment {
                 final Bundle picLoc = new Bundle();
                 //Does'nt throw a null error
                 //Only executes if picture already taken
-                if (outputFileUri != null) {
-                    picLoc.putString("picLocation", outputFileUri.toString());
+                if (outputFileLoc != null) {
+                    picLoc.putString("picLocation", outputFileLoc.toString());
                     final PictureDisplayFragment pdf = new PictureDisplayFragment();
                     pdf.setArguments(picLoc);
                     fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
@@ -192,129 +207,145 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-    private Team createTeam(){
+    private Team createTeam() {
+        //UI Element References
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
-        CheckBox chkUpperGoal = (CheckBox) getView().findViewById(R.id.chkUpperGoal);
-        CheckBox chkLowerGoal = (CheckBox) getView().findViewById(R.id.chkLowerGoal);
+        EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
+        final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
-        final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
+        final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
 
-        //if (edtTeamNum.getText().toString().equalsIgnoreCase("")) {
+        //Getting the input form the UI Elements
+        int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
+        String driveSystemInfo = edtDriveSyst.getText().toString();
+        String funcMechInfo = edtFuncMech.getText().toString();
+        String teamName = edtTeamName.getText().toString();
 
+        //Setting radio button values
+        if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes) {
+            visionExist = 1;
+        } else if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionNo) {
+            visionExist = 0;
+        }
 
-            int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
+        //Setting radio button values
+        if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousYes) {
+            autonomousExists = 1;
+        } else if (rgpAutonomous.getCheckedRadioButtonId() == R.id.radAutonomousNo) {
+            autonomousExists = 0;
+        }
 
-            String driveSystemInfo = edtDriveSyst.getText().toString();
-            String funcMechInfo = edtFuncMech.getText().toString();
+        //Setting radio button values
+        if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radUpperGoal) {
+            goalType = "Upper";
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radLowerGoal) {
+            goalType = "Lower";
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radBothGoal) {
+            goalType = "Both";
+        } else if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radNoGoal) {
+            goalType = "None";
+        }
 
-            String goalType;
-            if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
-                goalType = "Upper and Lower";
-            } else if (chkLowerGoal.isChecked()) {
-                goalType = "Lower";
-            } else if (chkUpperGoal.isChecked()) {
-                goalType = "Upper";
-            } else {
-                goalType = "None Selected";
-            }
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
+    }
 
-            //int visionExist;
-
-            rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpVision.getCheckedRadioButtonId();
-
-                    if (checkedId == R.id.radVisionYes) {
-                        visionExist = 1;
-                    } else if (checkedId == R.id.radVisionNo) {
-                        visionExist = 0;
-                    }
-                }
-            });
-
-            rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpAutonomous.getCheckedRadioButtonId();
-
-                    if (checkedId == R.id.radAutonomousYes) {
-                        autonomousExists = 1;
-                    } else if (checkedId == R.id.radAutonomousNo) {
-                        autonomousExists = 0;
-                    }
-                }
-            });
-
-            return new Team(teamNum, "LocPlaceHolder", driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
-//        }else {
-//            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
+//    //Method to get the Uri
+//   /* private Uri getFileUri(){
+//        //new Folder
+//        File folder
+//                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
+//
+//        //If the folder doesnt't exist
+//        if(!folder.exists()){
+//            //and cannot be made
+//            if(!folder.mkdirs()){
+//                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
+//                return null;
+//            }
 //        }
 //
-//        return null;
-    }
-
-    //Method to get the Uri
-    private Uri getFileUri(){
-        //new Folder
-        File folder
-                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
-
-        //If the folder doesnt't exist
-        if(!folder.exists()){
-            //and cannot be made
-            if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
-                return null;
-            }
-        }
-
-        //if you cannot write to the folder---THE ERROR IS HERE---
-        //Proper permissions in the manifest, still don't know whats up
-        if(!folder.canWrite()){
-            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-            return null;
-        }
-
-        String fileName
-                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-                .format(new Date()) + ".jpg";
-        File file = new File(folder, fileName);
-        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-        return Uri.fromFile(file);
-    }
-
-    //To check if an app is available to to what is required (take pic in this case)
-    private boolean inIntentHandlerAvailable(Intent intent){
-        PackageManager pm = getActivity().getPackageManager();
-
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        //return true if list.size is greater than
-        return (list.size() > 0);
-    }
+//        //if you cannot write to the folder---THE ERROR IS HERE---
+//        //Proper permissions in the manifest, still don't know whats up
+//        if(!folder.canWrite()){
+//            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
+//            return null;
+//        }
+//
+//        String fileName
+//                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
+//                .format(new Date()) + ".jpg";
+//        File file = new File(folder, fileName);
+//        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
+//        return Uri.fromFile(file);
+//    } */
+//
+//    //To check if an app is available to to what is required (take pic in this case)
+//   /* private boolean inIntentHandlerAvailable(Intent intent){
+//        PackageManager pm = getActivity().getPackageManager();
+//
+//        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//        //return true if list.size is greater than
+//        return (list.size() > 0);
+//    } */
 
     //taking the picture
-    public void takePicture(View view){
+    public void takePicture(View view) {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        if(inIntentHandlerAvailable(pictureIntent)){
-            outputFileUri = getFileUri();
-            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+        if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(pictureIntent, TAKE_PICTURE);
-        }else{
-            Toast.makeText(getActivity(), "Camera Handler not available", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant camera permission", Toast.LENGTH_LONG).show();
         }
     }
 
-    @Override
+    // @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
+        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
-            Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
+            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
+            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
+
             ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true));
+
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imgThumbnail.setImageBitmap(imageBitmap);
+            try {
+                saveToInternalSorage(imageBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
+    }
+
+    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
+        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
+        //The directory path can be used to save in the db...
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
+        String fileName = edtTeamNum.getText().toString() + ".jpg";
+        outputFileLoc = new File(directory, fileName);
+
+        //directory.mkdir();
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(outputFileLoc);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            fos.close();
+        }
+        return directory.getAbsolutePath();
     }
 }
