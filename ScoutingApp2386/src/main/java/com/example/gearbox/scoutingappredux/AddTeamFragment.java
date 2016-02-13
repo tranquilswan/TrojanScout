@@ -58,20 +58,8 @@ public class AddTeamFragment extends Fragment {
         // Inflate the layout for this fragment
         fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG);
+
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
-
-        Bundle infoBund = getArguments();
-        String updateFlag = infoBund.getString("updateTeam");
-        if (updateFlag.equals("update")){
-            int teamNum = infoBund.getInt("teamNum");
-
-            Toast.makeText(getActivity(), "Team Num: " + teamNum, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
-        }else if(updateFlag.equals("noUpdate")){
-            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
-        }
-
-
         btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
         btnTakePicture.setEnabled(false);
         final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
@@ -225,7 +213,6 @@ public class AddTeamFragment extends Fragment {
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
         EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
-        EditText edtComments = (EditText) getView().findViewById(R.id.edtComments);
         final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
@@ -235,7 +222,6 @@ public class AddTeamFragment extends Fragment {
         String driveSystemInfo = edtDriveSyst.getText().toString();
         String funcMechInfo = edtFuncMech.getText().toString();
         String teamName = edtTeamName.getText().toString();
-        String comments = edtComments.getText().toString();
 
         //Setting radio button values
         if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes) {
@@ -262,7 +248,7 @@ public class AddTeamFragment extends Fragment {
             goalType = "None";
         }
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
     }
 
 //    //Method to get the Uri
