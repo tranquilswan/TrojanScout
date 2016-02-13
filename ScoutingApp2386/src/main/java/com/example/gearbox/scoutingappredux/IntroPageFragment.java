@@ -55,9 +55,12 @@ public class IntroPageFragment extends Fragment {
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AddTeamFragment atf = new AddTeamFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("updateTeam", "noUpdate");
+                atf.setArguments(bundle);
                 fm.beginTransaction()
-                        .replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG)
+                        .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
                         .commit();
 
             }
@@ -89,7 +92,7 @@ public class IntroPageFragment extends Fragment {
                 //Team teamXYZ = tds.getTeam(srt);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("upateTeam", "update");
+                bundle.putString("updateTeam", "update");
                 bundle.putInt("teamNum", teamNum);
 
                 AddTeamFragment atf = new AddTeamFragment();
@@ -114,27 +117,10 @@ public class IntroPageFragment extends Fragment {
 
     private void updateTeams(ListView lvw){
         TeamDataSource tds = new TeamDataSource(getActivity());
-        //List<Team> team = tds.getTeams();
+        List<Team> team = tds.getTeams();
 
-        DbOpenHelper handler = new DbOpenHelper(getActivity().getApplicationContext());
-        SQLiteDatabase db = handler.getWritableDatabase();
-       // Cursor theCurse = getContentResolver().query
-        Cursor theCurse = db.rawQuery("SELECT * FROM Team",null);
-
-        String[] from = {tds.TEAM_NUM_COLUMN};
-        int[] to = {android.R.id.text1};
-
-        CursorAdapter ca = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, theCurse, from, to, 0);
-
-
-
-        //SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, theCurse, null, null, 1);
-
-
-
-        //SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_list_item_1, theCurse, from, to, null);
-        //ArrayAdapter<Team> adapter = new CursorAdapter<>()(getActivity(), android.R.layout.simple_list_item_1, team);
-        lvw.setAdapter(ca);
+        ArrayAdapter<Team> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, team);
+        lvw.setAdapter(adapter);
     }
 
 

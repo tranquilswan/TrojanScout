@@ -58,8 +58,20 @@ public class AddTeamFragment extends Fragment {
         // Inflate the layout for this fragment
         fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG);
-
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
+
+        Bundle infoBund = getArguments();
+        String updateFlag = infoBund.getString("updateTeam");
+        if (updateFlag.equals("update")){
+            int teamNum = infoBund.getInt("teamNum");
+
+            Toast.makeText(getActivity(), "Team Num: " + teamNum, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
+        }else if(updateFlag.equals("noUpdate")){
+            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
+        }
+
+
         btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
         btnTakePicture.setEnabled(false);
         final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
