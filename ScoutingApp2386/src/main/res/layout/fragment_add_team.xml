@@ -5,161 +5,176 @@
     android:fillViewport="true"> <!-- here -->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.gearbox.scoutingappredux.AddTeamFragment">
-
-    <EditText
-        android:id="@+id/edtTeamNum"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Team#"
-        android:imeOptions="actionDone"
-        android:inputType="number"
-        android:maxLength="5"
-        android:textAlignment="center" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.gearbox.scoutingappredux.AddTeamFragment">
 
-    <EditText
-        android:id="@+id/edtTeamName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name (School or Team)"
-        android:imeOptions="actionDone"
-        android:inputType="textAutoComplete"
-        android:textAlignment="center" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imgThumbnail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnTakePicture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Take Picture" />
-
-    <EditText
-        android:id="@+id/edtDriveSystem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Drive System"
-        android:imeOptions="actionDone"
-        android:inputType="textAutoComplete"
-        android:textAlignment="center" />
-
-    <EditText
-        android:id="@+id/edtFuncMech"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Functional Mechanism"
-        android:imeOptions="actionDone"
-        android:inputType="textAutoComplete"
-        android:textAlignment="center" />
-
-     <RadioGroup
-         android:id="@+id/rgpGoalScoring"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radUpperGoal"
+        <EditText
+            android:id="@+id/edtTeamNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Upper" />
-        <RadioButton
-            android:id="@+id/radLowerGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lower"/>
-        <RadioButton
-            android:id="@+id/radBothGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Both"/>
-        <RadioButton
-            android:id="@+id/radNoGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="None" />
-    </RadioGroup>
+            android:hint="Team#"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textAlignment="center" />
 
-    <RadioGroup
-        android:id="@+id/rgpVision"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/radVisionYes"
+        <EditText
+            android:id="@+id/edtTeamName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vision" />
-        <RadioButton
-            android:id="@+id/radVisionNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="No Vision" />
-    </RadioGroup>
-
-    <RadioGroup
-        android:id="@+id/rgpAutonomous"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/radAutonomousYes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Autonomous" />
-        <RadioButton
-            android:id="@+id/radAutonomousNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="No Autonomous" />
-    </RadioGroup>
+            android:hint="Name (School or Team)"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect"
+            android:textAlignment="center" />
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnSaveTeam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Save Team" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgThumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_launcher" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btnMainMenu"
+            android:id="@+id/btnTakePicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Cancel" />
+            android:text="Take Picture" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/edtDriveSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Drive System"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/edtFuncMech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Functional Mechanism"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect"
+            android:textAlignment="center" />
+
+        <RadioGroup
+            android:id="@+id/rgpGoalScoring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radUpperGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Upper" />
+
+            <RadioButton
+                android:id="@+id/radLowerGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lower" />
+
+            <RadioButton
+                android:id="@+id/radBothGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Both" />
+
+            <RadioButton
+                android:id="@+id/radNoGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="None" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgpVision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radVisionYes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vision" />
+
+            <RadioButton
+                android:id="@+id/radVisionNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="No Vision" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgpAutonomous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radAutonomousYes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Autonomous" />
+
+            <RadioButton
+                android:id="@+id/radAutonomousNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="No Autonomous" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/edtComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Additional Comments"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSaveTeam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save Team" />
+
+            <Button
+                android:id="@+id/btnMainMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Cancel" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
