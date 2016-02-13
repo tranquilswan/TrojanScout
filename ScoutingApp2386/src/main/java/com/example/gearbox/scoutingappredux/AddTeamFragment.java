@@ -225,6 +225,7 @@ public class AddTeamFragment extends Fragment {
         EditText edtDriveSyst = (EditText) getView().findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) getView().findViewById(R.id.edtFuncMech);
         EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
+        EditText edtComments = (EditText) getView().findViewById(R.id.edtComments);
         final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
@@ -234,6 +235,7 @@ public class AddTeamFragment extends Fragment {
         String driveSystemInfo = edtDriveSyst.getText().toString();
         String funcMechInfo = edtFuncMech.getText().toString();
         String teamName = edtTeamName.getText().toString();
+        String comments = edtComments.getText().toString();
 
         //Setting radio button values
         if (rgpVision.getCheckedRadioButtonId() == R.id.radVisionYes) {
@@ -260,7 +262,7 @@ public class AddTeamFragment extends Fragment {
             goalType = "None";
         }
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
     }
 
 //    //Method to get the Uri
