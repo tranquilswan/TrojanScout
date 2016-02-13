@@ -23,7 +23,9 @@ public class Team {
 
     private String mTeamName;
 
-    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String teamName) {
+    private String mComments;
+
+    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments) {
         this.mDBid = mDBid;
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
@@ -32,10 +34,11 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
-        this.mTeamName = teamName;
+        this.mTeamName = mTeamName;
+        this.mComments = comments;
     }
 
-    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String teamName) {
+    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments ) {
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
         this.mDriveSystem = mDriveSystem;
@@ -43,7 +46,8 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
-        this.mTeamName = teamName;
+        this.mTeamName = mTeamName;
+        this.mComments = comments;
     }
 
     public long getmDBid() {
@@ -110,6 +114,7 @@ public class Team {
         this.autonomousExist = autonomousExist;
     }
 
+
     public String getmTeamName() {
         return mTeamName;
     }
@@ -118,8 +123,17 @@ public class Team {
         this.mTeamName = mTeamName;
     }
 
+    public String getmComments() {
+        return mComments;
+    }
+
+    public void setmComments(String mComments) {
+        this.mComments = mComments;
+    }
+
     @Override
     public String toString() {
-        return "Team: " + getmTeamNum() + ", Name: " + getmTeamName();
+
+        return ""+getmTeamNum();
     }
 }

@@ -3,25 +3,16 @@ package com.example.gearbox.scoutingappredux;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.DbOpenHelper;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.util.List;
@@ -102,9 +93,8 @@ public class IntroPageFragment extends Fragment {
                         .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
                         .commit();
 
-               // int teamNums = teamXYZ.getmTeamNum();
+                // int teamNums = teamXYZ.getmTeamNum();
                 //Toast.makeText(getActivity(), " "+teamNums, Toast.LENGTH_SHORT).show();
-
 
 
                 return true;
@@ -115,7 +105,7 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    private void updateTeams(ListView lvw){
+    private void updateTeams(ListView lvw) {
         TeamDataSource tds = new TeamDataSource(getActivity());
         List<Team> team = tds.getTeams();
 
