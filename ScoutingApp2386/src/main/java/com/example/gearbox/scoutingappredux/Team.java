@@ -1,5 +1,8 @@
 package com.example.gearbox.scoutingappredux;
 
+/**
+ * Created by gearbox on 04/02/16.
+ */
 public class Team {
 
     private long  mDBid;
@@ -20,7 +23,7 @@ public class Team {
 
     private String mTeamName;
 
-    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String teamName) {
+    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName) {
         this.mDBid = mDBid;
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
@@ -29,10 +32,10 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
-        this.mTeamName = teamName;
+        this.mTeamName = mTeamName;
     }
 
-    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String teamName) {
+    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName ) {
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
         this.mDriveSystem = mDriveSystem;
@@ -40,7 +43,7 @@ public class Team {
         this.mGoalType = mGoalType;
         this.visionExist = visionExistance;
         this.autonomousExist = autonomousExistance;
-        this.mTeamName = teamName;
+        this.mTeamName = mTeamName;
     }
 
     public long getmDBid() {
@@ -107,6 +110,7 @@ public class Team {
         this.autonomousExist = autonomousExist;
     }
 
+
     public String getmTeamName() {
         return mTeamName;
     }
@@ -117,6 +121,8 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team: " + getmTeamNum() + ", Name: " + getmTeamName();
+        //return "Team: " + getmTeamNum() + ", Name: " + getmTeamName();
+        return ""+getmTeamNum();
     }
 }
+

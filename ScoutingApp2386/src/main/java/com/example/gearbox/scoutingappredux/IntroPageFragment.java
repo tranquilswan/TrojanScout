@@ -3,14 +3,19 @@ package com.example.gearbox.scoutingappredux;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
+import com.example.gearbox.scoutingappredux.db.DbOpenHelper;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.util.List;
@@ -69,11 +74,27 @@ public class IntroPageFragment extends Fragment {
 
     private void updateTeams(ListView lvw){
         TeamDataSource tds = new TeamDataSource(getActivity());
-        List<Team> team = tds.getTeams();
+        //List<Team> team = tds.getTeams();
+
+        DbOpenHelper handler = new DbOpenHelper(getActivity().getApplicationContext());
+        SQLiteDatabase db = handler.getWritableDatabase();
+       // Cursor theCurse = getContentResolver().query
+        Cursor theCurse = db.rawQuery("SELECT * FROM Team",null);
+
+        String[] from = {tds.TEAM_NUM_COLUMN};
+        int[] to = {android.R.id.text1};
+
+        CursorAdapter ca = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, theCurse, from, to, 0);
 
 
-        ArrayAdapter<Team> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, team);
-        lvw.setAdapter(adapter);
+
+        //SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, theCurse, null, null, 1);
+
+
+
+        //SimpleCursorAdapter dataAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_list_item_1, theCurse, from, to, null);
+        //ArrayAdapter<Team> adapter = new CursorAdapter<>()(getActivity(), android.R.layout.simple_list_item_1, team);
+        lvw.setAdapter(ca);
     }
 
 }
