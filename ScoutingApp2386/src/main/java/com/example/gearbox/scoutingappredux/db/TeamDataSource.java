@@ -111,43 +111,33 @@ public class TeamDataSource {
         return teams;
     }
 
-//    public Team getTeam(int teamNum){
-//        Team team = null;
-//        mDatabase = mDbOpenHelper.getReadableDatabase();
-//        //Cursor cursor = mDatabase.query(TABLE_NAME, null, "teamNum=?", new String[teamNum], null, null, TEAM_NAME_COLUMN);
-//        Cursor rawCursor = null;
-//        String queryString = "SELECT * FROM Team WHERE teamNum = " + teamNum + ";";
-//        try{
-//            rawCursor
-//                    = mDatabase.rawQuery(queryString, null);
-//            if(rawCursor.getCount() > 0){
-//                rawCursor.moveToFirst();
-//                team.setmTeamNum(rawCursor.getInt(TEAM_NUM_COLUMN_POSITION));
-//                rawCursor.moveToNext();
-//                team.setmDriveSystem(rawCursor.getString(DRIVE_SYSTEM_COLUMN_POSITION));
-//                rawCursor.moveToNext();
-//
-////                long id = rawCursor.getLong(ID_COLUMN_POSITION);
-////                rawCursor.moveToNext();
-////                int teamNumb = rawCursor.getInt(TEAM_NUM_ID_COLUMN_POSITION);
-////                rawCursor.moveToNext();
-////                String picLoc = rawCursor.getString(PIC_ID_COLUMN_POSITION);
-////                String driveSystem = rawCursor.getString(DRIVE_SYSTEM_COLUMN_POSITION);
-////                String funcMech = rawCursor.getString(FUCN_MECH_TYPE_COLUMN_POSITION);
-////                String goalType = rawCursor.getString(GOAL_TYPE_COLUMN_POSITION);
-////                int vision = rawCursor.getInt(VISION_COLUMN_POSITION);
-////                int autonomous = rawCursor.getInt(AUTONOMOUS_COLUMN_POSITION);
-////                String teamName = rawCursor.getString(TEAM_NAME_COLUMN_POSITION);
-//
-////                return team = new Team(id, teamNumb, picLoc,driveSystem, funcMech, goalType, vision, autonomous, teamName);
-//                return team;
-//
-//            }
-//        }finally {
-//            rawCursor.close();
-//            mDatabase.close();
-//        }
-//
-//        return team;
-//    }
+    public Team getTeam(int teamNum){
+        Team team = null;
+        mDatabase = mDbOpenHelper.getReadableDatabase();
+        //Cursor rawCursor = null;
+        //String queryString = "SELECT * FROM Team WHERE teamNum = " + teamNum + ";";
+        Cursor rawCursor
+                = mDatabase.query(TABLE_NAME,
+                                    null,
+                                    TEAM_NUM_COLUMN+" = " + teamNum,
+                                    null, null, null, TEAM_NUM_COLUMN);
+        while (rawCursor.moveToNext()) {
+            long id = rawCursor.getLong(ID_COLUMN_POSITION);
+            int teamNumber = rawCursor.getInt(TEAM_NUM_ID_COLUMN_POSITION);
+            String picLoc = rawCursor.getString(PIC_ID_COLUMN_POSITION);
+            String driveSystem = rawCursor.getString(DRIVE_SYSTEM_COLUMN_POSITION);
+            String funcMech = rawCursor.getString(FUCN_MECH_TYPE_COLUMN_POSITION);
+            String goalType = rawCursor.getString(GOAL_TYPE_COLUMN_POSITION);
+            int vision = rawCursor.getInt(VISION_COLUMN_POSITION);
+            int autonomous = rawCursor.getInt(AUTONOMOUS_COLUMN_POSITION);
+            String teamName = rawCursor.getString(TEAM_NAME_COLUMN_POSITION);
+            String comments = rawCursor.getString(COMMENTS_COLUMN_POSITION);
+            team = new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments);
+        }
+
+            rawCursor.close();
+            mDatabase.close();
+
+        return team;
+    }
 }
