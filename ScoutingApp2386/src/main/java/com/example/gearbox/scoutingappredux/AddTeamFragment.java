@@ -330,7 +330,7 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
+        return new Team(teamNum, outputFileLoc.getAbsolutePath(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
 //        }else {
 //            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
 //        }
