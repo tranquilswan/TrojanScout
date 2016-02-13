@@ -72,6 +72,7 @@ public class AddTeamFragment extends Fragment {
             inSampleSize = Math.round((float) height / (float) reqHeight);
         }
         int expectedWidth = width / inSampleSize;
+        int check;
 
         if (expectedWidth > reqWidth) {
             //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
