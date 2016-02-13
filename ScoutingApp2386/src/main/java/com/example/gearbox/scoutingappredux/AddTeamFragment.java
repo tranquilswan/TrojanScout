@@ -266,6 +266,7 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpVision);
         EditText edtTeamName = (EditText) getView().findViewById(R.id.edtTeamName);
+        //EditText edtComments = (EditText) getView().findViewById(R.id.edtComments);
 
         //if (edtTeamNum.getText().toString().equalsIgnoreCase("")) {
 
@@ -330,7 +331,7 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        return new Team(teamNum, outputFileLoc.getAbsolutePath(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
 //        }else {
 //            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
 //        }

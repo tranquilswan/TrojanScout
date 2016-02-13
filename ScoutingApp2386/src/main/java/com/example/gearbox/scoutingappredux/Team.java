@@ -1,11 +1,6 @@
 package com.example.gearbox.scoutingappredux;
 
-import android.app.Activity;
-
-/**
- * Created by gearbox on 04/02/16.
- */
-public class Team extends Activity {
+public class Team {
 
     private long  mDBid;
 
