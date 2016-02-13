@@ -312,6 +312,9 @@ public class AddTeamFragment extends Fragment {
         return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
     }
 
+    private void bluetooth() {
+    }
+
     //Method to get the Uri
    /* private Uri getFileUri(){
         //new Folder
