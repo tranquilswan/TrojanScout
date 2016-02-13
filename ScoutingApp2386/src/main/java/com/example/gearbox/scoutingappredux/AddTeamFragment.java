@@ -5,7 +5,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -32,8 +30,6 @@ import android.widget.Toast;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 /**
@@ -127,7 +123,7 @@ public class AddTeamFragment extends Fragment {
                 if (s.length() >= 1) {
                     btnTakePicture.setEnabled(true);
                     btnSaveTeam.setEnabled(true);
-                }else {
+                } else {
                     btnTakePicture.setEnabled(false);
                     btnSaveTeam.setEnabled(false);
                 }
@@ -161,7 +157,7 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+        //btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
 
 
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
@@ -299,9 +295,6 @@ public class AddTeamFragment extends Fragment {
             autonomousExists = 0;
         }
 
-        String driveSystemInfo = edtDriveSyst.getText().toString();
-        String funcMechInfo = edtFuncMech.getText().toString();
-        String teamName = edtTeamName.getText().toString();
         //Setting radio button values
         if (rgpGoalScoring.getCheckedRadioButtonId() == R.id.radUpperGoal) {
             goalType = "Upper";
@@ -313,51 +306,7 @@ public class AddTeamFragment extends Fragment {
             goalType = "None";
         }
 
-            String goalType;
-            if (chkUpperGoal.isChecked() && chkLowerGoal.isChecked()) {
-                goalType = "Upper and Lower";
-            } else if (chkLowerGoal.isChecked()) {
-                goalType = "Lower";
-            } else if (chkUpperGoal.isChecked()) {
-                goalType = "Upper";
-            } else {
-                goalType = "None Selected";
-            }
-
-            //int visionExist;
-
-            rgpVision.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpVision.getCheckedRadioButtonId();
-
-                    if (checkedId == R.id.radVisionYes) {
-                        visionExist = 1;
-                    } else if (checkedId == R.id.radVisionNo) {
-                        visionExist = 0;
-                    }
-                }
-            });
-
-            rgpAutonomous.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkedId = rgpAutonomous.getCheckedRadioButtonId();
-
-                    if (checkedId == R.id.radAutonomousYes) {
-                        autonomousExists = 1;
-                    } else if (checkedId == R.id.radAutonomousNo) {
-                        autonomousExists = 0;
-                    }
-                }
-            });
-
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists);
-//        }else {
-//            Toast.makeText(getActivity().getApplicationContext(), "Must Enter a Team Number", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        return null;
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName);
     }
 
     //Method to get the Uri
