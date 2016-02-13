@@ -2,16 +2,22 @@ package com.example.gearbox.scoutingappredux;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    public final static String TAG = "IntroPageFragment";
+    private final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         final int minVersionThreshold = 1;
+
 
         try {
             //This part checks wether current app  is less than the threshold app version
@@ -81,4 +88,20 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }//onActivityResult
+
+    @Override
+    protected void onDestroy() {
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter.disable();
+        Log.v(TAG, "Bluetooth should be disabled");
+        super.onDestroy();
+    }
+
+
 }

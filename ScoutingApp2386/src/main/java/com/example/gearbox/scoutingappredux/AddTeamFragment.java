@@ -325,7 +325,7 @@ public class AddTeamFragment extends Fragment {
         if(!folder.exists()){
             //and cannot be made
             if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
+                Log.e("AddTeamFragment", "Issue with Folder Cr eating: " + folder.toString());
                 return null;
             }
         }
@@ -395,6 +395,8 @@ public class AddTeamFragment extends Fragment {
             Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
             imgThumbnail.setImageBitmap(bitmap);
 
+            // Toast.makeText(getActivity(), Integer.toString(resultCode), Toast.LENGTH_LONG).show();
+
 
 //            Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -411,6 +413,8 @@ public class AddTeamFragment extends Fragment {
                 }*/
         }
     }
+
+
 //
 //    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
 //        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
