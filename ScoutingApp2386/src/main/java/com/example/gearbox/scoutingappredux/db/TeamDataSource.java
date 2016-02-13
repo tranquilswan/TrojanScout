@@ -19,7 +19,6 @@ import java.util.List;
 public class TeamDataSource {
     private SQLiteOpenHelper mDbOpenHelper;
     private SQLiteDatabase mDatabase;
-
     private Context mContext;
 
     public static final String TABLE_NAME = "Team";
@@ -41,6 +40,8 @@ public class TeamDataSource {
     public static final int AUTONOMOUS_COLUMN_POSITION = 7;
     public static final String TEAM_NAME_COLUMN = "teamName";
     public static final int  TEAM_NAME_COLUMN_POSITION = 8;
+    public static final String COMMENTS_COLUMN = "comments";
+    public static final int COMMENTS_COLUMN_POSITION = 9;
 
     //DDL statement for table creation
     public static final String CREATE_TABLE =
@@ -53,7 +54,8 @@ public class TeamDataSource {
                     GOAL_TYPE_COLUMN + " INTEGER, " +
                     VISION_COLUMN + " INTEGER, " +
                     AUTONOMOUS_COLUMN + " INTEGER, " +
-                    TEAM_NAME_COLUMN + " TEXT)";
+                    TEAM_NAME_COLUMN + " TEXT, " +
+                    COMMENTS_COLUMN + " TEXT)";
 
     public TeamDataSource(Context context){
         mDbOpenHelper = new DbOpenHelper(context);
@@ -73,6 +75,7 @@ public class TeamDataSource {
         cv.put(VISION_COLUMN, team.isVisionExist());
         cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
         cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
+        cv.put(COMMENTS_COLUMN, team.getmComments());
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
 
@@ -100,7 +103,8 @@ public class TeamDataSource {
             int vision = cursor.getInt(VISION_COLUMN_POSITION);
             int autonomous = cursor.getInt(AUTONOMOUS_COLUMN_POSITION);
             String teamName = cursor.getString(TEAM_NAME_COLUMN_POSITION);
-            teams.add(new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName));
+            String comments = cursor.getString(COMMENTS_COLUMN_POSITION);
+            teams.add(new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments));
         }
         cursor.close();
         mDatabase.close();
