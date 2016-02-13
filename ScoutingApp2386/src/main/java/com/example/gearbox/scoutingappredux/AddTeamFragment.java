@@ -2,14 +2,17 @@ package com.example.gearbox.scoutingappredux;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -45,11 +48,43 @@ public class AddTeamFragment extends Fragment {
     String goalType;
     private File outputFileLoc;
 
+    //private static final String TAG1 = "nicknagi";
+
 
     public AddTeamFragment() {
         // Required empty public constructor
     }
 
+    public static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) { // BEST QUALITY MATCH
+
+        //First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        // Calculate inSampleSize, Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        int inSampleSize = 1;
+
+        if (height > reqHeight) {
+            inSampleSize = Math.round((float) height / (float) reqHeight);
+        }
+        int expectedWidth = width / inSampleSize;
+
+        if (expectedWidth > reqWidth) {
+            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
+            inSampleSize = Math.round((float) width / (float) reqWidth);
+        }
+
+        options.inSampleSize = inSampleSize;
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeFile(path, options);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,9 +182,12 @@ public class AddTeamFragment extends Fragment {
 //                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
                     //Toast.makeText(getActivity(), "Sent Data", Toast.LENGTH_SHORT).show();
 
+
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.parse(outputFileLoc.toString()), "image/*");
+//                    Log.v(TAG1, outputFileLoc.toString());
+//                    Log.v(TAG1, Uri.parse(outputFileLoc.getAbsolutePath()).toString());
+                    intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
                     startActivity(intent);
 
                 }
@@ -192,7 +230,6 @@ public class AddTeamFragment extends Fragment {
             // result of the request.
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -306,13 +343,18 @@ public class AddTeamFragment extends Fragment {
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         //The directory path can be used to save in the db...
         // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        //File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         String fileName = edtTeamNum.getText().toString() + ".jpg";
-        outputFileLoc = new File(directory, fileName);
+        //outputFileLoc = new File(directory, fileName);
 
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+        if (!directory.isDirectory()) directory.mkdirs();
+        //Log.v(TAG1, Boolean.toString(file.isDirectory()));
+        outputFileLoc = new File(directory, fileName);
+        //Log.v(TAG1, outputFileLoc.toString());
         pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFileLoc));
 
 
@@ -324,31 +366,35 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-    // @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
-//
-//            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
-//            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
-//
-//            ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-//
-//
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
+
+            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
+            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
+
+            ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
+
+//            File file = new File(Environment.getExternalStorageDirectory()+File.separator + "image.jpg");
+            Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
+            imgThumbnail.setImageBitmap(bitmap);
+
+
 //            Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            imgThumbnail.setImageBitmap(imageBitmap);
+////          imgThumbnail.setImageBitmap(imageBitmap);
 //            try {
 //                saveToInternalSorage(imageBitmap);
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-//                /*try {
-//                    saveToInternalSorage(imageBitmap);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }*/
-//        }
-//    }
+                /*try {
+                    saveToInternalSorage(imageBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
+        }
+    }
 //
 //    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
 //        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
