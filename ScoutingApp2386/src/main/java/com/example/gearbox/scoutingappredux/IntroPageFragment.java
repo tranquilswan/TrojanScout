@@ -1,15 +1,10 @@
 package com.example.gearbox.scoutingappredux;
 
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.bluetooth.BluetoothAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,30 +44,15 @@ public class IntroPageFragment extends Fragment {
 
         final Button btnAddTeam = (Button) view.findViewById(R.id.btnAddTeam);
 
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("NO BLUETOOTH CAPABILITY")
-                    .setMessage("The device does not support bluetooth.")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                            System.exit(1);
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
-        if (mBluetoothAdapter != null) {
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent discoverableIntent = new
-                        Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 3600);
-                startActivityForResult(discoverableIntent, 30);
+        final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
+
+        btnTradeData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TradeData(v);
             }
-        }
+        });
+
 
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,25 +125,9 @@ public class IntroPageFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-// TODO Auto-generated method stub
-        if (requestCode == 30) {
-            if (resultCode == 3600) {
-                Toast.makeText(getActivity(), "Bluetooth is now Enabled", Toast.LENGTH_LONG).show();
-                Log.v(TAG, "Bluetooth enabled");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Error occured while enabling.Leaving the application..", Toast.LENGTH_LONG).show();
-                Log.v(TAG, "Bluetooth Not Enabled..Permission Denied");
-                getActivity().finish();
-//                android.os.Process.killProcess(android.os.Process.myPid());
-//                System.exit(1);
-                //System.exit(0);
-                //finish();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }//onActivityResult
+    public void TradeData(View view) {
+        Intent intent = new Intent(getActivity(), TradeData.class);
+        startActivity(intent);
+    }
 
 }
