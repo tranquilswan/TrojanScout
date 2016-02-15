@@ -5,12 +5,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,12 +24,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 /**
@@ -164,8 +167,9 @@ public class AddTeamFragment extends Fragment {
 //            imgThumbnail.setImageBitmap(bitmap);
 
 
-        }else if(updateFlag.equals("noUpdate")){
+        } else if (updateFlag.equals("noUpdate")) {
             Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
+        }
             //btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
             btnTakePicture.setEnabled(false);
 //        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
@@ -176,7 +180,8 @@ public class AddTeamFragment extends Fragment {
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
 
-            }
+                }
+
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -195,7 +200,7 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
+        btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
         //Go back to the main screen
         btnMainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,7 +249,7 @@ public class AddTeamFragment extends Fragment {
         });
 
         //View the taken pictures
-        ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+        imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
         imgThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
