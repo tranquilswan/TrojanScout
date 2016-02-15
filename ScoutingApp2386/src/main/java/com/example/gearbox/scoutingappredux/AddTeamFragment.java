@@ -5,14 +5,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,10 +24,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -47,8 +45,6 @@ public class AddTeamFragment extends Fragment {
     int autonomousExists;
     String goalType;
     private File outputFileLoc;
-
-    //private static final String TAG1 = "nicknagi";
 
 
     public AddTeamFragment() {
@@ -95,26 +91,89 @@ public class AddTeamFragment extends Fragment {
         fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG);
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
 
+        btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
+        EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+        Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
+        ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+
+
+        EditText edtDriveSyst = (EditText) view.findViewById(R.id.edtDriveSystem);
+        EditText edtFuncMech = (EditText) view.findViewById(R.id.edtFuncMech);
+        EditText edtTeamName = (EditText) view.findViewById(R.id.edtTeamName);
+        EditText edtComments = (EditText) view.findViewById(R.id.edtComments);
+        final RadioGroup rgpGoalScoring = (RadioGroup) view.findViewById(R.id.rgpGoalScoring);
+        final RadioGroup rgpVision = (RadioGroup) view.findViewById(R.id.rgpVision);
+        final RadioGroup rgpAutonomous = (RadioGroup) view.findViewById(R.id.rgpAutonomous);
+
+
         Bundle infoBund = getArguments();
         String updateFlag = infoBund.getString("updateTeam");
         if (updateFlag.equals("update")){
             int teamNum = infoBund.getInt("teamNum");
 
-            Toast.makeText(getActivity(), "Team Num: " + teamNum, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
+            edtTeamNum.setText(Integer.toString(teamNum));
+            edtTeamNum.setEnabled(false);
+
+            TeamDataSource tds = new TeamDataSource(getActivity());
+            Team editTeam = tds.getTeam(teamNum);
+
+            edtDriveSyst.setText(editTeam.getmDriveSystem());
+            edtFuncMech.setText(editTeam.getmFuncMech());
+            edtTeamName.setText(editTeam.getmTeamName());
+            edtComments.setText(editTeam.getmComments());
+
+            RadioButton radNoGoal = (RadioButton) view.findViewById(R.id.radNoGoal);
+            RadioButton radLower = (RadioButton) view.findViewById(R.id.radLowerGoal);
+            RadioButton radUpper = (RadioButton) view.findViewById(R.id.radUpperGoal);
+            RadioButton radBoth = (RadioButton) view.findViewById(R.id.radBothGoal);
+
+            if (editTeam.getmGoalType().equals("Upper")){
+                radUpper.setChecked(true);
+            }else if(editTeam.getmGoalType().equals("Lower")){
+                radLower.setChecked(true);
+            }else if(editTeam.getmGoalType().equals("Both")){
+                radBoth.setChecked(true);
+            }else if(editTeam.getmGoalType().equals("None")){
+                radNoGoal.setChecked(true);
+            }
+
+            RadioButton radVisionYes = (RadioButton) view.findViewById(R.id.radVisionYes);
+            RadioButton radVisionNo = (RadioButton) view.findViewById(R.id.radVisionNo);
+
+            if(editTeam.isVisionExist() == 1){
+                radVisionYes.setChecked(true);
+            }else if(editTeam.isVisionExist() == 0){
+                radVisionNo.setChecked(true);
+            }
+
+            RadioButton radAutonomousYes = (RadioButton) view.findViewById(R.id.radAutonomousYes);
+            RadioButton radAutonomousNo = (RadioButton) view.findViewById(R.id.radAutonomousNo);
+
+            if(editTeam.isAutonomousExist() == 1){
+                radAutonomousYes.setChecked(true);
+            }else if (editTeam.isAutonomousExist() == 0 ){
+                radAutonomousNo.setChecked(true);
+            }
+
+//            imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
+//
+//            File outPutImageFile = Uri.fromFile(Uri.parse(editTeam.getmPicLoc()));
+////            File file = new File(Environment.getExternalStorageDirectory()+File.separator + "image.jpg");
+//            Bitmap bitmap = decodeSampledBitmapFromFile(editTeam.getmPicLoc(), 400, 400);
+//            imgThumbnail.setImageBitmap(bitmap);
+
+
         }else if(updateFlag.equals("noUpdate")){
             Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
-        }
-
-
-        btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
-        btnTakePicture.setEnabled(false);
-        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
-        btnSaveTeam.setEnabled(false);
-        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
-        edtTeamNum.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            //btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
+            btnTakePicture.setEnabled(false);
+//        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+            btnSaveTeam.setEnabled(false);
+            //        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+            edtTeamNum.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
 
             }
@@ -158,7 +217,6 @@ public class AddTeamFragment extends Fragment {
             }
         });
 
-        //btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
 
 
         btnSaveTeam.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +248,7 @@ public class AddTeamFragment extends Fragment {
         imgThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final Bundle picLoc = new Bundle();
+                final Bundle picLoc = new Bundle();
                 //Does'nt throw a null error
                 //Only executes if picture already taken
                 if (outputFileLoc != null) {
@@ -213,6 +271,15 @@ public class AddTeamFragment extends Fragment {
                 else {
                     Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnMainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fm.beginTransaction()
+                        .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                        .commit();
             }
         });
 
@@ -312,44 +379,44 @@ public class AddTeamFragment extends Fragment {
         return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
     }
 
-    //Method to get the Uri
-   /* private Uri getFileUri(){
-        //new Folder
-        File folder
-                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
-
-        //If the folder doesnt't exist
-        if(!folder.exists()){
-            //and cannot be made
-            if(!folder.mkdirs()){
-                Log.e("AddTeamFragment", "Issue with Folder Cr eating: " + folder.toString());
-                return null;
-            }
-        }
-
-        //if you cannot write to the folder---THE ERROR IS HERE---
-        //Proper permissions in the manifest, still don't know whats up
-        if(!folder.canWrite()){
-            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-            return null;
-        }
-
-        String fileName
-                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-                .format(new Date()) + ".jpg";
-        File file = new File(folder, fileName);
-        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-        return Uri.fromFile(file);
-    } */
-
-    //To check if an app is available to to what is required (take pic in this case)
-   /* private boolean inIntentHandlerAvailable(Intent intent){
-        PackageManager pm = getActivity().getPackageManager();
-
-        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        //return true if list.size is greater than
-        return (list.size() > 0);
-    } */
+//    //Method to get the Uri
+//   /* private Uri getFileUri(){
+//        //new Folder
+//        File folder
+//                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
+//
+//        //If the folder doesnt't exist
+//        if(!folder.exists()){
+//            //and cannot be made
+//            if(!folder.mkdirs()){
+//                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
+//                return null;
+//            }
+//        }
+//
+//        //if you cannot write to the folder---THE ERROR IS HERE---
+//        //Proper permissions in the manifest, still don't know whats up
+//        if(!folder.canWrite()){
+//            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
+//            return null;
+//        }
+//
+//        String fileName
+//                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
+//                .format(new Date()) + ".jpg";
+//        File file = new File(folder, fileName);
+//        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
+//        return Uri.fromFile(file);
+//    } */
+//
+//    //To check if an app is available to to what is required (take pic in this case)
+//   /* private boolean inIntentHandlerAvailable(Intent intent){
+//        PackageManager pm = getActivity().getPackageManager();
+//
+//        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+//        //return true if list.size is greater than
+//        return (list.size() > 0);
+//    } */
 
     //taking the picture
     public void takePicture(View view) {
@@ -381,7 +448,7 @@ public class AddTeamFragment extends Fragment {
 
     // @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK){
+        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
             /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
             imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
