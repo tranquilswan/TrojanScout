@@ -67,6 +67,7 @@ public class TradeData extends AppCompatActivity {
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
                     tvEmpty.setText(readMessage);
+//                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -105,6 +106,8 @@ public class TradeData extends AppCompatActivity {
             } else {
                 mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 mBluetoothAdapter.startDiscovery();
+                AcceptThread thread = new AcceptThread();
+                thread.start();
             }
         }
 
@@ -116,8 +119,9 @@ public class TradeData extends AppCompatActivity {
                 Log.v(TAG, device.getName().toString() + " Selected");
                 Log.v(TAG, "Selected Device Address is " + device.getAddress().toString());
                 Toast.makeText(getApplicationContext(), adapter.getItem(position) + " Selected", Toast.LENGTH_LONG).show();
-
-                ConnectBluetooth(device);
+                ConnectThread thread = new ConnectThread(device);
+                thread.start();
+                //ConnectBluetooth(device);
 
 
             }
@@ -145,6 +149,8 @@ public class TradeData extends AppCompatActivity {
                 Toast.makeText(this, "Bluetooth is now Enabled", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "Bluetooth enabled");
 //                PopulateListViewPaired();
+                AcceptThread thread = new AcceptThread();
+                thread.start();
                 View v = null;
                 StartDiscovery(v);
             }
@@ -267,7 +273,9 @@ class AcceptThread extends Thread {
                 try {
                     Handler handler = new Handler(Looper.getMainLooper());
                     ConnectedThread thread = new ConnectedThread(socket, handler);
-                    thread.run();
+                    String s = "Hello World";
+                    byte[] bytes = s.getBytes();
+                    thread.write(bytes);
                     mmServerSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -331,9 +339,8 @@ class ConnectThread extends Thread {
         //manageConnectedSocket(mmSocket);
         Handler h = new Handler(Looper.getMainLooper());
         ConnectedThread thread = new ConnectedThread(mmSocket, h);
-        String s = "Hello World";
-        byte[] bytes = s.getBytes();
-        thread.write(bytes);
+        thread.start();
+
     }
 
     /**
@@ -350,11 +357,11 @@ class ConnectThread extends Thread {
 
 class ConnectedThread extends Thread {
     public static final int MESSAGE_READ = 2;
+    public final static String TAG = "ConnectedThread";
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
     private final Handler mHandler;
-
     public ConnectedThread(BluetoothSocket socket, Handler handler) {
         mHandler = handler;
         mmSocket = socket;
@@ -374,7 +381,7 @@ class ConnectedThread extends Thread {
     }
 
     public void run() {
-        byte[] buffer = new byte[8192];  // buffer store for the stream
+        byte[] buffer = new byte[1024];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
         // Keep listening to the InputStream until an exception occurs
@@ -383,6 +390,11 @@ class ConnectedThread extends Thread {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
                 // Send the obtained bytes to the UI activity
+                Log.v(TAG, "Contacting handler to send bytes");
+                byte[] readBuf = (byte[]) buffer;
+                // construct a string from the valid bytes in the buffer
+                String readMessage = new String(readBuf, 0, bytes);
+                Log.v(TAG, readMessage);
                 mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {
