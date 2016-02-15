@@ -94,6 +94,10 @@ public class TradeData extends AppCompatActivity {
                 Log.v(TAG, device.getName().toString() + " Selected");
                 Log.v(TAG, "Selected Device Address is " + device.getAddress().toString());
                 Toast.makeText(getApplicationContext(), adapter.getItem(position) + " Selected", Toast.LENGTH_LONG).show();
+
+                ConnectBluetooth(device);
+
+
             }
         });
 
@@ -180,6 +184,29 @@ public class TradeData extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.lvDevices);
         listView.setAdapter(adapter);
+    }
+
+    private void ConnectBluetooth(final BluetoothDevice device) {
+        //Dialog to Select either server or client and start threads respectively
+        new AlertDialog.Builder(this)
+                .setTitle("Connect Bluetooth")
+                .setMessage("Please Select Bluetooth Connection Type")
+                .setPositiveButton("SENDER", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        AcceptThread thread = new AcceptThread();
+                        thread.run();
+                    }
+                })
+                .setNegativeButton("RECIPIENT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ConnectThread thread = new ConnectThread(device);
+                        thread.run();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_secure)
+                .show();
     }
 }
 
