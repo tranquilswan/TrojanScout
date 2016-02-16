@@ -155,8 +155,8 @@ public class TradeData extends AppCompatActivity {
             }
         });
 
-        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
-        listView.setEmptyView(tvEmpty);
+//        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+//        listView.setEmptyView(tvEmpty);
 
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1);
@@ -187,7 +187,7 @@ public class TradeData extends AppCompatActivity {
                 StartDiscovery(v);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Error occured while enabling.Leaving the application..", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error occured while enabling. Cannot transfer data", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "Bluetooth Not Enabled..Permission Denied");
                 finish();
 //                android.os.Process.killProcess(android.os.Process.myPid());
@@ -197,19 +197,23 @@ public class TradeData extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }//onActivityResult
+    }//on ActivityResult
 
     private void PopulateListViewDiscoverable() {
         ListView listView = (ListView) findViewById(R.id.lvDevices);
+        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+        if (adapter.getCount() > 0) tvEmpty.setText("Discoverable Devices");
         listView.setAdapter(adapter);
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy() {//Work on onDestroy and add label  textView
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mBluetoothAdapter.disable();
+        if (mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.disable();
+        }
         Toast.makeText(this, "Bluetooth is Disabled", Toast.LENGTH_LONG).show();
-        Log.v(TAG, "Bluetooth Disabled OnDestroy");
+        Log.v(TAG, "Bluetooth Disabled OnDestroy TradeData");
 
         unregisterReceiver(mReceiver);
         super.onDestroy();
@@ -220,7 +224,7 @@ public class TradeData extends AppCompatActivity {
         if (DeviceList != null)
             DeviceList.clear();
         ListView listView = (ListView) findViewById(R.id.lvDevices);
-        listView.setAdapter(adapter);
+        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
