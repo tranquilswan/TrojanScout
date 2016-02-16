@@ -35,9 +35,8 @@ import java.util.UUID;
 
 public class TradeData extends AppCompatActivity {
     public static final int MESSAGE_READ = 2;
-
-    public final static String TAG = "IntroPageFragment";
-
+    public final static String TAG = "TradeData Activity";
+    final int LAUNCH_BLUETOOTH_TYPE_DIALOG = 3;
     ArrayAdapter<String> adapter;
     List<BluetoothDevice> DeviceList;
 
@@ -56,10 +55,9 @@ public class TradeData extends AppCompatActivity {
             }
         }
     };
-
     Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(final Message msg) {
             switch (msg.what) {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
@@ -69,6 +67,36 @@ public class TradeData extends AppCompatActivity {
                     tvEmpty.setText(readMessage);
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
+                case 1:
+                    Toast.makeText(getApplicationContext(), "Thread can talk", Toast.LENGTH_LONG).show();
+                    break;
+                case LAUNCH_BLUETOOTH_TYPE_DIALOG:
+                    new AlertDialog.Builder(getApplicationContext())
+                            .setTitle("Select Connection Type")
+                            .setMessage("THINK BEFORE MAKING A CHOICE")
+                            .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    BluetoothSocket socket = (BluetoothSocket) msg.obj;
+                                    ConnectedThread thread = new ConnectedThread(socket, mHandler);
+                                    thread.start();
+                                }
+                            })
+                            .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    BluetoothSocket socket = (BluetoothSocket) msg.obj;
+                                    ConnectedThread thread = new ConnectedThread(socket, mHandler);
+                                    String s = "Hello World";
+                                    byte[] bytes = s.getBytes();
+                                    thread.write(bytes);
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    break;
+
+
             }
         }
     };
@@ -106,7 +134,7 @@ public class TradeData extends AppCompatActivity {
             } else {
                 mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 mBluetoothAdapter.startDiscovery();
-                AcceptThread thread = new AcceptThread();
+                AcceptThread thread = new AcceptThread(mHandler);
                 thread.start();
             }
         }
@@ -119,7 +147,7 @@ public class TradeData extends AppCompatActivity {
                 Log.v(TAG, device.getName().toString() + " Selected");
                 Log.v(TAG, "Selected Device Address is " + device.getAddress().toString());
                 Toast.makeText(getApplicationContext(), adapter.getItem(position) + " Selected", Toast.LENGTH_LONG).show();
-                ConnectThread thread = new ConnectThread(device);
+                ConnectThread thread = new ConnectThread(device, mHandler);
                 thread.start();
                 //ConnectBluetooth(device);
 
@@ -139,6 +167,10 @@ public class TradeData extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 
+
+        TestThread t = new TestThread(mHandler);
+        t.start();
+
     }
 
     @Override
@@ -149,7 +181,7 @@ public class TradeData extends AppCompatActivity {
                 Toast.makeText(this, "Bluetooth is now Enabled", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "Bluetooth enabled");
 //                PopulateListViewPaired();
-                AcceptThread thread = new AcceptThread();
+                AcceptThread thread = new AcceptThread(mHandler);
                 thread.start();
                 View v = null;
                 StartDiscovery(v);
@@ -223,14 +255,14 @@ public class TradeData extends AppCompatActivity {
                 .setPositiveButton("SENDER", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        AcceptThread thread = new AcceptThread();
+                        AcceptThread thread = new AcceptThread(mHandler);
                         thread.run();
                     }
                 })
                 .setNegativeButton("RECIPIENT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ConnectThread thread = new ConnectThread(device);
+                        ConnectThread thread = new ConnectThread(device, mHandler);
                         thread.run();
                     }
                 })
@@ -242,12 +274,15 @@ public class TradeData extends AppCompatActivity {
 
 class AcceptThread extends Thread {
     final String MY_UUID = "7855102e-2d60-46bd-b6c0-ce75ec467bf8";
+    final int LAUNCH_BLUETOOTH_TYPE_DIALOG = 3;
     private final BluetoothServerSocket mmServerSocket;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Handler handler;
 
-    public AcceptThread() {
+    public AcceptThread(Handler mHandler) {
         // Use a temporary object that is later assigned to mmServerSocket,
         // because mmServerSocket is final
+        handler = mHandler;
         BluetoothServerSocket tmp = null;
         try {
             // MY_UUID is the app's UUID string, also used by the client code
@@ -258,6 +293,8 @@ class AcceptThread extends Thread {
     }
 
     public void run() {
+        final String TAG = "AcceptThread";
+        Log.v(TAG, "Starting AcceptThread");
         BluetoothSocket socket = null;
         // Keep listening until exception occurs or a socket is returned
         while (true) {
@@ -271,11 +308,10 @@ class AcceptThread extends Thread {
                 // Do work to manage the connection (in a separate thread)
                 //manageConnectedSocket(socket);
                 try {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    ConnectedThread thread = new ConnectedThread(socket, handler);
-                    String s = "Hello World";
-                    byte[] bytes = s.getBytes();
-                    thread.write(bytes);
+                    //Handler handler = new Handler(Looper.getMainLooper());
+                    Message completeMessage =
+                            handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, socket);
+                    completeMessage.sendToTarget();
                     mmServerSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -283,6 +319,7 @@ class AcceptThread extends Thread {
                 break;
             }
         }
+        Log.v(TAG, "Closing AccceptThread");
     }
 
     /**
@@ -299,13 +336,16 @@ class AcceptThread extends Thread {
 
 class ConnectThread extends Thread {
     final String MY_UUID = "7855102e-2d60-46bd-b6c0-ce75ec467bf8";
+    final int LAUNCH_BLUETOOTH_TYPE_DIALOG = 3;
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Handler handler;
 
-    public ConnectThread(BluetoothDevice device) {
+    public ConnectThread(BluetoothDevice device, Handler mHandler) {
         // Use a temporary object that is later assigned to mmSocket,
         // because mmSocket is final
+        handler = mHandler;
         BluetoothSocket tmp = null;
         mmDevice = device;
 
@@ -319,6 +359,8 @@ class ConnectThread extends Thread {
     }
 
     public void run() {
+        final String TAG = "ConnectRequestThread";
+        Log.v(TAG, "Starting ConnectThread");
         // Cancel discovery because it will slow down the connection
         mBluetoothAdapter.cancelDiscovery();
 
@@ -337,10 +379,12 @@ class ConnectThread extends Thread {
 
         // Do work to manage the connection (in a separate thread)
         //manageConnectedSocket(mmSocket);
-        Handler h = new Handler(Looper.getMainLooper());
-        ConnectedThread thread = new ConnectedThread(mmSocket, h);
-        thread.start();
+        //Handler h = new Handler(Looper.getMainLooper());
+        Message completeMessage =
+                handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, mmSocket);
+        completeMessage.sendToTarget();
 
+        Log.v(TAG, "Closing ConnectRequestThread");
     }
 
     /**
@@ -381,6 +425,8 @@ class ConnectedThread extends Thread {
     }
 
     public void run() {
+        final String TAG = "ConnectedThread";
+        Log.v(TAG, "Starting ConnectedThread");
         byte[] buffer = new byte[1024];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
@@ -401,6 +447,7 @@ class ConnectedThread extends Thread {
                 break;
             }
         }
+        Log.v(TAG, "Closing ConnectedThread");
     }
 
     /* Call this from the main activity to send data to the remote device */
@@ -418,4 +465,27 @@ class ConnectedThread extends Thread {
         } catch (IOException e) {
         }
     }
+}
+
+
+class TestThread extends Thread {
+    final String MY_UUID = "7855102e-2d60-46bd-b6c0-ce75ec467bf8";
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Handler handler;
+
+    public TestThread(Handler h) {
+        //h=new Handler(Looper.getMainLooper());
+        handler = h;
+    }
+
+    public void run() {
+        handler.sendEmptyMessage(1);
+    }
+
+    /**
+     * Will cancel the listening socket, and cause the thread to finish
+     */
+    public void cancel() {
+    }
+
 }
