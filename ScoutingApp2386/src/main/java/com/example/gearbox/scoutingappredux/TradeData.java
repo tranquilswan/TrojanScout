@@ -63,7 +63,7 @@ public class TradeData extends AppCompatActivity {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+                    TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
                     tvEmpty.setText(readMessage);
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
@@ -71,7 +71,7 @@ public class TradeData extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Thread can talk", Toast.LENGTH_LONG).show();
                     break;
                 case LAUNCH_BLUETOOTH_TYPE_DIALOG:
-                    new AlertDialog.Builder(getApplicationContext())
+                    new AlertDialog.Builder(TradeData.this)
                             .setTitle("Select Connection Type")
                             .setMessage("THINK BEFORE MAKING A CHOICE")
                             .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
@@ -201,8 +201,8 @@ public class TradeData extends AppCompatActivity {
 
     private void PopulateListViewDiscoverable() {
         ListView listView = (ListView) findViewById(R.id.lvDevices);
-        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
-        if (adapter.getCount() > 0) tvEmpty.setText("Discoverable Devices");
+//        TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
+//        if (adapter.getCount() > 0) tvEmpty.setText("Discoverable Devices");
         listView.setAdapter(adapter);
     }
 
@@ -224,7 +224,7 @@ public class TradeData extends AppCompatActivity {
         if (DeviceList != null)
             DeviceList.clear();
         ListView listView = (ListView) findViewById(R.id.lvDevices);
-        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+        TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mBluetoothAdapter.cancelDiscovery();
         mBluetoothAdapter.startDiscovery();
@@ -313,9 +313,14 @@ class AcceptThread extends Thread {
                 //manageConnectedSocket(socket);
                 try {
                     //Handler handler = new Handler(Looper.getMainLooper());
-                    Message completeMessage =
-                            handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, socket);
-                    completeMessage.sendToTarget();
+//                    Message completeMessage =
+//                            handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG,socket);
+//                    completeMessage.sendToTarget();
+                    ConnectedThread thread = new ConnectedThread(socket, handler);
+                    String s = "Hello World";
+                    byte[] bytes = s.getBytes();
+                    thread.write(bytes);
+
                     mmServerSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -384,9 +389,12 @@ class ConnectThread extends Thread {
         // Do work to manage the connection (in a separate thread)
         //manageConnectedSocket(mmSocket);
         //Handler h = new Handler(Looper.getMainLooper());
-        Message completeMessage =
-                handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, mmSocket);
-        completeMessage.sendToTarget();
+//        Message completeMessage =
+//                handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, mmSocket);
+//        completeMessage.sendToTarget();
+
+        ConnectedThread thread = new ConnectedThread(mmSocket, handler);
+        thread.start();
 
         Log.v(TAG, "Closing ConnectRequestThread");
     }
