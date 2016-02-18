@@ -275,6 +275,7 @@ public class TradeData extends AppCompatActivity {
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
                     .show();
         } else {
             String HowToRunConnectedThread;
