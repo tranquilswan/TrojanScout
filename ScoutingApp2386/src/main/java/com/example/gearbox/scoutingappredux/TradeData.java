@@ -39,7 +39,6 @@ public class TradeData extends AppCompatActivity {
     final int LAUNCH_BLUETOOTH_TYPE_DIALOG = 3;
     ArrayAdapter<String> adapter;
     List<BluetoothDevice> DeviceList;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
 
@@ -55,6 +54,7 @@ public class TradeData extends AppCompatActivity {
             }
         }
     };
+    String type;
     Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(final Message msg) {
@@ -65,6 +65,17 @@ public class TradeData extends AppCompatActivity {
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
                     tvEmpty.setText(readMessage);
+
+                    // Closes Activity after getting a bluetooth reply
+                    try {
+                        wait(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    String s = readMessage.substring(0, 16);
+                    if (s.equals("Message sent from")) {
+                        finish();
+                    }
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
@@ -228,35 +239,49 @@ public class TradeData extends AppCompatActivity {
     }
 
     public void ThreadStartWithType(final String whichThread, final BluetoothDevice device) {
-        new AlertDialog.Builder(TradeData.this)
-                .setTitle("Select Connection Type")
-                .setMessage("THINK BEFORE MAKING A CHOICE")
-                .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        final String HowToRunConnectedThread = "RECIEVE";
-                        if (whichThread.equals("AcceptThread")) {
-                            AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
-                            thread.start();
-                        } else if (whichThread.equals("ConnectThread")) {
-                            ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
-                            thread.start();
+        if (type == null) {
+            new AlertDialog.Builder(TradeData.this)
+                    .setTitle("Select Connection Type")
+                    .setMessage("THINK BEFORE MAKING A CHOICE")
+                    .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            final String HowToRunConnectedThread = "RECIEVE";
+                            type = HowToRunConnectedThread;
+                            if (whichThread.equals("AcceptThread")) {
+                                AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                                thread.start();
+                            } else if (whichThread.equals("ConnectThread")) {
+                                ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
+                                thread.start();
+                            }
                         }
-                    }
-                })
-                .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        final String HowToRunConnectedThread = "SEND";
-                        if (whichThread.equals("AcceptThread")) {
-                            AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
-                            thread.start();
-                        } else if (whichThread.equals("ConnectThread")) {
-                            ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
-                            thread.start();
+                    })
+                    .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            final String HowToRunConnectedThread = "SEND";
+                            type = HowToRunConnectedThread;
+                            if (whichThread.equals("AcceptThread")) {
+                                AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                                thread.start();
+                            } else if (whichThread.equals("ConnectThread")) {
+                                ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
+                                thread.start();
+                            }
                         }
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+            String HowToRunConnectedThread;
+            HowToRunConnectedThread = type;
+            if (whichThread.equals("AcceptThread")) {
+                AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                thread.start();
+            } else if (whichThread.equals("ConnectThread")) {
+                ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
+                thread.start();
+            }
+        }
     }
 
     private void PopulateListViewPaired() {
@@ -407,7 +432,7 @@ class ConnectThread extends Thread {
 
     public void run() {
         final String TAG = "ConnectRequestThread";
-        Log.v(TAG, "Starting ConnectThread");
+        Log.v(TAG, "Starting ConnectThread as " + HowToRunConnectedThread);
         // Cancel discovery because it will slow down the connection
         mBluetoothAdapter.cancelDiscovery();
 
