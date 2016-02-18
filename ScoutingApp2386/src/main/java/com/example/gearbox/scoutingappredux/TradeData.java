@@ -38,7 +38,6 @@ public class TradeData extends AppCompatActivity {
     public final static String TAG = "TradeData Activity";
     final int LAUNCH_BLUETOOTH_TYPE_DIALOG = 3;
     ArrayAdapter<String> adapter;
-    String test;
     List<BluetoothDevice> DeviceList;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -68,15 +67,15 @@ public class TradeData extends AppCompatActivity {
                     tvEmpty.setText(readMessage);
 
                     // Closes Activity after getting a bluetooth reply
-                    try {
-                        wait(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    String s = readMessage.substring(0, 16);
-                    if (s.equals("Message sent from")) {
-                        finish();
-                    }
+//                    try {
+//                        wait(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    String s = readMessage.substring(0, 16);
+//                    if (s.equals("Message sent from")) {
+//                        finish();
+//                    }
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
