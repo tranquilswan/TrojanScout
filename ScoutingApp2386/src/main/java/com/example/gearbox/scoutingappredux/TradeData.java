@@ -64,6 +64,8 @@ public class TradeData extends AppCompatActivity {
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
+
+                    tvEmpty.setTextSize(6f);
                     tvEmpty.setText(readMessage);
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
@@ -134,8 +136,7 @@ public class TradeData extends AppCompatActivity {
             } else {
                 mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 mBluetoothAdapter.startDiscovery();
-                AcceptThread thread = new AcceptThread(mHandler);
-                thread.start();
+                ThreadStartWithType("AcceptThread", null);
             }
         }
 
@@ -147,8 +148,7 @@ public class TradeData extends AppCompatActivity {
                 Log.v(TAG, device.getName().toString() + " Selected");
                 Log.v(TAG, "Selected Device Address is " + device.getAddress().toString());
                 Toast.makeText(getApplicationContext(), adapter.getItem(position) + " Selected", Toast.LENGTH_LONG).show();
-                ConnectThread thread = new ConnectThread(device, mHandler);
-                thread.start();
+                ThreadStartWithType("ConnectThread", device);
                 //ConnectBluetooth(device);
 
 
@@ -181,8 +181,7 @@ public class TradeData extends AppCompatActivity {
                 Toast.makeText(this, "Bluetooth is now Enabled", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "Bluetooth enabled");
 //                PopulateListViewPaired();
-                AcceptThread thread = new AcceptThread(mHandler);
-                thread.start();
+                ThreadStartWithType("AcceptThread", null);
                 View v = null;
                 StartDiscovery(v);
             }
@@ -230,6 +229,33 @@ public class TradeData extends AppCompatActivity {
         mBluetoothAdapter.startDiscovery();
     }
 
+    public void ThreadStartWithType(final String whichThread, final BluetoothDevice device) {
+        new AlertDialog.Builder(TradeData.this)
+                .setTitle("Select Connection Type")
+                .setMessage("THINK BEFORE MAKING A CHOICE")
+                .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String HowToRunConnectedThread = "RECIEVE";
+                        if (whichThread.equals("AcceptThread")) {
+                            AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                            thread.start();
+                        } else if (whichThread.equals("ConnectThread")) {
+                            ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
+                            thread.start();
+                        }
+                    }
+                })
+                .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String HowToRunConnectedThread = "SEND";
+                        AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                        thread.start();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     private void PopulateListViewPaired() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1);
@@ -251,28 +277,28 @@ public class TradeData extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    private void ConnectBluetooth(final BluetoothDevice device) {
-        //Dialog to Select either server or client and start threads respectively
-        new AlertDialog.Builder(this)
-                .setTitle("Connect Bluetooth")
-                .setMessage("Please Select Bluetooth Connection Type")
-                .setPositiveButton("SENDER", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        AcceptThread thread = new AcceptThread(mHandler);
-                        thread.run();
-                    }
-                })
-                .setNegativeButton("RECIPIENT", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ConnectThread thread = new ConnectThread(device, mHandler);
-                        thread.run();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_secure)
-                .show();
-    }
+//    private void ConnectBluetooth(final BluetoothDevice device) {
+//        //Dialog to Select either server or client and start threads respectively
+//        new AlertDialog.Builder(this)
+//                .setTitle("Connect Bluetooth")
+//                .setMessage("Please Select Bluetooth Connection Type")
+//                .setPositiveButton("SENDER", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // continue with delete
+//                        AcceptThread thread = new AcceptThread(mHandler);
+//                        thread.run();
+//                    }
+//                })
+//                .setNegativeButton("RECIPIENT", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        ConnectThread thread = new ConnectThread(device, mHandler);
+//                        thread.run();
+//                    }
+//                })
+//                .setIcon(android.R.drawable.ic_secure)
+//                .show();
+//    }
 }
 
 
@@ -282,14 +308,16 @@ class AcceptThread extends Thread {
     private final BluetoothServerSocket mmServerSocket;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Handler handler;
+    String HowToRunConnectedThread;
 
-    public AcceptThread(Handler mHandler) {
+    public AcceptThread(Handler mHandler, String type) {
         // Use a temporary object that is later assigned to mmServerSocket,
         // because mmServerSocket is final
         handler = mHandler;
         BluetoothServerSocket tmp = null;
         try {
             // MY_UUID is the app's UUID string, also used by the client code
+            HowToRunConnectedThread = type;
             tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord("nicknagi", UUID.fromString(MY_UUID));
         } catch (IOException e) {
         }
@@ -317,9 +345,20 @@ class AcceptThread extends Thread {
 //                            handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG,socket);
 //                    completeMessage.sendToTarget();
                     ConnectedThread thread = new ConnectedThread(socket, handler);
-                    String s = "Hello World";
-                    byte[] bytes = s.getBytes();
-                    thread.write(bytes);
+                    //String s = "Hello World sent by " + mBluetoothAdapter.getName();
+                    if (HowToRunConnectedThread.equals("SEND")) {
+                        String s = "A \"Hello, world!\" program is often used to introduce beginning programmers to a programming language. In general, it is simple enough to be understood easily, especially with the guidance of a teacher or a written guide.\n" +
+                                "\n" +
+                                "In addition, \"Hello world!\" can be a useful sanity test to make sure that a language's compiler, development environment, and run-time environment are correctly installed. Configuring a complete programming toolchain from scratch to the point where even trivial programs can be compiled and run can involve substantial amounts of work. For this reason, a simple program is used first when testing a new tool chain.\n" +
+                                "\n" +
+                                "\n" +
+                                "A \"Hello world!\" program running on Sony's PlayStation Portable as a proof of concept.\n" +
+                                "\"Hello world!\" is also used by computer hackers as a proof of concept that arbitrary code can be executed through an exploit where the system designers did not intend code to be executed—for example, on Sony's PlayStation Portable. This is the first step in using homemade content (\"home brew\") on such a device.";
+                        byte[] bytes = s.getBytes();
+                        thread.write(bytes);
+                    } else if (HowToRunConnectedThread.equals("RECIEVE")) {
+                        thread.start();
+                    }
 
                     mmServerSocket.close();
                 } catch (IOException e) {
@@ -350,8 +389,9 @@ class ConnectThread extends Thread {
     private final BluetoothDevice mmDevice;
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Handler handler;
+    String HowToRunConnectedThread;
 
-    public ConnectThread(BluetoothDevice device, Handler mHandler) {
+    public ConnectThread(BluetoothDevice device, Handler mHandler, String type) {
         // Use a temporary object that is later assigned to mmSocket,
         // because mmSocket is final
         handler = mHandler;
@@ -394,7 +434,20 @@ class ConnectThread extends Thread {
 //        completeMessage.sendToTarget();
 
         ConnectedThread thread = new ConnectedThread(mmSocket, handler);
-        thread.start();
+        //String s = "Hello World sent by " + mBluetoothAdapter.getName();
+        if (HowToRunConnectedThread.equals("SEND")) {
+            String s = "A \"Hello, world!\" program is often used to introduce beginning programmers to a programming language. In general, it is simple enough to be understood easily, especially with the guidance of a teacher or a written guide.\n" +
+                    "\n" +
+                    "In addition, \"Hello world!\" can be a useful sanity test to make sure that a language's compiler, development environment, and run-time environment are correctly installed. Configuring a complete programming toolchain from scratch to the point where even trivial programs can be compiled and run can involve substantial amounts of work. For this reason, a simple program is used first when testing a new tool chain.\n" +
+                    "\n" +
+                    "\n" +
+                    "A \"Hello world!\" program running on Sony's PlayStation Portable as a proof of concept.\n" +
+                    "\"Hello world!\" is also used by computer hackers as a proof of concept that arbitrary code can be executed through an exploit where the system designers did not intend code to be executed—for example, on Sony's PlayStation Portable. This is the first step in using homemade content (\"home brew\") on such a device.";
+            byte[] bytes = s.getBytes();
+            thread.write(bytes);
+        } else if (HowToRunConnectedThread.equals("RECIEVE")) {
+            thread.start();
+        }
 
         Log.v(TAG, "Closing ConnectRequestThread");
     }
@@ -439,7 +492,7 @@ class ConnectedThread extends Thread {
     public void run() {
         final String TAG = "ConnectedThread";
         Log.v(TAG, "Starting ConnectedThread");
-        byte[] buffer = new byte[1024];  // buffer store for the stream
+        byte[] buffer = new byte[8192];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
         // Keep listening to the InputStream until an exception occurs
