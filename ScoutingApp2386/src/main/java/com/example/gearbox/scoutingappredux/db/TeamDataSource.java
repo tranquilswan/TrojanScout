@@ -85,6 +85,26 @@ public class TeamDataSource {
         return teamId;
     }
 
+    public long updateTeam(Team team){
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+        //cv.put(TEAM_NUM_COLUMN, team.getmTeamNum());
+        cv.put(PIC_LOC_COLUMN, team.getmPicLoc());
+        cv.put(DRIVE_SYSTEM_COLUMN, team.getmDriveSystem());
+        cv.put(FUNC_MECH_TYPE_COLUMN, team.getmFuncMech());
+        cv.put(GOAL_TYPE_COLUMN, team.getmGoalType());
+        cv.put(VISION_COLUMN, team.isVisionExist());
+        cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
+        cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
+        cv.put(COMMENTS_COLUMN, team.getmComments());
+
+        long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?", new String[]{Integer.toString(team.getmTeamNum())});
+
+        return teamId;
+    }
+
 
     public List<Team> getTeams() {
         ArrayList<Team> teams = new ArrayList<>();

@@ -99,6 +99,8 @@ public class AddTeamFragment extends Fragment {
         final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
         Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
         ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+        //Button btnUpdateTeam = (Button) view.findViewById(R.id.btnSaveTeam);
+
 
 
         EditText edtDriveSyst = (EditText) view.findViewById(R.id.edtDriveSystem);
@@ -131,6 +133,9 @@ public class AddTeamFragment extends Fragment {
             RadioButton radUpper = (RadioButton) view.findViewById(R.id.radUpperGoal);
             RadioButton radBoth = (RadioButton) view.findViewById(R.id.radBothGoal);
 
+            btnSaveTeam.setText("Update Team");
+            btnTakePicture.setEnabled(false);
+
             if (editTeam.getmGoalType().equals("Upper")){
                 radUpper.setChecked(true);
             }else if(editTeam.getmGoalType().equals("Lower")){
@@ -158,6 +163,38 @@ public class AddTeamFragment extends Fragment {
             }else if (editTeam.isAutonomousExist() == 0 ){
                 radAutonomousNo.setChecked(true);
             }
+
+            File newFile = new File(editTeam.getmPicLoc());
+            outputFileLoc = newFile;
+
+            Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
+            imgThumbnail.setImageBitmap(bitmap);
+
+            imgThumbnail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+//                    Log.v(TAG1, outputFileLoc.toString());
+//                    Log.v(TAG1, Uri.parse(outputFileLoc.getAbsolutePath()).toString());
+                    intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
+                    startActivity(intent);
+                }
+            });
+            btnSaveTeam.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Team team = createTeam();
+                    TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
+                    teamDS.updateTeam(team);
+
+                    FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction()
+                            .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                        .commit();
+                    Toast.makeText(getActivity(), "Team " + team.getmTeamNum() + " Updated", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 //            imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
 //
