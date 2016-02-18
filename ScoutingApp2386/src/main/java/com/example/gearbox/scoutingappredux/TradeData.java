@@ -64,8 +64,6 @@ public class TradeData extends AppCompatActivity {
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
-
-                    tvEmpty.setTextSize(6f);
                     tvEmpty.setText(readMessage);
 //                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
