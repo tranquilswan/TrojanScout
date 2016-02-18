@@ -102,7 +102,6 @@ public class AddTeamFragment extends Fragment {
         //Button btnUpdateTeam = (Button) view.findViewById(R.id.btnSaveTeam);
 
 
-
         EditText edtDriveSyst = (EditText) view.findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) view.findViewById(R.id.edtFuncMech);
         EditText edtTeamName = (EditText) view.findViewById(R.id.edtTeamName);
@@ -114,7 +113,7 @@ public class AddTeamFragment extends Fragment {
 
         Bundle infoBund = getArguments();
         String updateFlag = infoBund.getString("updateTeam");
-        if (updateFlag.equals("update")){
+        if (updateFlag.equals("update")) {
             int teamNum = infoBund.getInt("teamNum");
 
             edtTeamNum.setText(Integer.toString(teamNum));
@@ -136,31 +135,31 @@ public class AddTeamFragment extends Fragment {
             btnSaveTeam.setText("Update Team");
             btnTakePicture.setEnabled(false);
 
-            if (editTeam.getmGoalType().equals("Upper")){
+            if (editTeam.getmGoalType().equals("Upper")) {
                 radUpper.setChecked(true);
-            }else if(editTeam.getmGoalType().equals("Lower")){
+            } else if (editTeam.getmGoalType().equals("Lower")) {
                 radLower.setChecked(true);
-            }else if(editTeam.getmGoalType().equals("Both")){
+            } else if (editTeam.getmGoalType().equals("Both")) {
                 radBoth.setChecked(true);
-            }else if(editTeam.getmGoalType().equals("None")){
+            } else if (editTeam.getmGoalType().equals("None")) {
                 radNoGoal.setChecked(true);
             }
 
             RadioButton radVisionYes = (RadioButton) view.findViewById(R.id.radVisionYes);
             RadioButton radVisionNo = (RadioButton) view.findViewById(R.id.radVisionNo);
 
-            if(editTeam.isVisionExist() == 1){
+            if (editTeam.isVisionExist() == 1) {
                 radVisionYes.setChecked(true);
-            }else if(editTeam.isVisionExist() == 0){
+            } else if (editTeam.isVisionExist() == 0) {
                 radVisionNo.setChecked(true);
             }
 
             RadioButton radAutonomousYes = (RadioButton) view.findViewById(R.id.radAutonomousYes);
             RadioButton radAutonomousNo = (RadioButton) view.findViewById(R.id.radAutonomousNo);
 
-            if(editTeam.isAutonomousExist() == 1){
+            if (editTeam.isAutonomousExist() == 1) {
                 radAutonomousYes.setChecked(true);
-            }else if (editTeam.isAutonomousExist() == 0 ){
+            } else if (editTeam.isAutonomousExist() == 0) {
                 radAutonomousNo.setChecked(true);
             }
 
@@ -191,7 +190,7 @@ public class AddTeamFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
                             .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
-                        .commit();
+                            .commit();
                     Toast.makeText(getActivity(), "Team " + team.getmTeamNum() + " Updated", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -206,7 +205,6 @@ public class AddTeamFragment extends Fragment {
 
         } else if (updateFlag.equals("noUpdate")) {
             Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
-        }
             //btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
             btnTakePicture.setEnabled(false);
 //        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
@@ -220,113 +218,111 @@ public class AddTeamFragment extends Fragment {
                 }
 
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 1) {
-                    btnTakePicture.setEnabled(true);
-                    btnSaveTeam.setEnabled(true);
-                } else {
-                    btnTakePicture.setEnabled(false);
-                    btnSaveTeam.setEnabled(false);
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.length() >= 1) {
+                        btnTakePicture.setEnabled(true);
+                        btnSaveTeam.setEnabled(true);
+                    } else {
+                        btnTakePicture.setEnabled(false);
+                        btnSaveTeam.setEnabled(false);
+                    }
                 }
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                @Override
+                public void afterTextChanged(Editable s) {
 
-            }
-        });
+                }
+            });
 
-        btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
-        //Go back to the main screen
-        btnMainMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fm.beginTransaction()
-                        .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
-                        .commit();
-            }
-        });
-
-        //Write Permission Request For Marshmallow Devices
-        RequestWritePermission();
-
-        //Taking Picture logic
-        btnTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePicture(view);
-            }
-        });
-
-
-
-        btnSaveTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (outputFileLoc != null) {
-                    Team team = createTeam();
-
-
-                    TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
-
-                    teamDS.saveTeam(team);
-
-                    Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
-
+            btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
+            //Go back to the main screen
+            btnMainMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     fm.beginTransaction()
                             .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
                             .commit();
-                } else {
-                    Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
                 }
+            });
 
-            }
-        });
+            //Write Permission Request For Marshmallow Devices
+            RequestWritePermission();
 
-        //View the taken pictures
-        imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
-        imgThumbnail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Bundle picLoc = new Bundle();
-                //Does'nt throw a null error
-                //Only executes if picture already taken
-                if (outputFileLoc != null) {
+            //Taking Picture logic
+            btnTakePicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    takePicture(view);
+                }
+            });
+
+
+            btnSaveTeam.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (outputFileLoc != null) {
+                        Team team = createTeam();
+
+
+                        TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
+
+                        teamDS.saveTeam(team);
+
+                        Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
+
+                        fm.beginTransaction()
+                                .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                                .commit();
+                    } else {
+                        Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            //View the taken pictures
+            imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
+            imgThumbnail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Bundle picLoc = new Bundle();
+                    //Does'nt throw a null error
+                    //Only executes if picture already taken
+                    if (outputFileLoc != null) {
 //                    picLoc.putString("picLocation", outputFileLoc.toString());
 //                    final PictureDisplayFragment pdf = new PictureDisplayFragment();
 //                    pdf.setArguments(picLoc);
 //                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
-                    //Toast.makeText(getActivity(), "Sent Data", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Sent Data", Toast.LENGTH_SHORT).show();
 
 
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
 //                    Log.v(TAG1, outputFileLoc.toString());
 //                    Log.v(TAG1, Uri.parse(outputFileLoc.getAbsolutePath()).toString());
-                    intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
-                    startActivity(intent);
+                        intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
+                        startActivity(intent);
 
+                    }
+                    //Info given to the user
+                    else {
+                        Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                //Info given to the user
-                else {
-                    Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
+            });
+
+            btnMainMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fm.beginTransaction()
+                            .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                            .commit();
                 }
-            }
-        });
+            });
 
-        btnMainMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fm.beginTransaction()
-                        .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
-                        .commit();
-            }
-        });
-
-
-
+        }
         return view;
     }
 
