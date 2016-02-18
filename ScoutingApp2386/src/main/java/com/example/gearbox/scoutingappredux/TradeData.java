@@ -248,8 +248,13 @@ public class TradeData extends AppCompatActivity {
                 .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         final String HowToRunConnectedThread = "SEND";
-                        AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
-                        thread.start();
+                        if (whichThread.equals("AcceptThread")) {
+                            AcceptThread thread = new AcceptThread(mHandler, HowToRunConnectedThread);
+                            thread.start();
+                        } else if (whichThread.equals("ConnectThread")) {
+                            ConnectThread thread = new ConnectThread(device, mHandler, HowToRunConnectedThread);
+                            thread.start();
+                        }
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -326,7 +331,7 @@ class AcceptThread extends Thread {
 
     public void run() {
         final String TAG = "AcceptThread";
-        Log.v(TAG, "Starting AcceptThread");
+        Log.v(TAG, "Starting AcceptThread as " + HowToRunConnectedThread);
         BluetoothSocket socket = null;
         // Keep listening until exception occurs or a socket is returned
         while (true) {
@@ -347,13 +352,7 @@ class AcceptThread extends Thread {
                     ConnectedThread thread = new ConnectedThread(socket, handler);
                     //String s = "Hello World sent by " + mBluetoothAdapter.getName();
                     if (HowToRunConnectedThread.equals("SEND")) {
-                        String s = "A \"Hello, world!\" program is often used to introduce beginning programmers to a programming language. In general, it is simple enough to be understood easily, especially with the guidance of a teacher or a written guide.\n" +
-                                "\n" +
-                                "In addition, \"Hello world!\" can be a useful sanity test to make sure that a language's compiler, development environment, and run-time environment are correctly installed. Configuring a complete programming toolchain from scratch to the point where even trivial programs can be compiled and run can involve substantial amounts of work. For this reason, a simple program is used first when testing a new tool chain.\n" +
-                                "\n" +
-                                "\n" +
-                                "A \"Hello world!\" program running on Sony's PlayStation Portable as a proof of concept.\n" +
-                                "\"Hello world!\" is also used by computer hackers as a proof of concept that arbitrary code can be executed through an exploit where the system designers did not intend code to be executed—for example, on Sony's PlayStation Portable. This is the first step in using homemade content (\"home brew\") on such a device.";
+                        String s = "Message sent from " + mBluetoothAdapter.getName();
                         byte[] bytes = s.getBytes();
                         thread.write(bytes);
                     } else if (HowToRunConnectedThread.equals("RECIEVE")) {
@@ -397,6 +396,7 @@ class ConnectThread extends Thread {
         handler = mHandler;
         BluetoothSocket tmp = null;
         mmDevice = device;
+        HowToRunConnectedThread = type;
 
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {
@@ -436,13 +436,7 @@ class ConnectThread extends Thread {
         ConnectedThread thread = new ConnectedThread(mmSocket, handler);
         //String s = "Hello World sent by " + mBluetoothAdapter.getName();
         if (HowToRunConnectedThread.equals("SEND")) {
-            String s = "A \"Hello, world!\" program is often used to introduce beginning programmers to a programming language. In general, it is simple enough to be understood easily, especially with the guidance of a teacher or a written guide.\n" +
-                    "\n" +
-                    "In addition, \"Hello world!\" can be a useful sanity test to make sure that a language's compiler, development environment, and run-time environment are correctly installed. Configuring a complete programming toolchain from scratch to the point where even trivial programs can be compiled and run can involve substantial amounts of work. For this reason, a simple program is used first when testing a new tool chain.\n" +
-                    "\n" +
-                    "\n" +
-                    "A \"Hello world!\" program running on Sony's PlayStation Portable as a proof of concept.\n" +
-                    "\"Hello world!\" is also used by computer hackers as a proof of concept that arbitrary code can be executed through an exploit where the system designers did not intend code to be executed—for example, on Sony's PlayStation Portable. This is the first step in using homemade content (\"home brew\") on such a device.";
+            String s = "Message sent from " + mBluetoothAdapter.getName();
             byte[] bytes = s.getBytes();
             thread.write(bytes);
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
@@ -492,7 +486,7 @@ class ConnectedThread extends Thread {
     public void run() {
         final String TAG = "ConnectedThread";
         Log.v(TAG, "Starting ConnectedThread");
-        byte[] buffer = new byte[8192];  // buffer store for the stream
+        byte[] buffer = new byte[1024];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
         // Keep listening to the InputStream until an exception occurs
