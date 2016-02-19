@@ -29,6 +29,7 @@ import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +66,28 @@ public class TradeData extends AppCompatActivity {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
-                    tvEmpty.setText(readMessage);
+                    ArrayList<String> recArray = new ArrayList<>();
+                    recArray.add(new String(readBuf, 0, msg.arg1));
+
+                    Toast.makeText(getApplicationContext(), "0: " + recArray.get(0), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "1: " + recArray.get(1), Toast.LENGTH_LONG).show();
+                    Log.v(TAG, recArray.get(0));
+
+                    String teamVal = recArray.get(0);
+                    String[] teamSep = teamVal.split("#");
+
+                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8]);
+
+                    tds.saveTeam(newTeam);
+
+
+
+                    //Log.v(TAG, recArray.get(1));
+
+//                    String readMessage = new String(readBuf, 0, msg.arg1);
+//                    TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
+//                    tvEmpty.setText(readMessage);
+//
 
                     // Closes Activity after getting a bluetooth reply
 //                    try {
@@ -382,9 +402,41 @@ class AcceptThread extends Thread {
                     ConnectedThread thread = new ConnectedThread(socket, handler, tdsFromUI);
                     //String s = "Hello World sent by " + mBluetoothAdapter.getName();
                     if (HowToRunConnectedThread.equals("SEND")) {
-                        String s = "Message sent from " + mBluetoothAdapter.getName();
-                        byte[] bytes = s.getBytes();
-                        thread.write(bytes);
+                        Team team1 = tdsFromUI.getTeam(2386);
+//                        team1.getmComments().getBytes();
+
+                        //ObjectOutputStream oos = new ObjectOutputStream();
+                        //String[] teamArray = new String[10];
+//                        ArrayList<String> teamArray = new ArrayList<>();
+                        ArrayList<byte[]> byteArray = new ArrayList<>();
+
+                        byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmPicLoc().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmDriveSystem().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmFuncMech().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmGoalType().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmTeamName().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(team1.getmComments().getBytes());
+                        byteArray.add("#".getBytes());
+
+                        for (int i =0; i < 18; i++){
+                            thread.write(byteArray.get(i));
+
+                        }
+
+//                        String s = "Message sent from " + mBluetoothAdapter.getName();
+//                        byte[] bytes = s.getBytes();
+//                        thread.write(bytes);
                     } else if (HowToRunConnectedThread.equals("RECIEVE")) {
                         thread.start();
                     }
@@ -468,9 +520,32 @@ class ConnectThread extends Thread {
         ConnectedThread thread = new ConnectedThread(mmSocket, handler, tdsFromUI);
         //String s = "Hello World sent by " + mBluetoothAdapter.getName();
         if (HowToRunConnectedThread.equals("SEND")) {
-            String s = "Message sent from " + mBluetoothAdapter.getName();
-            byte[] bytes = s.getBytes();
-            thread.write(bytes);
+            Team team1 = tdsFromUI.getTeam(2386);
+
+            ArrayList<byte[]> byteArray = new ArrayList<>();
+
+            byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmPicLoc().getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmDriveSystem().getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmFuncMech().getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmGoalType().getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmTeamName().getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(team1.getmComments().getBytes());
+            byteArray.add("#".getBytes());
+
+            for (int i =0; i < 18; i++){
+                thread.write(byteArray.get(i));
+            }
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
             thread.start();
         }
@@ -524,6 +599,19 @@ class ConnectedThread extends Thread {
         byte[] buffer = new byte[1024];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
+//        Team team1 = tdsChild.getTeam(2386);
+//        team1.getmComments().getBytes();
+//
+//
+//
+//        try {
+//            ObjectOutputStream oos = new ObjectOutputStream(mmOutStream);
+//            oos.writeObject(team1);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         // Keep listening to the InputStream until an exception occurs
         while (true) {
             try {
@@ -533,8 +621,8 @@ class ConnectedThread extends Thread {
                 Log.v(TAG, "Contacting handler to send bytes");
                 byte[] readBuf = (byte[]) buffer;
                 // construct a string from the valid bytes in the buffer
-                String readMessage = new String(readBuf, 0, bytes);
-                Log.v(TAG, readMessage);
+//                String readMessage = new String(readBuf, 0, bytes);
+//                Log.v(TAG, readMessage);
                 mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {

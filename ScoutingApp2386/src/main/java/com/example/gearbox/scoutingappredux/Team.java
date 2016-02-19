@@ -1,9 +1,11 @@
 package com.example.gearbox.scoutingappredux;
 
+import java.io.Serializable;
+
 /**
  * Created by gearbox on 04/02/16.
  */
-public class Team {
+public class Team implements Serializable {
 
     private long  mDBid;
 
