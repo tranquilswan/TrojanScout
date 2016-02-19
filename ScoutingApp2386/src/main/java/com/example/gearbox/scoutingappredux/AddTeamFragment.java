@@ -74,7 +74,6 @@ public class AddTeamFragment extends Fragment {
         int check;
 
         if (expectedWidth > reqWidth) {
-            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
             inSampleSize = Math.round((float) width / (float) reqWidth);
         }
 
@@ -99,8 +98,6 @@ public class AddTeamFragment extends Fragment {
         final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
         Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
         ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
-        //Button btnUpdateTeam = (Button) view.findViewById(R.id.btnSaveTeam);
-
 
         EditText edtDriveSyst = (EditText) view.findViewById(R.id.edtDriveSystem);
         EditText edtFuncMech = (EditText) view.findViewById(R.id.edtFuncMech);
@@ -174,8 +171,7 @@ public class AddTeamFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
-//                    Log.v(TAG1, outputFileLoc.toString());
-//                    Log.v(TAG1, Uri.parse(outputFileLoc.getAbsolutePath()).toString());
+
                     intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
                     startActivity(intent);
                 }
@@ -195,21 +191,11 @@ public class AddTeamFragment extends Fragment {
                 }
             });
 
-//            imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-//
-//            File outPutImageFile = Uri.fromFile(Uri.parse(editTeam.getmPicLoc()));
-////            File file = new File(Environment.getExternalStorageDirectory()+File.separator + "image.jpg");
-//            Bitmap bitmap = decodeSampledBitmapFromFile(editTeam.getmPicLoc(), 400, 400);
-//            imgThumbnail.setImageBitmap(bitmap);
-
 
         } else if (updateFlag.equals("noUpdate")) {
             Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
-            //btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
             btnTakePicture.setEnabled(false);
-//        final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
             btnSaveTeam.setEnabled(false);
-            //        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
             edtTeamNum.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -294,17 +280,10 @@ public class AddTeamFragment extends Fragment {
                     //Does'nt throw a null error
                     //Only executes if picture already taken
                     if (outputFileLoc != null) {
-//                    picLoc.putString("picLocation", outputFileLoc.toString());
-//                    final PictureDisplayFragment pdf = new PictureDisplayFragment();
-//                    pdf.setArguments(picLoc);
-//                    fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
-                        //Toast.makeText(getActivity(), "Sent Data", Toast.LENGTH_SHORT).show();
-
 
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
-//                    Log.v(TAG1, outputFileLoc.toString());
-//                    Log.v(TAG1, Uri.parse(outputFileLoc.getAbsolutePath()).toString());
+
                         intent.setDataAndType(Uri.fromFile(outputFileLoc), "image/*");
                         startActivity(intent);
 
@@ -439,62 +418,22 @@ public class AddTeamFragment extends Fragment {
         return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
     }
 
-//    //Method to get the Uri
-//   /* private Uri getFileUri(){
-//        //new Folder
-//        File folder
-//                = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/MyPics");
-//
-//        //If the folder doesnt't exist
-//        if(!folder.exists()){
-//            //and cannot be made
-//            if(!folder.mkdirs()){
-//                Log.e("AddTeamFragment", "Issue with Folder Creating: " + folder.toString());
-//                return null;
-//            }
-//        }
-//
-//        //if you cannot write to the folder---THE ERROR IS HERE---
-//        //Proper permissions in the manifest, still don't know whats up
-//        if(!folder.canWrite()){
-//            Log.e("AddTeamFragment", "Issue with writing to Folder: " + folder.toString() + " :Check Uses-Permission");
-//            return null;
-//        }
-//
-//        String fileName
-//                = new SimpleDateFormat("yyMMdd_hhss", Locale.CANADA)
-//                .format(new Date()) + ".jpg";
-//        File file = new File(folder, fileName);
-//        Log.d("AddTeamFrag", Uri.fromFile(file).toString());
-//        return Uri.fromFile(file);
-//    } */
-//
-//    //To check if an app is available to to what is required (take pic in this case)
-//   /* private boolean inIntentHandlerAvailable(Intent intent){
-//        PackageManager pm = getActivity().getPackageManager();
-//
-//        List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-//        //return true if list.size is greater than
-//        return (list.size() > 0);
-//    } */
 
     //taking the picture
     public void takePicture(View view) {
         ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
         //The directory path can be used to save in the db...
-        // path to /data/data/yourapp/app_data/imageDir
-        //File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
+
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
         String fileName = edtTeamNum.getText().toString() + ".jpg";
-        //outputFileLoc = new File(directory, fileName);
+
 
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
         if (!directory.isDirectory()) directory.mkdirs();
-        //Log.v(TAG1, Boolean.toString(file.isDirectory()));
+
         outputFileLoc = new File(directory, fileName);
-        //Log.v(TAG1, outputFileLoc.toString());
+
         pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFileLoc));
 
 
@@ -510,60 +449,10 @@ public class AddTeamFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
-            /*Bitmap bitmapFull = BitmapFactory.decodeFile(outputFileUri.getPath());
-            imgThumbnail.setImageBitmap(bitmapFull.createScaledBitmap(bitmapFull, 200, 200, true)); */
-
             ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-
-//            File file = new File(Environment.getExternalStorageDirectory()+File.separator + "image.jpg");
-            Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
+          Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
             imgThumbnail.setImageBitmap(bitmap);
 
-            // Toast.makeText(getActivity(), Integer.toString(resultCode), Toast.LENGTH_LONG).show();
-
-
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-////          imgThumbnail.setImageBitmap(imageBitmap);
-//            try {
-//                saveToInternalSorage(imageBitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-                /*try {
-                    saveToInternalSorage(imageBitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
         }
     }
-
-
-//
-//    private String saveToInternalSorage(Bitmap bitmapImage) throws IOException {
-//        ContextWrapper cw = new ContextWrapper(getActivity().getApplicationContext());
-//        //The directory path can be used to save in the db...
-//        // path to /data/data/yourapp/app_data/imageDir
-//        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-//        // Create imageDir
-//        EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
-//        String fileName = edtTeamNum.getText().toString() + ".jpg";
-//        outputFileLoc = new File(directory, fileName);
-//        Toast.makeText(getActivity(), outputFileLoc.toString(), Toast.LENGTH_LONG).show();
-//
-//
-//        //directory.mkdir();
-//
-//        FileOutputStream fos = null;
-//        try {
-//            fos = new FileOutputStream(outputFileLoc);
-//            // Use the compress method on the BitMap object to write image to the OutputStream
-//            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            fos.close();
-//        }
-//        return directory.getAbsolutePath();
-//    }
 }

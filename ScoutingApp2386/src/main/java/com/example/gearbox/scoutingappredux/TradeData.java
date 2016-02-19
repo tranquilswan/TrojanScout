@@ -80,57 +80,10 @@ public class TradeData extends AppCompatActivity {
 
                     tds.saveTeam(newTeam);
 
-
-
-                    //Log.v(TAG, recArray.get(1));
-
-//                    String readMessage = new String(readBuf, 0, msg.arg1);
-//                    TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
-//                    tvEmpty.setText(readMessage);
-//
-
-                    // Closes Activity after getting a bluetooth reply
-//                    try {
-//                        wait(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    String s = readMessage.substring(0, 16);
-//                    if (s.equals("Message sent from")) {
-//                        finish();
-//                    }
-//                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
                     Toast.makeText(getApplicationContext(), "Thread can talk", Toast.LENGTH_LONG).show();
                     break;
-//                case LAUNCH_BLUETOOTH_TYPE_DIALOG:
-//                    new AlertDialog.Builder(TradeData.this)
-//                            .setTitle("Select Connection Type")
-//                            .setMessage("THINK BEFORE MAKING A CHOICE")
-//                            .setPositiveButton("RECIEVE", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // continue with delete
-//                                    BluetoothSocket socket = (BluetoothSocket) msg.obj;
-//                                    ConnectedThread thread = new ConnectedThread(socket, mHandler);
-//                                    thread.start();
-//                                }
-//                            })
-//                            .setNegativeButton("SEND", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // continue with delete
-//                                    BluetoothSocket socket = (BluetoothSocket) msg.obj;
-//                                    ConnectedThread thread = new ConnectedThread(socket, mHandler);
-//                                    String s = "Hello World";
-//                                    byte[] bytes = s.getBytes();
-//                                    thread.write(bytes);
-//                                }
-//                            })
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
-//                            .show();
-//                    break;
-
-
             }
         }
     };
@@ -189,8 +142,6 @@ public class TradeData extends AppCompatActivity {
             }
         });
 
-//        TextView tvEmpty = (TextView) findViewById(R.id.tvEmpty);
-//        listView.setEmptyView(tvEmpty);
 
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1);
@@ -201,9 +152,6 @@ public class TradeData extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 
-
-//        TestThread t = new TestThread(mHandler);
-//        t.start();
 
     }
 
@@ -223,10 +171,6 @@ public class TradeData extends AppCompatActivity {
                 Toast.makeText(this, "Error occured while enabling. Cannot transfer data", Toast.LENGTH_LONG).show();
                 Log.v(TAG, "Bluetooth Not Enabled..Permission Denied");
                 finish();
-//                android.os.Process.killProcess(android.os.Process.myPid());
-//                System.exit(1);
-                //System.exit(0);
-                //finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -234,8 +178,6 @@ public class TradeData extends AppCompatActivity {
 
     private void PopulateListViewDiscoverable() {
         ListView listView = (ListView) findViewById(R.id.lvDevices);
-//        TextView tvEmpty = (TextView) findViewById(R.id.tvTitle);
-//        if (adapter.getCount() > 0) tvEmpty.setText("Discoverable Devices");
         listView.setAdapter(adapter);
     }
 
@@ -309,50 +251,6 @@ public class TradeData extends AppCompatActivity {
             }
         }
     }
-
-    private void PopulateListViewPaired() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1);
-
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-// If there are paired devices
-        if (pairedDevices.size() > 0) {
-            // Loop through paired devices
-            for (BluetoothDevice device : pairedDevices) {
-                // Add the name and address to an array adapter to show in a ListView
-                adapter.add(device.getName() + "\n" + device.getAddress());
-            }
-        }
-
-
-        ListView listView = (ListView) findViewById(R.id.lvDevices);
-        listView.setAdapter(adapter);
-    }
-
-//    private void ConnectBluetooth(final BluetoothDevice device) {
-//        //Dialog to Select either server or client and start threads respectively
-//        new AlertDialog.Builder(this)
-//                .setTitle("Connect Bluetooth")
-//                .setMessage("Please Select Bluetooth Connection Type")
-//                .setPositiveButton("SENDER", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // continue with delete
-//                        AcceptThread thread = new AcceptThread(mHandler);
-//                        thread.run();
-//                    }
-//                })
-//                .setNegativeButton("RECIPIENT", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        ConnectThread thread = new ConnectThread(device, mHandler);
-//                        thread.run();
-//                    }
-//                })
-//                .setIcon(android.R.drawable.ic_secure)
-//                .show();
-//    }
 }
 
 
@@ -391,24 +289,16 @@ class AcceptThread extends Thread {
             } catch (IOException e) {
                 break;
             }
-            // If a connection was accepted
+
             if (socket != null) {
-                // Do work to manage the connection (in a separate thread)
-                //manageConnectedSocket(socket);
+
                 try {
-                    //Handler handler = new Handler(Looper.getMainLooper());
-//                    Message completeMessage =
-//                            handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG,socket);
-//                    completeMessage.sendToTarget();
+
                     ConnectedThread thread = new ConnectedThread(socket, handler, tdsFromUI);
                     //String s = "Hello World sent by " + mBluetoothAdapter.getName();
                     if (HowToRunConnectedThread.equals("SEND")) {
                         Team team1 = tdsFromUI.getTeam(2386);
-//                        team1.getmComments().getBytes();
 
-                        //ObjectOutputStream oos = new ObjectOutputStream();
-                        //String[] teamArray = new String[10];
-//                        ArrayList<String> teamArray = new ArrayList<>();
                         ArrayList<byte[]> byteArray = new ArrayList<>();
 
                         byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
@@ -435,9 +325,6 @@ class AcceptThread extends Thread {
 
                         }
 
-//                        String s = "Message sent from " + mBluetoothAdapter.getName();
-//                        byte[] bytes = s.getBytes();
-//                        thread.write(bytes);
                     } else if (HowToRunConnectedThread.equals("RECIEVE")) {
                         thread.start();
                     }
@@ -511,15 +398,10 @@ class ConnectThread extends Thread {
             return;
         }
 
-        // Do work to manage the connection (in a separate thread)
-        //manageConnectedSocket(mmSocket);
-        //Handler h = new Handler(Looper.getMainLooper());
-//        Message completeMessage =
-//                handler.obtainMessage(LAUNCH_BLUETOOTH_TYPE_DIALOG, mmSocket);
-//        completeMessage.sendToTarget();
+
 
         ConnectedThread thread = new ConnectedThread(mmSocket, handler, tdsFromUI);
-        //String s = "Hello World sent by " + mBluetoothAdapter.getName();
+
         if (HowToRunConnectedThread.equals("SEND")) {
             Team team1 = tdsFromUI.getTeam(2386);
 
@@ -600,18 +482,6 @@ class ConnectedThread extends Thread {
         byte[] buffer = new byte[1024];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
-//        Team team1 = tdsChild.getTeam(2386);
-//        team1.getmComments().getBytes();
-//
-//
-//
-//        try {
-//            ObjectOutputStream oos = new ObjectOutputStream(mmOutStream);
-//            oos.writeObject(team1);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         // Keep listening to the InputStream until an exception occurs
         while (true) {
@@ -622,8 +492,7 @@ class ConnectedThread extends Thread {
                 Log.v(TAG, "Contacting handler to send bytes");
                 byte[] readBuf = (byte[]) buffer;
                 // construct a string from the valid bytes in the buffer
-//                String readMessage = new String(readBuf, 0, bytes);
-//                Log.v(TAG, readMessage);
+
                 mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {
@@ -649,26 +518,3 @@ class ConnectedThread extends Thread {
         }
     }
 }
-
-
-//class TestThread extends Thread {
-//    final String MY_UUID = "7855102e-2d60-46bd-b6c0-ce75ec467bf8";
-//    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//    Handler handler;
-//
-//    public TestThread(Handler h) {
-//        //h=new Handler(Looper.getMainLooper());
-//        handler = h;
-//    }
-//
-//    public void run() {
-//        handler.sendEmptyMessage(1);
-//    }
-//
-//    /**
-//     * Will cancel the listening socket, and cause the thread to finish
-//     */
-//    public void cancel() {
-//    }
-//
-//}
