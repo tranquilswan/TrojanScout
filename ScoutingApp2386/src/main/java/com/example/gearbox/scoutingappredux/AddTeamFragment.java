@@ -249,6 +249,9 @@ public class AddTeamFragment extends Fragment {
             //Write Permission Request For Marshmallow Devices
             RequestWritePermission();
 
+            ////Write Permission Request For Marshmallow Devices
+            RequestCameraPermission();
+
             //Taking Picture logic
             btnTakePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -345,6 +348,25 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
+    private void RequestCameraPermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CAMERA);
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // No explanation needed, we can request the permission.
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -360,7 +382,7 @@ public class AddTeamFragment extends Fragment {
 
                 } else {
                     // permission denied, boo! Disable the picture taking buttonn now...
-                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant write permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Write/Camera permission", Toast.LENGTH_LONG).show();
                     btnTakePicture.setEnabled(false);
                 }
 
