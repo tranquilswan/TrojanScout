@@ -93,13 +93,6 @@ public class IntroPageFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Integer teamNum = Integer.parseInt(lvwListTeams.getItemAtPosition(position).toString());//make this an int
-                Toast.makeText(getActivity(), "Mess:" + teamNum, Toast.LENGTH_SHORT).show();
-                //getTeam from the teamdata source
-                //the team will have all the necessary components that a team elements has.
-                //it will query the db based on the given team number
-                //put it into a bundle and pass it off to the add team fragment
-                //TeamDataSource tds = new TeamDataSource(getActivity());
-                //Team teamXYZ = tds.getTeam(srt);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("updateTeam", "update");

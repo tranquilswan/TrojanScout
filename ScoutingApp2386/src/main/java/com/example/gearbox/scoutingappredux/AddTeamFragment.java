@@ -191,9 +191,20 @@ public class AddTeamFragment extends Fragment {
                 }
             });
 
+            btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
+            //Go back to the main screen
+            btnMainMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fm.beginTransaction()
+                            .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                            .commit();
+                }
+            });
+
 
         } else if (updateFlag.equals("noUpdate")) {
-            Toast.makeText(getActivity(), "UpdateFlag:" + updateFlag, Toast.LENGTH_SHORT).show();
+
             btnTakePicture.setEnabled(false);
             btnSaveTeam.setEnabled(false);
             edtTeamNum.addTextChangedListener(new TextWatcher() {
@@ -232,11 +243,12 @@ public class AddTeamFragment extends Fragment {
                 }
             });
 
+            RequestCameraPermission();
             //Write Permission Request For Marshmallow Devices
             RequestWritePermission();
 
             ////Write Permission Request For Marshmallow Devices
-            RequestCameraPermission();
+
 
             //Taking Picture logic
             btnTakePicture.setOnClickListener(new View.OnClickListener() {
