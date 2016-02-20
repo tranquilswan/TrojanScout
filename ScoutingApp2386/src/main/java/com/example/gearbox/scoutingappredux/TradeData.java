@@ -358,7 +358,7 @@ class AcceptThread extends Thread {
                         byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
                         byteArray.add("#".getBytes());
 
-                        for (int i =0; i < 18; i++){
+                        for (int i =0; i < 30; i++){
                             thread.write(byteArray.get(i));
 
                         }
@@ -463,8 +463,20 @@ class ConnectThread extends Thread {
             byteArray.add("#".getBytes());
             byteArray.add(team1.getmComments().getBytes());
             byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
+            byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
+            byteArray.add("#".getBytes());
 
-            for (int i =0; i < 18; i++){
+            for (int i =0; i < 30; i++){
                 thread.write(byteArray.get(i));
             }
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
