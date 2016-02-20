@@ -105,9 +105,8 @@ public class IntroPageFragment extends Fragment {
                         .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
                         .commit();
 
-               // int teamNums = teamXYZ.getmTeamNum();
+                // int teamNums = teamXYZ.getmTeamNum();
                 //Toast.makeText(getActivity(), " "+teamNums, Toast.LENGTH_SHORT).show();
-
 
 
                 return true;
@@ -118,12 +117,14 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    private void updateTeams(ListView lvw){
+    private void updateTeams(ListView lvw) {
         TeamDataSource tds = new TeamDataSource(getActivity());
-        List<Team> team = tds.getTeams();
+        if (tds.getTeams().size() >= 1) {
+            List<Team> team = tds.getTeams();
 
-        ArrayAdapter<Team> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, team);
-        lvw.setAdapter(adapter);
+            ArrayAdapter<Team> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, team);
+            lvw.setAdapter(adapter);
+        }
     }
 
 

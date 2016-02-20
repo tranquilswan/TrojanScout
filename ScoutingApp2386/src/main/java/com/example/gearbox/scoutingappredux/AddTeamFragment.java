@@ -512,7 +512,7 @@ public class AddTeamFragment extends Fragment {
             groupD = 0;
         }
 
-        CheckBox chkLowBar = (CheckBox) getView().findViewById(R.id.chkLowBar);
+        //CheckBox chkLowBar = (CheckBox) getView().findViewById(R.id.chkLowBar);
         if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()){
             lowBar = 1;
         }else{

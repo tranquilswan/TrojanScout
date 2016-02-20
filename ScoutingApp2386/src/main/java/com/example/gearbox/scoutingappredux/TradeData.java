@@ -323,45 +323,88 @@ class AcceptThread extends Thread {
                     ConnectedThread thread = new ConnectedThread(socket, handler, tdsFromUI);
                     //String s = "Hello World sent by " + mBluetoothAdapter.getName();
                     if (HowToRunConnectedThread.equals("SEND")) {
-                        Team team1 = tdsFromUI.getTeam(2386);
 
-                        ArrayList<byte[]> byteArray = new ArrayList<>();
+                        List<Team> teamList = tdsFromUI.getTeams();
 
-                        byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmPicLoc().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmDriveSystem().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmFuncMech().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmGoalType().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmTeamName().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(team1.getmComments().getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
-                        byteArray.add("#".getBytes());
-                        byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
-                        byteArray.add("#".getBytes());
+                        for(Team teamX : teamList){
+                            ArrayList<byte[]> byteArray = new ArrayList<>();
 
-                        for (int i =0; i < 30; i++){
-                            thread.write(byteArray.get(i));
+                            byteArray.add(Integer.toString(teamX.getmTeamNum()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmPicLoc().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmDriveSystem().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmFuncMech().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmGoalType().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.isVisionExist()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.isAutonomousExist()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmTeamName().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(teamX.getmComments().getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmChallengeOrScale()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmGroupA()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmGroupB()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmGroupC()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmGroupD()).getBytes());
+                            byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmLowBar()).getBytes());
+                            byteArray.add("#".getBytes());
 
+                            for (int i =0; i < 30; i++){
+                                thread.write(byteArray.get(i));
+
+                            }
                         }
+
+//                        Team team1 = tdsFromUI.getTeam(2386);
+//
+//                        ArrayList<byte[]> byteArray = new ArrayList<>();
+//
+//                        byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmPicLoc().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmDriveSystem().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmFuncMech().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmGoalType().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmTeamName().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(team1.getmComments().getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
+//                        byteArray.add("#".getBytes());
+//                        byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
+//                        byteArray.add("#".getBytes());
+//
+//                        for (int i =0; i < 30; i++){
+//                            thread.write(byteArray.get(i));
+//
+//                        }
 
                     } else if (HowToRunConnectedThread.equals("RECIEVE")) {
                         thread.start();
