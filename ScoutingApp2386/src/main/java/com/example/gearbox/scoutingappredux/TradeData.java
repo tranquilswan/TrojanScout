@@ -29,11 +29,9 @@ import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class TradeData extends AppCompatActivity {
@@ -179,6 +177,34 @@ public class TradeData extends AppCompatActivity {
     private void PopulateListViewDiscoverable() {
         ListView listView = (ListView) findViewById(R.id.lvDevices);
         listView.setAdapter(adapter);
+
+//        //Retrieve Image and convert to byte array
+//        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+//        File outputFileLoc = new File(directory, "2386");
+//        Bitmap myBitmap = BitmapFactory.decodeFile(outputFileLoc.getAbsolutePath());
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//        byte[] byteArray = stream.toByteArray();
+//
+//        //Converting Byte[] to image where bytearray is the recieved array
+//        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//        File directory1 = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+//        if (!directory1.isDirectory()) directory.mkdirs();
+//        File outputFileLoc1 = new File(directory, "2386");
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(outputFileLoc1);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                fos.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override
