@@ -117,9 +117,6 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpChallengeOrScale = (RadioGroup) view.findViewById(R.id.rgpChallengeOrScale);
 
 
-
-
-
         Bundle infoBund = getArguments();
         String updateFlag = infoBund.getString("updateTeam");
         if (updateFlag.equals("update")) {
@@ -173,10 +170,9 @@ public class AddTeamFragment extends Fragment {
             }
 
 
-
-            if(editTeam.getmChallengeOrScale() == 1){
+            if (editTeam.getmChallengeOrScale() == 1) {
                 ((RadioButton) view.findViewById(R.id.radScale)).setChecked(true);
-            }else if(editTeam.getmChallengeOrScale() == 2){
+            } else if (editTeam.getmChallengeOrScale() == 2) {
                 ((RadioButton) view.findViewById(R.id.radChallenge)).setChecked(true);
             }
 //            else{
@@ -185,23 +181,22 @@ public class AddTeamFragment extends Fragment {
 //            }
 
             //CheckBox chkGroupA = (CheckBox) view.findViewById(R.id.chkGroupA);
-            if(editTeam.getmGroupA() == 1){
+            if (editTeam.getmGroupA() == 1) {
                 //view.findViewById(R.id.chkGroupA).setC
-                ((CheckBox)view.findViewById(R.id.chkGroupA)).setChecked(true);
+                ((CheckBox) view.findViewById(R.id.chkGroupA)).setChecked(true);
             }
-            if(editTeam.getmGroupB() == 1){
-                ((CheckBox)view.findViewById(R.id.chkGroupB)).setChecked(true);
+            if (editTeam.getmGroupB() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupB)).setChecked(true);
             }
-            if(editTeam.getmGroupC() == 1){
-                ((CheckBox)view.findViewById(R.id.chkGroupC)).setChecked(true);
+            if (editTeam.getmGroupC() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupC)).setChecked(true);
             }
-            if(editTeam.getmGroupD() ==1 ){
-                ((CheckBox)view.findViewById(R.id.chkGroupD)).setChecked(true);
+            if (editTeam.getmGroupD() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupD)).setChecked(true);
             }
-            if(editTeam.getmLowBar() == 1){
-                ((CheckBox)view.findViewById(R.id.chkLowBar)).setChecked(true);
+            if (editTeam.getmLowBar() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkLowBar)).setChecked(true);
             }
-
 
 
             File newFile = new File(editTeam.getmPicLoc());
@@ -258,7 +253,6 @@ public class AddTeamFragment extends Fragment {
 
                 }
 
-
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.length() >= 1) {
@@ -287,9 +281,9 @@ public class AddTeamFragment extends Fragment {
                 }
             });
 
-            RequestCameraPermission();
+            //RequestCameraPermission();
             //Write Permission Request For Marshmallow Devices
-            RequestWritePermission();
+            //RequestWritePermission();
 
             ////Write Permission Request For Marshmallow Devices
 
@@ -370,75 +364,75 @@ public class AddTeamFragment extends Fragment {
 
         // Checks the orientation of the screen for landscape and portrait
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(getActivity(), "landscape", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "landscape", Toast.LENGTH_SHORT).show();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void RequestWritePermission() {
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+//    private void RequestWritePermission() {
+//        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        // Here, thisActivity is the current activity
+//        if (ContextCompat.checkSelfPermission(getActivity(),
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//            // No explanation needed, we can request the permission.
+//
+//            ActivityCompat.requestPermissions(getActivity(),
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+//
+//            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//            // app-defined int constant. The callback method gets the
+//            // result of the request.
+//        }
+//    }
+//
+//    private void RequestCameraPermission() {
+//        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+//                Manifest.permission.CAMERA);
+//        // Here, thisActivity is the current activity
+//        if (ContextCompat.checkSelfPermission(getActivity(),
+//                Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//            // No explanation needed, we can request the permission.
+//
+//            ActivityCompat.requestPermissions(getActivity(),
+//                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+//
+//            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//            // app-defined int constant. The callback method gets the
+//            // result of the request.
+//        }
+//    }
 
-            // No explanation needed, we can request the permission.
 
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-
-            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
-        }
-    }
-
-    private void RequestCameraPermission() {
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.CAMERA);
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // No explanation needed, we can request the permission.
-
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
-
-            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
-        }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_LONG).show();
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
-                } else {
-                    // permission denied, boo! Disable the picture taking buttonn now...
-                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Write/Camera permission", Toast.LENGTH_LONG).show();
-                    btnTakePicture.setEnabled(false);
-                }
-
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case PERMISSION_REQUEST_CODE: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_LONG).show();
+//                    // permission was granted, yay! Do the
+//                    // contacts-related task you need to do.
+//
+//                } else {
+//                    // permission denied, boo! Disable the picture taking buttonn now...
+//                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Write/Camera permission", Toast.LENGTH_LONG).show();
+//                    btnTakePicture.setEnabled(false);
+//                }
+//
+//            }
+//
+//            // other 'case' lines to check for other
+//            // permissions this app might request
+//        }
+//    }
 
 
     private Team createTeam() {
@@ -452,7 +446,6 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
         final RadioGroup rgpChallengeOrScale = (RadioGroup) getView().findViewById(R.id.rgpChallengeOrScale);
-
 
 
         //Getting the input form the UI Elements
@@ -488,46 +481,46 @@ public class AddTeamFragment extends Fragment {
         }
 
 
-        if(rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radScale){
+        if (rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radScale) {
             challengeOrScale = 1;
-        }else if (rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radChallenge) {
+        } else if (rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radChallenge) {
             challengeOrScale = 2;
-        }else{
+        } else {
             challengeOrScale = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupA)).isChecked()){
+        if (((CheckBox) getView().findViewById(R.id.chkGroupA)).isChecked()) {
             groupA = 1;
-        }else{
+        } else {
             groupA = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupB)).isChecked()){
+        if (((CheckBox) getView().findViewById(R.id.chkGroupB)).isChecked()) {
             groupB = 1;
-        }else{
+        } else {
             groupB = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupC)).isChecked()){
+        if (((CheckBox) getView().findViewById(R.id.chkGroupC)).isChecked()) {
             groupC = 1;
-        }else{
+        } else {
             groupC = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupD)).isChecked()){
+        if (((CheckBox) getView().findViewById(R.id.chkGroupD)).isChecked()) {
             groupD = 1;
-        }else{
+        } else {
             groupD = 0;
         }
 
         //CheckBox chkLowBar = (CheckBox) getView().findViewById(R.id.chkLowBar);
-        if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()){
+        if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()) {
             lowBar = 1;
-        }else{
+        } else {
             lowBar = 0;
         }
 
@@ -554,7 +547,6 @@ public class AddTeamFragment extends Fragment {
         pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFileLoc));
 
 
-
         if (pictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(pictureIntent, TAKE_PICTURE);
         } else {
@@ -567,7 +559,7 @@ public class AddTeamFragment extends Fragment {
         if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
 
             ImageView imgThumbnail = (ImageView) getActivity().findViewById(R.id.imgThumbnail);
-          Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
+            Bitmap bitmap = decodeSampledBitmapFromFile(outputFileLoc.getAbsolutePath(), 400, 400);
             imgThumbnail.setImageBitmap(bitmap);
 
         }

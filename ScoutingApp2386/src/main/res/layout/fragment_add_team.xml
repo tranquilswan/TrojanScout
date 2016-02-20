@@ -153,7 +153,90 @@
             android:layout_height="wrap_content"
             android:hint="Additional Comments"
             android:imeOptions="actionDone"
+            android:textAlignment="center"
             android:inputType="textAutoCorrect" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/rgpChallengeOrScale"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radChallenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Challenge" />
+
+                <RadioButton
+                    android:id="@+id/radScale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Scale" />
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkGroupA"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group A" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group B" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group C" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkGroupD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Group D" />
+
+                    <CheckBox
+                        android:id="@+id/chkLowBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Low Bar" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,92 +256,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="Cancel" />
-
-        </LinearLayout>
-
-
-<!--#########################################################################################################################################-->
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioGroup
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/rgpChallengeOrScale">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/radChallenge"
-                    android:text="Challenge" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/radScale"
-                    android:text="Scale" />
-
-            </RadioGroup>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Group A"
-                        android:id="@+id/chkGroupA"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Group B"
-                        android:id="@+id/chkGroupB"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Group C"
-                        android:id="@+id/chkGroupC"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Group D"
-                        android:id="@+id/chkGroupD"/>
-
-                    <CheckBox
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Low Bar"
-                        android:id="@+id/chkLowBar"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
 
         </LinearLayout>
 

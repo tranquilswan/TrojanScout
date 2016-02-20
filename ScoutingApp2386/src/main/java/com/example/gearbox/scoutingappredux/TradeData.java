@@ -72,11 +72,31 @@ public class TradeData extends AppCompatActivity {
                     Log.v(TAG, recArray.get(0));
 
                     String teamVal = recArray.get(0);
-                    String[] teamSep = teamVal.split("#");
+                    String[] teamListX = teamVal.split("@");
 
-                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+//                    for(String teamZ : teamListX){
+//                        String teamSep = teamVal.split("#")
+//                    }
 
-                    tds.saveTeam(newTeam);
+                    for(int i = 0; i<teamListX.length; i++){
+                        String[] teamSep = teamListX[i].split("#");
+                        Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+                        tds.saveTeam(newTeam);
+                    }
+//                    String[] teamSep = teamVal.split("#");
+
+                    //after the first 30 inputs split it into new array
+                    //split it at the first 15 indicies of teamSep array
+
+
+                    //int arrayLen = teamSep.length;
+
+
+                    //for(int i = 0; )
+
+//                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+//
+//                    tds.saveTeam(newTeam);
 
                     break;
                 case 1:
@@ -347,8 +367,6 @@ class AcceptThread extends Thread {
                             byteArray.add("#".getBytes());
                             byteArray.add(teamX.getmComments().getBytes());
                             byteArray.add("#".getBytes());
-                            byteArray.add(Integer.toString(teamX.getmChallengeOrScale()).getBytes());
-                            byteArray.add("#".getBytes());
                             byteArray.add(Integer.toString(teamX.getmGroupA()).getBytes());
                             byteArray.add("#".getBytes());
                             byteArray.add(Integer.toString(teamX.getmGroupB()).getBytes());
@@ -359,6 +377,8 @@ class AcceptThread extends Thread {
                             byteArray.add("#".getBytes());
                             byteArray.add(Integer.toString(teamX.getmLowBar()).getBytes());
                             byteArray.add("#".getBytes());
+                            byteArray.add(Integer.toString(teamX.getmChallengeOrScale()).getBytes());
+                            byteArray.add("@".getBytes());
 
                             for (int i =0; i < 30; i++){
                                 thread.write(byteArray.get(i));
@@ -506,8 +526,6 @@ class ConnectThread extends Thread {
             byteArray.add("#".getBytes());
             byteArray.add(team1.getmComments().getBytes());
             byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
-            byteArray.add("#".getBytes());
             byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
             byteArray.add("#".getBytes());
             byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
@@ -518,6 +536,8 @@ class ConnectThread extends Thread {
             byteArray.add("#".getBytes());
             byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
             byteArray.add("#".getBytes());
+            byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
+            byteArray.add("@".getBytes());
 
             for (int i =0; i < 30; i++){
                 thread.write(byteArray.get(i));

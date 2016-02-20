@@ -4,10 +4,14 @@ package com.example.gearbox.scoutingappredux;
 import android.app.Fragment;
 import android.app.FragmentManager;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.example.gearbox.scoutingappredux.db.DbOpenHelper;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.util.List;
+import java.util.jar.Manifest;
 
 
 /**
@@ -34,6 +39,8 @@ public class IntroPageFragment extends Fragment {
 
     public final static String TAG = "IntroPageFragment";
     FragmentManager fm;
+
+    final int PERMISSION_REQUEST_CODE = 5;
 
     public IntroPageFragment() {
         // Required empty public constructor
@@ -53,6 +60,12 @@ public class IntroPageFragment extends Fragment {
         final Button btnAddTeam = (Button) view.findViewById(R.id.btnAddTeam);
 
         final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
+
+        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA};
+        if(!hasPermissions(getActivity(), PERMISSIONS)){
+            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_REQUEST_CODE);
+        }
+
 
         btnTradeData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,17 +118,23 @@ public class IntroPageFragment extends Fragment {
                         .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
                         .commit();
 
-               // int teamNums = teamXYZ.getmTeamNum();
-                //Toast.makeText(getActivity(), " "+teamNums, Toast.LENGTH_SHORT).show();
-
-
-
                 return true;
             }
         });
 
 
         return view;
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null){
+            for (String permission : permissions){
+                if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void updateTeams(ListView lvw){
