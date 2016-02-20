@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -48,14 +49,13 @@ public class AddTeamFragment extends Fragment {
     int visionExist;
     int autonomousExists;
     String goalType;
-    private File outputFileLoc;
-
     int challengeOrScale;
     int groupA;
     int groupB;
     int groupC;
     int groupD;
     int lowBar;
+    private File outputFileLoc;
 
 
     public AddTeamFragment() {
@@ -362,6 +362,18 @@ public class AddTeamFragment extends Fragment {
 
         }
         return view;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen for landscape and portrait
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(getActivity(), "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void RequestWritePermission() {

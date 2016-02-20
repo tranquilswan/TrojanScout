@@ -3,25 +3,18 @@ package com.example.gearbox.scoutingappredux;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
-
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.DbOpenHelper;
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.util.List;
@@ -116,6 +109,18 @@ public class IntroPageFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen for landscape and portrait
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(getActivity(), "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateTeams(ListView lvw){
