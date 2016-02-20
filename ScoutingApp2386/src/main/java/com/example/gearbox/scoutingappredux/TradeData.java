@@ -68,21 +68,21 @@ public class TradeData extends AppCompatActivity {
                     recArray.add(new String(readBuf, 0, msg.arg1));
 
                     Toast.makeText(getApplicationContext(), "0: " + recArray.get(0), Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), "1: " + recArray.get(1), Toast.LENGTH_LONG).show();
+
                     Log.v(TAG, recArray.get(0));
 
                     String teamVal = recArray.get(0);
                     String[] teamListX = teamVal.split("@");
-
-//                    for(String teamZ : teamListX){
-//                        String teamSep = teamVal.split("#")
-//                    }
 
                     for(int i = 0; i<teamListX.length; i++){
                         String[] teamSep = teamListX[i].split("#");
                         Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
                         tds.saveTeam(newTeam);
                     }
+
+                    Toast.makeText(getApplicationContext(), "Teams Added", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
 //                    String[] teamSep = teamVal.split("#");
 
                     //after the first 30 inputs split it into new array
