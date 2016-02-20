@@ -23,22 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         final int minVersionThreshold = 1;
 
 
         try {
-            //This part checks wether current app  is less than the threshold app version
+            //This part checks weather current app  is less than the threshold app version
             //If YES the exits app and kills all processes
             //If NO then continues with everything else.
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -104,11 +95,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    //    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }//onActivityResult
-
 
 }

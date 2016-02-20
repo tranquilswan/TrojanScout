@@ -175,10 +175,6 @@ public class AddTeamFragment extends Fragment {
             } else if (editTeam.getmChallengeOrScale() == 2) {
                 ((RadioButton) view.findViewById(R.id.radChallenge)).setChecked(true);
             }
-//            else{
-//                ((RadioButton) view.findViewById(R.id.radScale)).setChecked(false);
-//                ((RadioButton) view.findViewById(R.id.radChallenge)).setChecked(false);
-//            }
 
             //CheckBox chkGroupA = (CheckBox) view.findViewById(R.id.chkGroupA);
             if (editTeam.getmGroupA() == 1) {
@@ -281,13 +277,6 @@ public class AddTeamFragment extends Fragment {
                 }
             });
 
-            //RequestCameraPermission();
-            //Write Permission Request For Marshmallow Devices
-            //RequestWritePermission();
-
-            ////Write Permission Request For Marshmallow Devices
-
-
             //Taking Picture logic
             btnTakePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -370,69 +359,6 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
-//    private void RequestWritePermission() {
-//        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        // Here, thisActivity is the current activity
-//        if (ContextCompat.checkSelfPermission(getActivity(),
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            // No explanation needed, we can request the permission.
-//
-//            ActivityCompat.requestPermissions(getActivity(),
-//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-//
-//            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//            // app-defined int constant. The callback method gets the
-//            // result of the request.
-//        }
-//    }
-//
-//    private void RequestCameraPermission() {
-//        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-//                Manifest.permission.CAMERA);
-//        // Here, thisActivity is the current activity
-//        if (ContextCompat.checkSelfPermission(getActivity(),
-//                Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            // No explanation needed, we can request the permission.
-//
-//            ActivityCompat.requestPermissions(getActivity(),
-//                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
-//
-//            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//            // app-defined int constant. The callback method gets the
-//            // result of the request.
-//        }
-//    }
-
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode,
-//                                           String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case PERMISSION_REQUEST_CODE: {
-//                // If request is cancelled, the result arrays are empty.
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_LONG).show();
-//                    // permission was granted, yay! Do the
-//                    // contacts-related task you need to do.
-//
-//                } else {
-//                    // permission denied, boo! Disable the picture taking buttonn now...
-//                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Write/Camera permission", Toast.LENGTH_LONG).show();
-//                    btnTakePicture.setEnabled(false);
-//                }
-//
-//            }
-//
-//            // other 'case' lines to check for other
-//            // permissions this app might request
-//        }
-//    }
 
 
     private Team createTeam() {
@@ -517,7 +443,6 @@ public class AddTeamFragment extends Fragment {
             groupD = 0;
         }
 
-        //CheckBox chkLowBar = (CheckBox) getView().findViewById(R.id.chkLowBar);
         if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()) {
             lowBar = 1;
         } else {

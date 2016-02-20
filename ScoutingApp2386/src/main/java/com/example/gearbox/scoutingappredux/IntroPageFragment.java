@@ -52,7 +52,6 @@ public class IntroPageFragment extends Fragment {
         // Inflate the layout for this fragment
 
         fm = getFragmentManager();
-        //fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG);
 
         final View view = inflater.inflate(R.layout.fragment_intro_page, container, false);
 
