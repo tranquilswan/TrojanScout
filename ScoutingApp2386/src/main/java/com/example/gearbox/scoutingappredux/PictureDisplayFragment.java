@@ -32,8 +32,6 @@ public class PictureDisplayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_picture_display, container, false);
-        //fm = getFragmentManager();
-        //fm.beginTransaction().replace(R.id.fragContainer, new PictureDisplayFragment(), PictureDisplayFragment.TAG);
 
         String picLocation = getArguments().getString("picLocation");
 
@@ -52,10 +50,7 @@ public class PictureDisplayFragment extends Fragment {
             //            final Bundle lol = new Bundle();
             @Override
             public void onClick(View v) {
-//                lol.putString("FromWhere", "PictureDisplayFragment");
-//                final AddTeamFragment pdf = new AddTeamFragment();
-//                pdf.setArguments(lol);
-//                fm.beginTransaction().replace(R.id.fragContainer, pdf, PictureDisplayFragment.TAG).commit();
+
                 fm.beginTransaction().replace(R.id.fragContainer, new AddTeamFragment(), AddTeamFragment.TAG)
                         .commit();
             }

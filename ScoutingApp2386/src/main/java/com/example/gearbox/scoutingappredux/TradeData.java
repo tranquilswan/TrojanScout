@@ -67,14 +67,10 @@ public class TradeData extends AppCompatActivity {
                     ArrayList<String> recArray = new ArrayList<>();
                     recArray.add(new String(readBuf, 0, msg.arg1));
 
-                    Toast.makeText(getApplicationContext(), "0: " + recArray.get(0), Toast.LENGTH_LONG).show();
-
-                    Log.v(TAG, recArray.get(0));
-
                     String teamVal = recArray.get(0);
                     String[] teamListX = teamVal.split("@");
 
-                    for(int i = 0; i<teamListX.length; i++){
+                    for (int i = 0; i < teamListX.length; i++) {
                         String[] teamSep = teamListX[i].split("#");
                         Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
                         tds.saveTeam(newTeam);
@@ -83,20 +79,6 @@ public class TradeData extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Teams Added", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
-//                    String[] teamSep = teamVal.split("#");
-
-                    //after the first 30 inputs split it into new array
-                    //split it at the first 15 indicies of teamSep array
-
-
-                    //int arrayLen = teamSep.length;
-
-
-                    //for(int i = 0; )
-
-//                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
-//
-//                    tds.saveTeam(newTeam);
 
                     break;
                 case 1:
@@ -198,33 +180,6 @@ public class TradeData extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lvDevices);
         listView.setAdapter(adapter);
 
-//        //Retrieve Image and convert to byte array
-//        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
-//        File outputFileLoc = new File(directory, "2386");
-//        Bitmap myBitmap = BitmapFactory.decodeFile(outputFileLoc.getAbsolutePath());
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//        byte[] byteArray = stream.toByteArray();
-//
-//        //Converting Byte[] to image where bytearray is the recieved array
-//        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-//        File directory1 = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
-//        if (!directory1.isDirectory()) directory.mkdirs();
-//        File outputFileLoc1 = new File(directory, "2386");
-//        FileOutputStream fos = null;
-//        try {
-//            fos = new FileOutputStream(outputFileLoc1);
-//            // Use the compress method on the BitMap object to write image to the OutputStream
-//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                fos.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     @Override
@@ -346,7 +301,7 @@ class AcceptThread extends Thread {
 
                         List<Team> teamList = tdsFromUI.getTeams();
 
-                        for(Team teamX : teamList){
+                        for (Team teamX : teamList) {
                             ArrayList<byte[]> byteArray = new ArrayList<>();
 
                             byteArray.add(Integer.toString(teamX.getmTeamNum()).getBytes());
@@ -380,51 +335,11 @@ class AcceptThread extends Thread {
                             byteArray.add(Integer.toString(teamX.getmChallengeOrScale()).getBytes());
                             byteArray.add("@".getBytes());
 
-                            for (int i =0; i < 30; i++){
+                            for (int i = 0; i < 30; i++) {
                                 thread.write(byteArray.get(i));
 
                             }
                         }
-
-//                        Team team1 = tdsFromUI.getTeam(2386);
-//
-//                        ArrayList<byte[]> byteArray = new ArrayList<>();
-//
-//                        byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmPicLoc().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmDriveSystem().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmFuncMech().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmGoalType().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmTeamName().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(team1.getmComments().getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
-//                        byteArray.add("#".getBytes());
-//                        byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
-//                        byteArray.add("#".getBytes());
-//
-//                        for (int i =0; i < 30; i++){
-//                            thread.write(byteArray.get(i));
-//
-//                        }
 
                     } else if (HowToRunConnectedThread.equals("RECIEVE")) {
                         thread.start();
@@ -437,7 +352,7 @@ class AcceptThread extends Thread {
                 break;
             }
         }
-        Log.v(TAG, "Closing AccceptThread");
+        Log.v(TAG, "Closing Acccept Thread");
     }
 
     /**
@@ -498,7 +413,6 @@ class ConnectThread extends Thread {
             }
             return;
         }
-
 
 
         ConnectedThread thread = new ConnectedThread(mmSocket, handler, tdsFromUI);
