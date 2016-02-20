@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +41,7 @@ import java.util.jar.Manifest;
 public class IntroPageFragment extends Fragment {
 
     public final static String TAG = "IntroPageFragment";
+    final int PERMISSION_REQUEST_CODE = 5;
     FragmentManager fm;
 
     final int PERMISSION_REQUEST_CODE = 5;
@@ -49,6 +51,16 @@ public class IntroPageFragment extends Fragment {
     }
 
     Button btnViewTeam;
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -63,8 +75,10 @@ public class IntroPageFragment extends Fragment {
 
         final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
 
+        final Button btnHelp = (Button) view.findViewById(R.id.btnHelp);
+
         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION};
-        if (!hasPermissions(getActivity(), PERMISSIONS)) {
+        if(!hasPermissions(getActivity(), PERMISSIONS)){
             ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_REQUEST_CODE);
         }
 
@@ -76,6 +90,12 @@ public class IntroPageFragment extends Fragment {
             }
         });
 
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartHelpActivity(v);
+            }
+        });
 
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,36 +113,32 @@ public class IntroPageFragment extends Fragment {
 
         final ListView lvwListTeams = (ListView) view.findViewById(R.id.lvwExistingTeams);
 
-        btnViewTeam = (Button) view.findViewById(R.id.btnViewTeams);
+        Button btnViewTeam = (Button) view.findViewById(R.id.btnViewTeams);
         btnViewTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 lvwListTeams.setVisibility(View.VISIBLE);
                 updateTeams(lvwListTeams);
+
+
             }
         });
 
         lvwListTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final Integer teamNum = Integer.parseInt(lvwListTeams.getItemAtPosition(position).toString());//make this an int
+                Integer teamNum = Integer.parseInt(lvwListTeams.getItemAtPosition(position).toString());//make this an int
 
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Selection")
-                        .setMessage("Select whether to update or delete team")
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("updateTeam", "update");
-                                bundle.putInt("teamNum", teamNum);
+                Bundle bundle = new Bundle();
+                bundle.putString("updateTeam", "update");
+                bundle.putInt("teamNum", teamNum);
 
-                                AddTeamFragment atf = new AddTeamFragment();
-                                atf.setArguments(bundle);
+                AddTeamFragment atf = new AddTeamFragment();
+                atf.setArguments(bundle);
 
-                                fm.beginTransaction()
-                                        .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
-                                        .commit();
+                fm.beginTransaction()
+                        .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
+                        .commit();
 
                             }
                         })
@@ -161,10 +177,10 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+    public static boolean hasPermissions(Context context, String... permissions){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null){
+            for (String permission : permissions){
+                if(ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
                     return false;
                 }
             }
@@ -172,7 +188,7 @@ public class IntroPageFragment extends Fragment {
         return true;
     }
 
-    private void updateTeams(ListView lvw) {
+    private void updateTeams(ListView lvw){
         TeamDataSource tds = new TeamDataSource(getActivity());
         List<Team> team = tds.getTeams();
 
@@ -183,6 +199,11 @@ public class IntroPageFragment extends Fragment {
 
     public void TradeData(View view) {
         Intent intent = new Intent(getActivity(), TradeData.class);
+        startActivity(intent);
+    }
+
+    public void StartHelpActivity(View view) {
+        Intent intent = new Intent(getActivity(), HelpScreen.class);
         startActivity(intent);
     }
 

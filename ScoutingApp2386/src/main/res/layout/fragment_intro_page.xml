@@ -26,6 +26,14 @@
         android:text="View Teams" />
 
 
+    <Button
+        android:id="@+id/btnHelp"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Help" />
+
     <ListView
         android:id="@+id/lvwExistingTeams"
         android:layout_width="match_parent"
