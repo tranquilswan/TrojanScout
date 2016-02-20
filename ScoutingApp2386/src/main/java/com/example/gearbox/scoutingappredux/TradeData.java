@@ -32,10 +32,12 @@ import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,26 +64,101 @@ public class TradeData extends AppCompatActivity {
     };
     TeamDataSource tds;
     String type;
+    byte[] AllInformation;
     Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(final Message msg) {
             switch (msg.what) {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    ArrayList<String> recArray = new ArrayList<>();
-                    recArray.add(new String(readBuf, 0, msg.arg1));
+                    String bufferString = new String(readBuf, 0, msg.arg1);
+                    Log.v(TAG, bufferString);
+                    byte[] one = readBuf;
+                    byte[] two = AllInformation;
+                    byte[] combined;
+                    if (two == null) {
+                        two = one;
+                        AllInformation = two;
+                    } else {
+                        combined = new byte[one.length + two.length];
+                        System.arraycopy(one, 0, combined, 0, one.length);
+                        System.arraycopy(two, 0, combined, one.length, two.length);
 
-                    Toast.makeText(getApplicationContext(), "0: " + recArray.get(0), Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), "1: " + recArray.get(1), Toast.LENGTH_LONG).show();
-                    Log.v(TAG, recArray.get(0));
+                        AllInformation = combined;
 
-                    String teamVal = recArray.get(0);
-                    String[] teamSep = teamVal.split("#");
+                        if (bufferString.contains("ImageBytesEnd")) {
+                            Toast.makeText(getApplicationContext(), "Transmission Complete WooHoo", Toast.LENGTH_LONG).show();
+                            String AllInfo = new String(AllInformation, 0, AllInformation.length);
+                            Log.v(TAG, "AllInformation Array length is " + Integer.toString(AllInformation.length));
+                            Log.v(TAG, "AllInfo String length is " + Integer.toString(AllInfo.length()));
+                            String[] teamSep = AllInfo.split("#");
 
-                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+                            String ImageInString = teamSep[15];
+                            ImageInString = ImageInString.replace("ImageBytesEnd", "");
+                            Log.v(TAG, teamSep[15]);
+                            Log.v(TAG, ImageInString);
 
-                    tds.saveTeam(newTeam);
+                            byte[] ImageinBytes = ImageInString.getBytes();
+                            Log.v(TAG, "ImageinBytes array length is " + Integer.toString(ImageinBytes.length));
+
+                            Bitmap bmp = BitmapFactory.decodeByteArray(ImageinBytes, 0, ImageinBytes.length);
+                            File directory1 = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+                            if (!directory1.isDirectory()) directory1.mkdirs();
+                            File outputFileLoc1 = new File(directory1, "698854.jpg");
+                            //outputFileLoc1 = new File(teamSep[1]);
+                            FileOutputStream fos = null;
+                            try {
+                                fos = new FileOutputStream(outputFileLoc1);
+                                // Use the compress method on the BitMap object to write image to the OutputStream
+                                bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                try {
+                                    fos.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            //Log.v(TAG, ImageinBytes.toString());
+
+                            Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+
+                            tds.saveTeam(newTeam);
+//                            ArrayList<String> recArray = new ArrayList<>();
+//                    recArray.add(new String(AllInformation, 0, msg.arg1));
+
+                        }
+                    }
+
+//                    byte[] one = readBuf;
+//                    byte[] two = ImageArray;
+//                    byte[] combined = new byte[one.length + two.length];
+//
+//                    System.arraycopy(one,0,combined,0,one.length);
+//                    System.arraycopy(two,0,combined,one.length,two.length);
+//
+//                    ImageArray = combined;
+//                    // construct a string from the valid bytes in the buffer
+//                    ArrayList<String> recArray = new ArrayList<>();
+//                    recArray.add(new String(ImageArray, 0, msg.arg1));
+//
+//                    //Toast.makeText(getApplicationContext(), "0: " + recArray.get(0), Toast.LENGTH_LONG).show();
+//                    //Toast.makeText(getApplicationContext(), "1: " + recArray.get(1), Toast.LENGTH_LONG).show();
+//                    Log.v(TAG, recArray.get(0));
+//
+//                    String teamVal = recArray.get(0);
+//                    String[] teamSep = teamVal.split("#");
+//
+//                    String ImageInString = teamSep[16];
+//                    byte[] ImageinBytes = ImageInString.getBytes();
+//
+//                    Log.v(TAG, ImageinBytes.toString());
+//
+//                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
+//
+//                    tds.saveTeam(newTeam);
 
                     break;
                 case 1:
@@ -331,8 +408,18 @@ class AcceptThread extends Thread {
 
                         List<Team> teamList = tdsFromUI.getTeams();
 
+//                        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+//                        File outputFileLoc = new File(directory, "2386.jpg");
+
                         for(Team teamX : teamList){
                             ArrayList<byte[]> byteArray = new ArrayList<>();
+
+                            File ImageLoc = new File(teamX.getmPicLoc());
+
+                            Bitmap myBitmap = BitmapFactory.decodeFile(ImageLoc.getAbsolutePath());
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                            byte[] ImageBytes = stream.toByteArray();
 
                             byteArray.add(Integer.toString(teamX.getmTeamNum()).getBytes());
                             byteArray.add("#".getBytes());
@@ -364,11 +451,14 @@ class AcceptThread extends Thread {
                             byteArray.add("#".getBytes());
                             byteArray.add(Integer.toString(teamX.getmLowBar()).getBytes());
                             byteArray.add("#".getBytes());
+                            byteArray.add(ImageBytes);
+                            byteArray.add("ImageBytesEnd".getBytes());
 
-                            for (int i =0; i < 30; i++){
+                            for (int i = 0; i < 32; i++) {
                                 thread.write(byteArray.get(i));
-
                             }
+
+                            Log.v(TAG, Arrays.toString("ImageBytesEnd".getBytes()));
                         }
 
 //                        Team team1 = tdsFromUI.getTeam(2386);
@@ -422,7 +512,7 @@ class AcceptThread extends Thread {
                 break;
             }
         }
-        Log.v(TAG, "Closing AccceptThread");
+        //Log.v(TAG, "Closing AccceptThread");
     }
 
     /**
@@ -489,51 +579,60 @@ class ConnectThread extends Thread {
         ConnectedThread thread = new ConnectedThread(mmSocket, handler, tdsFromUI);
 
         if (HowToRunConnectedThread.equals("SEND")) {
-            Team team1 = tdsFromUI.getTeam(2386);
+            List<Team> teamList = tdsFromUI.getTeams();
 
-            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
-            File outputFileLoc = new File(directory, "2386.jpg");
-            Bitmap myBitmap = BitmapFactory.decodeFile(outputFileLoc.getAbsolutePath());
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] ImageBytes = stream.toByteArray();
+//                        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+//                        File outputFileLoc = new File(directory, "2386.jpg");
 
-            ArrayList<byte[]> byteArray = new ArrayList<>();
+            for (Team teamX : teamList) {
+                ArrayList<byte[]> byteArray = new ArrayList<>();
 
-            byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmPicLoc().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmDriveSystem().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmFuncMech().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmGoalType().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.isVisionExist()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.isAutonomousExist()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmTeamName().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(team1.getmComments().getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
-            byteArray.add("#".getBytes());
-            byteArray.add(ImageBytes); //Image as byte[] passed in
+                File ImageLoc = new File(teamX.getmPicLoc());
 
-            for (int i = 0; i < 31; i++) {
-                thread.write(byteArray.get(i));
+                Bitmap myBitmap = BitmapFactory.decodeFile(ImageLoc.getAbsolutePath());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] ImageBytes = stream.toByteArray();
+
+                byteArray.add(Integer.toString(teamX.getmTeamNum()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmPicLoc().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmDriveSystem().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmFuncMech().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmGoalType().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.isVisionExist()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.isAutonomousExist()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmTeamName().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(teamX.getmComments().getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmChallengeOrScale()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmGroupA()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmGroupB()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmGroupC()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmGroupD()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(Integer.toString(teamX.getmLowBar()).getBytes());
+                byteArray.add("#".getBytes());
+                byteArray.add(ImageBytes);
+                byteArray.add("ImageBytesEnd".getBytes());
+
+                for (int i = 0; i < 32; i++) {
+                    thread.write(byteArray.get(i));
+                }
+
+                Log.v(TAG, Arrays.toString("ImageBytesEnd".getBytes()));
+                //Log.v(TAG, Arrays.toString(ImageBytes));
             }
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
             thread.start();
@@ -585,7 +684,7 @@ class ConnectedThread extends Thread {
     public void run() {
         final String TAG = "ConnectedThread";
         Log.v(TAG, "Starting ConnectedThread");
-        byte[] buffer = new byte[1024];  // buffer store for the stream
+        byte[] buffer = new byte[1024];  // buffer store for the stream 2MB for now
         int bytes; // bytes returned from read()
 
 
@@ -597,10 +696,11 @@ class ConnectedThread extends Thread {
                 // Send the obtained bytes to the UI activity
                 // Log.v(TAG, "Contacting handler to send bytes");
                 byte[] readBuf = (byte[]) buffer;
+
+                Log.v(TAG, "Contacting Handlrer to send info");
                 // construct a string from the valid bytes in the buffer
 
-                mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
-                        .sendToTarget();
+                mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 break;
             }
