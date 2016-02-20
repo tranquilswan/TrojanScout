@@ -154,7 +154,9 @@
             android:hint="Additional Comments"
             android:imeOptions="actionDone"
             android:textAlignment="center"
-            android:inputType="textAutoCorrect" />
+            android:maxLines="3"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine" />
 
         <LinearLayout
             android:layout_width="wrap_content"
