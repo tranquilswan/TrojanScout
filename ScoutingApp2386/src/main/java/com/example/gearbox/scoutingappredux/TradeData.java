@@ -11,7 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -486,6 +491,13 @@ class ConnectThread extends Thread {
         if (HowToRunConnectedThread.equals("SEND")) {
             Team team1 = tdsFromUI.getTeam(2386);
 
+            File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+            File outputFileLoc = new File(directory, "2386.jpg");
+            Bitmap myBitmap = BitmapFactory.decodeFile(outputFileLoc.getAbsolutePath());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] ImageBytes = stream.toByteArray();
+
             ArrayList<byte[]> byteArray = new ArrayList<>();
 
             byteArray.add(Integer.toString(team1.getmTeamNum()).getBytes());
@@ -518,8 +530,9 @@ class ConnectThread extends Thread {
             byteArray.add("#".getBytes());
             byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
             byteArray.add("#".getBytes());
+            byteArray.add(ImageBytes); //Image as byte[] passed in
 
-            for (int i =0; i < 30; i++){
+            for (int i = 0; i < 31; i++) {
                 thread.write(byteArray.get(i));
             }
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
@@ -582,7 +595,7 @@ class ConnectedThread extends Thread {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
                 // Send the obtained bytes to the UI activity
-                Log.v(TAG, "Contacting handler to send bytes");
+                // Log.v(TAG, "Contacting handler to send bytes");
                 byte[] readBuf = (byte[]) buffer;
                 // construct a string from the valid bytes in the buffer
 

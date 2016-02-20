@@ -44,6 +44,7 @@ public class AddTeamFragment extends Fragment {
     private final static int TAKE_PICTURE = 1;
     // PERMISSION_REQUEST_CODE is the write permission constant.
     final int PERMISSION_REQUEST_CODE = 5;
+    final int PERMISSION_REQUEST_CODE_CAMERA = 1;
     FragmentManager fm;
     Button btnTakePicture;
     int visionExist;
@@ -406,7 +407,7 @@ public class AddTeamFragment extends Fragment {
             // No explanation needed, we can request the permission.
 
             ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE_CAMERA);
 
             // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
             // app-defined int constant. The callback method gets the
@@ -423,13 +424,29 @@ public class AddTeamFragment extends Fragment {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Write Permission Granted", Toast.LENGTH_LONG).show();
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
 
                 } else {
                     // permission denied, boo! Disable the picture taking buttonn now...
-                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Write/Camera permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Writepermission", Toast.LENGTH_LONG).show();
+                    btnTakePicture.setEnabled(false);
+                }
+
+            }
+
+            case PERMISSION_REQUEST_CODE_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getActivity(), "Camera Permission Granted", Toast.LENGTH_LONG).show();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+                    // permission denied, boo! Disable the picture taking buttonn now...
+                    Toast.makeText(getActivity(), "Picture Taking Functionality Disabled!! Please grant Camera permission", Toast.LENGTH_LONG).show();
                     btnTakePicture.setEnabled(false);
                 }
 
