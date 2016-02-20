@@ -32,7 +32,7 @@ public class IntroPageFragment extends Fragment {
     FragmentManager fm;
 
     public IntroPageFragment() {
-        // Required empty public constructor
+        // Required empty public constructor//blah blah
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {
