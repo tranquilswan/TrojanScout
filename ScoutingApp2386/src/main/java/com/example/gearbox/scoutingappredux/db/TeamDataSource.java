@@ -140,7 +140,6 @@ public class TeamDataSource {
         return teamId;
     }
 
-
     public List<Team> getTeams() {
         ArrayList<Team> teams = new ArrayList<>();
 
@@ -207,5 +206,10 @@ public class TeamDataSource {
             mDatabase.close();
 
         return team;
+    }
+
+    public void deleteTeam(int teamNumber){
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+        mDatabase.delete(TABLE_NAME, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
     }
 }
