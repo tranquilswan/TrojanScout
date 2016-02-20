@@ -42,6 +42,19 @@ public class TeamDataSource {
     public static final int  TEAM_NAME_COLUMN_POSITION = 8;
     public static final String COMMENTS_COLUMN = "comments";
     public static final int COMMENTS_COLUMN_POSITION = 9;
+    public static final String CHALLENGE_OR_SCALE_COLUMN = "chllengeOrScale";
+    public static final int  CHALLENGE_OR_SCALE_COLUMN_POSTITION = 10;
+    public static final String GROUP_A_COLUMN = "groupA";
+    public static final int  GROUP_A_COLUMN_POSITION = 11;
+    public static final String GROUP_B_COLUMN = "groupB";
+    public static final int  GROUP_B_COLUMN_POSITION = 12;
+    public static final String GROUP_C_COLUMN = "groupC";
+    public static final int  GROUP_C_COLUMN_POSITION = 13;
+    public static final String GROUP_D_COLUMN = "groupD";
+    public static final int  GROUP_D_COLUMN_POSITION = 14;
+    public static final String LOW_BAR_COLUMN = "lowBar";
+    public static final int LOW_BAR_COLUMN_POSITION = 15;
+
 
     //DDL statement for table creation
     public static final String CREATE_TABLE =
@@ -55,7 +68,15 @@ public class TeamDataSource {
                     VISION_COLUMN + " INTEGER, " +
                     AUTONOMOUS_COLUMN + " INTEGER, " +
                     TEAM_NAME_COLUMN + " TEXT, " +
-                    COMMENTS_COLUMN + " TEXT)";
+                    COMMENTS_COLUMN + " TEXT, " +
+                    CHALLENGE_OR_SCALE_COLUMN + " INTEGER, " +
+                    GROUP_A_COLUMN + " INTEGER, " +
+                    GROUP_B_COLUMN + " INTEGER, " +
+                    GROUP_C_COLUMN + " INTEGER, " +
+                    GROUP_D_COLUMN + " INTEGER, " +
+                    LOW_BAR_COLUMN + " INTEGER )";
+
+
 
     public TeamDataSource(Context context){
         mDbOpenHelper = new DbOpenHelper(context);
@@ -76,6 +97,14 @@ public class TeamDataSource {
         cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
         cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
         cv.put(COMMENTS_COLUMN, team.getmComments());
+        cv.put(CHALLENGE_OR_SCALE_COLUMN, team.getmChallengeOrScale());
+        cv.put(GROUP_A_COLUMN, team.getmGroupA());
+        cv.put(GROUP_B_COLUMN, team.getmGroupB());
+        cv.put(GROUP_C_COLUMN, team.getmGroupC());
+        cv.put(GROUP_D_COLUMN, team.getmGroupD());
+        cv.put(LOW_BAR_COLUMN, team.getmLowBar());
+
+
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
 
@@ -99,6 +128,12 @@ public class TeamDataSource {
         cv.put(AUTONOMOUS_COLUMN, team.isAutonomousExist());
         cv.put(TEAM_NAME_COLUMN, team.getmTeamName());
         cv.put(COMMENTS_COLUMN, team.getmComments());
+        cv.put(CHALLENGE_OR_SCALE_COLUMN, team.getmChallengeOrScale());
+        cv.put(GROUP_A_COLUMN, team.getmGroupA());
+        cv.put(GROUP_B_COLUMN, team.getmGroupB());
+        cv.put(GROUP_C_COLUMN, team.getmGroupC());
+        cv.put(GROUP_D_COLUMN, team.getmGroupD());
+        cv.put(LOW_BAR_COLUMN, team.getmLowBar());
 
         long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?", new String[]{Integer.toString(team.getmTeamNum())});
 
@@ -124,7 +159,14 @@ public class TeamDataSource {
             int autonomous = cursor.getInt(AUTONOMOUS_COLUMN_POSITION);
             String teamName = cursor.getString(TEAM_NAME_COLUMN_POSITION);
             String comments = cursor.getString(COMMENTS_COLUMN_POSITION);
-            teams.add(new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments));
+            int challengeOrScale = cursor.getInt(CHALLENGE_OR_SCALE_COLUMN_POSTITION);
+            int groupA = cursor.getInt(GROUP_A_COLUMN_POSITION);
+            int groupB = cursor.getInt(GROUP_B_COLUMN_POSITION);
+            int groupC = cursor.getInt(GROUP_C_COLUMN_POSITION);
+            int groupD = cursor.getInt(GROUP_D_COLUMN_POSITION);
+            int lowBar = cursor.getInt(LOW_BAR_COLUMN_POSITION);
+
+            teams.add(new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments, groupA, groupB, groupC, groupD, lowBar, challengeOrScale));
         }
         cursor.close();
         mDatabase.close();
@@ -152,7 +194,13 @@ public class TeamDataSource {
             int autonomous = rawCursor.getInt(AUTONOMOUS_COLUMN_POSITION);
             String teamName = rawCursor.getString(TEAM_NAME_COLUMN_POSITION);
             String comments = rawCursor.getString(COMMENTS_COLUMN_POSITION);
-            team = new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments);
+            int challengeOrScale = rawCursor.getInt(CHALLENGE_OR_SCALE_COLUMN_POSTITION);
+            int groupA = rawCursor.getInt(GROUP_A_COLUMN_POSITION);
+            int groupB = rawCursor.getInt(GROUP_B_COLUMN_POSITION);
+            int groupC = rawCursor.getInt(GROUP_C_COLUMN_POSITION);
+            int groupD = rawCursor.getInt(GROUP_D_COLUMN_POSITION);
+            int lowBar = rawCursor.getInt(LOW_BAR_COLUMN_POSITION);
+            team = new Team(id, teamNum, picLoc, driveSystem, funcMech, goalType, vision, autonomous, teamName, comments, groupA, groupB, groupC, groupD, lowBar, challengeOrScale);
         }
 
             rawCursor.close();

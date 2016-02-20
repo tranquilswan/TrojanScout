@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -48,6 +49,13 @@ public class AddTeamFragment extends Fragment {
     int autonomousExists;
     String goalType;
     private File outputFileLoc;
+
+    int challengeOrScale;
+    int groupA;
+    int groupB;
+    int groupC;
+    int groupD;
+    int lowBar;
 
 
     public AddTeamFragment() {
@@ -106,6 +114,10 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpGoalScoring = (RadioGroup) view.findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) view.findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) view.findViewById(R.id.rgpAutonomous);
+        final RadioGroup rgpChallengeOrScale = (RadioGroup) view.findViewById(R.id.rgpChallengeOrScale);
+
+
+
 
 
         Bundle infoBund = getArguments();
@@ -159,6 +171,38 @@ public class AddTeamFragment extends Fragment {
             } else if (editTeam.isAutonomousExist() == 0) {
                 radAutonomousNo.setChecked(true);
             }
+
+
+
+            if(editTeam.getmChallengeOrScale() == 1){
+                ((RadioButton) view.findViewById(R.id.radScale)).setChecked(true);
+            }else if(editTeam.getmChallengeOrScale() == 2){
+                ((RadioButton) view.findViewById(R.id.radChallenge)).setChecked(true);
+            }
+//            else{
+//                ((RadioButton) view.findViewById(R.id.radScale)).setChecked(false);
+//                ((RadioButton) view.findViewById(R.id.radChallenge)).setChecked(false);
+//            }
+
+            //CheckBox chkGroupA = (CheckBox) view.findViewById(R.id.chkGroupA);
+            if(editTeam.getmGroupA() == 1){
+                //view.findViewById(R.id.chkGroupA).setC
+                ((CheckBox)view.findViewById(R.id.chkGroupA)).setChecked(true);
+            }
+            if(editTeam.getmGroupB() == 1){
+                ((CheckBox)view.findViewById(R.id.chkGroupB)).setChecked(true);
+            }
+            if(editTeam.getmGroupC() == 1){
+                ((CheckBox)view.findViewById(R.id.chkGroupC)).setChecked(true);
+            }
+            if(editTeam.getmGroupD() ==1 ){
+                ((CheckBox)view.findViewById(R.id.chkGroupD)).setChecked(true);
+            }
+            if(editTeam.getmLowBar() == 1){
+                ((CheckBox)view.findViewById(R.id.chkLowBar)).setChecked(true);
+            }
+
+
 
             File newFile = new File(editTeam.getmPicLoc());
             outputFileLoc = newFile;
@@ -384,6 +428,7 @@ public class AddTeamFragment extends Fragment {
         }
     }
 
+
     private Team createTeam() {
         //UI Element References
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
@@ -394,6 +439,9 @@ public class AddTeamFragment extends Fragment {
         final RadioGroup rgpGoalScoring = (RadioGroup) getView().findViewById(R.id.rgpGoalScoring);
         final RadioGroup rgpVision = (RadioGroup) getView().findViewById(R.id.rgpVision);
         final RadioGroup rgpAutonomous = (RadioGroup) getView().findViewById(R.id.rgpAutonomous);
+        final RadioGroup rgpChallengeOrScale = (RadioGroup) getView().findViewById(R.id.rgpChallengeOrScale);
+
+
 
         //Getting the input form the UI Elements
         int teamNum = Integer.parseInt(edtTeamNum.getText().toString());
@@ -427,7 +475,52 @@ public class AddTeamFragment extends Fragment {
             goalType = "None";
         }
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments);
+
+        if(rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radScale){
+            challengeOrScale = 1;
+        }else if (rgpChallengeOrScale.getCheckedRadioButtonId() == R.id.radChallenge) {
+            challengeOrScale = 2;
+        }else{
+            challengeOrScale = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupA)).isChecked()){
+            groupA = 1;
+        }else{
+            groupA = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupB)).isChecked()){
+            groupB = 1;
+        }else{
+            groupB = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupC)).isChecked()){
+            groupC = 1;
+        }else{
+            groupC = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupD)).isChecked()){
+            groupD = 1;
+        }else{
+            groupD = 0;
+        }
+
+        CheckBox chkLowBar = (CheckBox) getView().findViewById(R.id.chkLowBar);
+        if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()){
+            lowBar = 1;
+        }else{
+            lowBar = 0;
+        }
+
+
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments, groupA, groupB, groupC, groupD, lowBar, challengeOrScale);
     }
 
 

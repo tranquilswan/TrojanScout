@@ -27,7 +27,19 @@ public class Team implements Serializable {
 
     private String mComments;
 
-    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments) {
+    private int mGroupA;
+
+    private int mGroupB;
+
+    private int mGroupC;
+
+    private int mGroupD;
+
+    private int mLowBar;
+
+    private int mChallengeOrScale;
+
+    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments, int groupA, int groupB, int groupC, int groupD, int lowBar, int challengeOrScale) {
         this.mDBid = mDBid;
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
@@ -38,9 +50,15 @@ public class Team implements Serializable {
         this.autonomousExist = autonomousExistance;
         this.mTeamName = mTeamName;
         this.mComments = comments;
+        this.mGroupA = groupA;
+        this.mGroupB = groupB;
+        this.mGroupC = groupC;
+        this.mGroupD = groupD;
+        this.mLowBar = lowBar;
+        this.mChallengeOrScale = challengeOrScale;
     }
 
-    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments ) {
+    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments, int groupA, int groupB, int groupC, int groupD, int lowBar, int challengeOrScale) {
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
         this.mDriveSystem = mDriveSystem;
@@ -50,6 +68,12 @@ public class Team implements Serializable {
         this.autonomousExist = autonomousExistance;
         this.mTeamName = mTeamName;
         this.mComments = comments;
+        this.mGroupA = groupA;
+        this.mGroupB = groupB;
+        this.mGroupC = groupC;
+        this.mGroupD = groupD;
+        this.mLowBar = lowBar;
+        this.mChallengeOrScale = challengeOrScale;
     }
 
     public long getmDBid() {
@@ -131,6 +155,54 @@ public class Team implements Serializable {
 
     public void setmComments(String mComments) {
         this.mComments = mComments;
+    }
+
+    public int getmGroupA() {
+        return mGroupA;
+    }
+
+    public void setmGroupA(int mGroupA) {
+        this.mGroupA = mGroupA;
+    }
+
+    public int getmGroupB() {
+        return mGroupB;
+    }
+
+    public void setmGroupB(int mGroupB) {
+        this.mGroupB = mGroupB;
+    }
+
+    public int getmGroupC() {
+        return mGroupC;
+    }
+
+    public void setmGroupC(int mGroupC) {
+        this.mGroupC = mGroupC;
+    }
+
+    public int getmGroupD() {
+        return mGroupD;
+    }
+
+    public void setmGroupD(int mGroupD) {
+        this.mGroupD = mGroupD;
+    }
+
+    public int getmLowBar() {
+        return mLowBar;
+    }
+
+    public void setmLowBar(int mLowBar) {
+        this.mLowBar = mLowBar;
+    }
+
+    public int getmChallengeOrScale() {
+        return mChallengeOrScale;
+    }
+
+    public void setmChallengeOrScale(int mChallengeOrScale) {
+        this.mChallengeOrScale = mChallengeOrScale;
     }
 
     @Override

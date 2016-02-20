@@ -76,7 +76,7 @@ public class TradeData extends AppCompatActivity {
                     String teamVal = recArray.get(0);
                     String[] teamSep = teamVal.split("#");
 
-                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8]);
+                    Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
 
                     tds.saveTeam(newTeam);
 
@@ -318,6 +318,18 @@ class AcceptThread extends Thread {
                         byteArray.add(team1.getmTeamName().getBytes());
                         byteArray.add("#".getBytes());
                         byteArray.add(team1.getmComments().getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmChallengeOrScale()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmGroupA()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmGroupB()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmGroupC()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmGroupD()).getBytes());
+                        byteArray.add("#".getBytes());
+                        byteArray.add(Integer.toString(team1.getmLowBar()).getBytes());
                         byteArray.add("#".getBytes());
 
                         for (int i =0; i < 18; i++){
