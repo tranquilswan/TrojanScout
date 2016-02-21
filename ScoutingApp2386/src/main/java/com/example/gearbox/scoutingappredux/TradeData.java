@@ -509,7 +509,7 @@ class ConnectedThread extends Thread {
     public void run() {
         final String TAG = "ConnectedThread";
         Log.v(TAG, "Starting ConnectedThread");
-        byte[] buffer = new byte[1024];  // buffer store for the stream
+        byte[] buffer = new byte[4096];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
 
