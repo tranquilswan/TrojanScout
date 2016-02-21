@@ -85,7 +85,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView6"
         android:layout_marginTop="12dp"
-        android:text="Made by Pranshu and Nekhil on behalf of Team Trojans 2386: Burlington Central High School. "
+        android:text="Made by Trojans 2386: Burlington Central High School. "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
