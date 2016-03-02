@@ -135,12 +135,13 @@ public class AddTeamFragment extends Fragment {
             RadioButton radBoth = (RadioButton) view.findViewById(R.id.radBothGoal);
 
             btnSaveTeam.setText("Update Team");
+            btnTakePicture.setEnabled(true);
 
+            //Taking Picture logic
             btnTakePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     takePicture(view);
-
                 }
             });
 
@@ -361,7 +362,6 @@ public class AddTeamFragment extends Fragment {
             //Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     private Team createTeam() {
