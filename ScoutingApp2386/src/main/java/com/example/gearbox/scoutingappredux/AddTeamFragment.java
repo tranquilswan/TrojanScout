@@ -1,13 +1,11 @@
 package com.example.gearbox.scoutingappredux;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,8 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -139,7 +135,15 @@ public class AddTeamFragment extends Fragment {
             RadioButton radBoth = (RadioButton) view.findViewById(R.id.radBothGoal);
 
             btnSaveTeam.setText("Update Team");
-            btnTakePicture.setEnabled(false);
+            btnTakePicture.setEnabled(true);
+
+            //Taking Picture logic
+            btnTakePicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    takePicture(view);
+                }
+            });
 
             if (editTeam.getmGoalType().equals("Upper")) {
                 radUpper.setChecked(true);
@@ -358,7 +362,6 @@ public class AddTeamFragment extends Fragment {
             //Toast.makeText(getActivity(), "portrait", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 
     private Team createTeam() {
