@@ -70,6 +70,8 @@ public class TradeData extends AppCompatActivity {
                     String teamVal = recArray.get(0);
                     String[] teamListX = teamVal.split("@");
 
+                    int gbage = teamListX.length;
+
                     for (int i = 0; i < teamListX.length; i++) {
                         String[] teamSep = teamListX[i].split("#");
                         Team newTeam = new Team(Integer.parseInt(teamSep[0]), teamSep[1], teamSep[2], teamSep[3], teamSep[4], Integer.parseInt(teamSep[5]), Integer.parseInt(teamSep[6]), teamSep[7], teamSep[8], Integer.parseInt(teamSep[9]), Integer.parseInt(teamSep[10]), Integer.parseInt(teamSep[11]), Integer.parseInt(teamSep[12]), Integer.parseInt(teamSep[13]), Integer.parseInt(teamSep[14]));
@@ -456,7 +458,6 @@ class ConnectThread extends Thread {
 
                 for (int i = 0; i < 30; i++) {
                     thread.write(byteArray.get(i));
-
                 }
             }
         } else if (HowToRunConnectedThread.equals("RECIEVE")) {
@@ -509,7 +510,7 @@ class ConnectedThread extends Thread {
     public void run() {
         final String TAG = "ConnectedThread";
         Log.v(TAG, "Starting ConnectedThread");
-        byte[] buffer = new byte[4096];  // buffer store for the stream 4KB
+        byte[] buffer = new byte[2048];  // buffer store for the stream 4KB
         int bytes; // bytes returned from read()
 
 
