@@ -114,7 +114,9 @@ public class IntroPageFragment extends Fragment {
         lvwListTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final Integer teamNum = Integer.parseInt(lvwListTeams.getItemAtPosition(position).toString());//make this an int
+                String tNum = lvwListTeams.getItemAtPosition(position).toString();
+                String[] tNumSplit = tNum.split(" : ");
+                final Integer teamNum = Integer.parseInt(tNumSplit[0]);//make this an int
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Selection")
@@ -173,7 +175,6 @@ public class IntroPageFragment extends Fragment {
     private void updateTeams(ListView lvw) {
         TeamDataSource tds = new TeamDataSource(getActivity());
         List<Team> team = tds.getTeams();
-
         ArrayAdapter<Team> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, team);
         lvw.setAdapter(adapter);
     }
