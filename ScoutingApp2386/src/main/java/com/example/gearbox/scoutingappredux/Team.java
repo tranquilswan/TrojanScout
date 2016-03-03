@@ -1,6 +1,7 @@
 package com.example.gearbox.scoutingappredux;
 
 import java.io.Serializable;
+//xfgx
 
 /**
  * Created by gearbox on 04/02/16.
