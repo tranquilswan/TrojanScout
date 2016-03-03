@@ -38,7 +38,7 @@ public class AddTeamFragment extends Fragment {
 
     public static final String TAG = "AddTeamFragment";
     private final static int TAKE_PICTURE = 1;
-    // PERMISSION_REQUEST_CODE is the write permission constant.
+    // PERMISSION_REQUEST_CODE is the write permission constant. LOLOL
     final int PERMISSION_REQUEST_CODE = 5;
     FragmentManager fm;
     Button btnTakePicture;
