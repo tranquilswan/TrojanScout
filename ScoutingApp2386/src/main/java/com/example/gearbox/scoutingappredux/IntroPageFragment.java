@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.ListView;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -149,6 +152,7 @@ public class IntroPageFragment extends Fragment {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 TeamDataSource tds = new TeamDataSource(getActivity());
                                                 tds.deleteTeam(teamNum);
+                                                MovePicture(teamNum);
                                                 IntroPageFragment ipf = new IntroPageFragment();
                                                 fm.beginTransaction().replace(R.id.fragContainer, ipf, IntroPageFragment.TAG)
                                                         .commit();
@@ -170,6 +174,23 @@ public class IntroPageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void MovePicture(Integer teamNum) {
+        String fileName = teamNum.toString() + ".jpg";
+        File SourceDirectory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+        File FinalDirectory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImagesDeletedBackup");
+        File sourceFile = new File(SourceDirectory, fileName);
+        File finalFile = new File(FinalDirectory, fileName);
+
+        if (!FinalDirectory.isDirectory()) FinalDirectory.mkdirs();
+
+        if (sourceFile.renameTo(finalFile)) {
+            Log.v(TAG, "Move file successful.");
+        } else {
+            Log.v(TAG, "Move file failed.");
+        }
+
     }
 
     private void updateTeams(ListView lvw) {
