@@ -261,6 +261,6 @@ public class Team implements Serializable {
     @Override
     public String toString() {
 
-        return ""+getmTeamNum();
+        return "" + getmTeamNum() + " : " + getmTeamName();
     }
 }
