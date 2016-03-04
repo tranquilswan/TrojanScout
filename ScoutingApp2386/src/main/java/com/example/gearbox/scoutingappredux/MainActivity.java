@@ -3,9 +3,11 @@ package com.example.gearbox.scoutingappredux;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        final int minVersionThreshold = 1;
+        final int minVersionThreshold = 2;
 
 
         try {
@@ -50,6 +52,30 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }
+
+        String deviceMan = android.os.Build.MANUFACTURER;
+        if (deviceMan.toLowerCase().equals("samsung")) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Third Party Camera App")
+                    .setMessage("It appears that you have a Samsung Device." +
+                            " For proper functioning it is recommended for you to use a third party camera app." +
+                            " Do you want to install it?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" +
+                                    "net.sourceforge.opencamera&hl=en")));
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            dialog.cancel();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
 
         FragmentManager fm = getFragmentManager();
