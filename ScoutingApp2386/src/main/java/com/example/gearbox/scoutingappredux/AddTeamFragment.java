@@ -46,10 +46,14 @@ public class AddTeamFragment extends Fragment {
     int autonomousExists;
     String goalType;
     int challengeOrScale;
-    int groupA;
-    int groupB;
-    int groupC;
-    int groupD;
+    int groupA1;
+    int groupB1;
+    int groupC1;
+    int groupD1;
+    int groupA2;
+    int groupB2;
+    int groupC2;
+    int groupD2;
     int lowBar;
     private File outputFileLoc;
 
@@ -181,18 +185,31 @@ public class AddTeamFragment extends Fragment {
             }
 
             //CheckBox chkGroupA = (CheckBox) view.findViewById(R.id.chkGroupA);
-            if (editTeam.getmGroupA() == 1) {
+            if (editTeam.getmGroupA1() == 1) {
                 //view.findViewById(R.id.chkGroupA).setC
-                ((CheckBox) view.findViewById(R.id.chkGroupA)).setChecked(true);
+                ((CheckBox) view.findViewById(R.id.chkGroupA1)).setChecked(true);
             }
-            if (editTeam.getmGroupB() == 1) {
-                ((CheckBox) view.findViewById(R.id.chkGroupB)).setChecked(true);
+            if (editTeam.getmGroupB1() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupB1)).setChecked(true);
             }
-            if (editTeam.getmGroupC() == 1) {
-                ((CheckBox) view.findViewById(R.id.chkGroupC)).setChecked(true);
+            if (editTeam.getmGroupC1() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupC1)).setChecked(true);
             }
-            if (editTeam.getmGroupD() == 1) {
-                ((CheckBox) view.findViewById(R.id.chkGroupD)).setChecked(true);
+            if (editTeam.getmGroupD1() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupD1)).setChecked(true);
+            }
+            if (editTeam.getmGroupA2() == 1) {
+                //view.findViewById(R.id.chkGroupA).setC
+                ((CheckBox) view.findViewById(R.id.chkGroupA2)).setChecked(true);
+            }
+            if (editTeam.getmGroupB2() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupB2)).setChecked(true);
+            }
+            if (editTeam.getmGroupC2() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupC2)).setChecked(true);
+            }
+            if (editTeam.getmGroupD2() == 1) {
+                ((CheckBox) view.findViewById(R.id.chkGroupD2)).setChecked(true);
             }
             if (editTeam.getmLowBar() == 1) {
                 ((CheckBox) view.findViewById(R.id.chkLowBar)).setChecked(true);
@@ -419,31 +436,58 @@ public class AddTeamFragment extends Fragment {
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupA)).isChecked()) {
-            groupA = 1;
+        if (((CheckBox) getView().findViewById(R.id.chkGroupA1)).isChecked()) {
+            groupA1 = 1;
         } else {
-            groupA = 0;
+            groupA1 = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupB)).isChecked()) {
-            groupB = 1;
+        if (((CheckBox) getView().findViewById(R.id.chkGroupB1)).isChecked()) {
+            groupB1 = 1;
         } else {
-            groupB = 0;
+            groupB1 = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupC)).isChecked()) {
-            groupC = 1;
+        if (((CheckBox) getView().findViewById(R.id.chkGroupC1)).isChecked()) {
+            groupC1 = 1;
         } else {
-            groupC = 0;
+            groupC1 = 0;
         }
 
 
-        if (((CheckBox) getView().findViewById(R.id.chkGroupD)).isChecked()) {
-            groupD = 1;
+        if (((CheckBox) getView().findViewById(R.id.chkGroupD1)).isChecked()) {
+            groupD1 = 1;
         } else {
-            groupD = 0;
+            groupD1 = 0;
+        }
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupA2)).isChecked()) {
+            groupA2 = 1;
+        } else {
+            groupA2 = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupB2)).isChecked()) {
+            groupB2 = 1;
+        } else {
+            groupB2 = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupC2)).isChecked()) {
+            groupC2 = 1;
+        } else {
+            groupC2 = 0;
+        }
+
+
+        if (((CheckBox) getView().findViewById(R.id.chkGroupD2)).isChecked()) {
+            groupD2 = 1;
+        } else {
+            groupD2 = 0;
         }
 
         if (((CheckBox) getView().findViewById(R.id.chkLowBar)).isChecked()) {
@@ -453,7 +497,9 @@ public class AddTeamFragment extends Fragment {
         }
 
 
-        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist, autonomousExists, teamName, comments, groupA, groupB, groupC, groupD, lowBar, challengeOrScale);
+        return new Team(teamNum, outputFileLoc.toString(), driveSystemInfo, funcMechInfo, goalType, visionExist,
+                autonomousExists, teamName, comments, groupA1, groupA2, groupB1, groupB2, groupC1, groupC2, groupD1
+                , groupD2, lowBar, challengeOrScale);
     }
 
 

@@ -199,22 +199,29 @@
                     android:orientation="vertical">
 
                     <CheckBox
-                        android:id="@+id/chkGroupA"
+                        android:id="@+id/chkGroupA1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Group A" />
+                        android:text="PortCullis" />
 
                     <CheckBox
-                        android:id="@+id/chkGroupB"
+                        android:id="@+id/chkGroupB1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Group B" />
+                        android:text="Ramparts" />
 
                     <CheckBox
-                        android:id="@+id/chkGroupC"
+                        android:id="@+id/chkGroupC1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Group C" />
+                        android:text="DrawBridge" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupD1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rough Terrain" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -223,10 +230,28 @@
                     android:orientation="vertical">
 
                     <CheckBox
-                        android:id="@+id/chkGroupD"
+                        android:id="@+id/chkGroupA2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Group D" />
+                        android:text="Chival De Frise" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupB2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Moat" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupC2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sally Port" />
+
+                    <CheckBox
+                        android:id="@+id/chkGroupD2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rock Wall" />
 
                     <CheckBox
                         android:id="@+id/chkLowBar"
