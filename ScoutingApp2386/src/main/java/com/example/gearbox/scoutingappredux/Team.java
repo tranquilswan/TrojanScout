@@ -28,19 +28,30 @@ public class Team implements Serializable {
 
     private String mComments;
 
-    private int mGroupA;
+    private int mGroupA1;
 
-    private int mGroupB;
+    private int mGroupA2;
 
-    private int mGroupC;
+    private int mGroupB1;
 
-    private int mGroupD;
+    private int mGroupB2;
+
+    private int mGroupC1;
+
+    private int mGroupC2;
+
+    private int mGroupD1;
+
+    private int mGroupD2;
 
     private int mLowBar;
 
     private int mChallengeOrScale;
 
-    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments, int groupA, int groupB, int groupC, int groupD, int lowBar, int challengeOrScale) {
+    public Team(long mDBid, int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech,
+                String mGoalType, int visionExistance, int autonomousExistance, String mTeamName,
+                String comments, int groupA1, int groupA2, int groupB1, int groupB2, int groupC1,
+                int groupC2, int groupD1, int groupD2, int lowBar, int challengeOrScale) {
         this.mDBid = mDBid;
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
@@ -51,15 +62,21 @@ public class Team implements Serializable {
         this.autonomousExist = autonomousExistance;
         this.mTeamName = mTeamName;
         this.mComments = comments;
-        this.mGroupA = groupA;
-        this.mGroupB = groupB;
-        this.mGroupC = groupC;
-        this.mGroupD = groupD;
+        this.mGroupA1 = groupA1;
+        this.mGroupA2 = groupA2;
+        this.mGroupB1 = groupB1;
+        this.mGroupB2 = groupB2;
+        this.mGroupC1 = groupC1;
+        this.mGroupC2 = groupC2;
+        this.mGroupD1 = groupD1;
+        this.mGroupD2 = groupD2;
         this.mLowBar = lowBar;
         this.mChallengeOrScale = challengeOrScale;
     }
 
-    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance, int autonomousExistance, String mTeamName, String comments, int groupA, int groupB, int groupC, int groupD, int lowBar, int challengeOrScale) {
+    public Team(int mTeamNum, String mPicLoc, String mDriveSystem, String mFuncMech, String mGoalType, int visionExistance,
+                int autonomousExistance, String mTeamName, String comments, int groupA1, int groupA2, int groupB1, int groupB2,
+                int groupC1, int groupC2, int groupD1, int groupD2, int lowBar, int challengeOrScale) {
         this.mTeamNum = mTeamNum;
         this.mPicLoc = mPicLoc;
         this.mDriveSystem = mDriveSystem;
@@ -69,10 +86,14 @@ public class Team implements Serializable {
         this.autonomousExist = autonomousExistance;
         this.mTeamName = mTeamName;
         this.mComments = comments;
-        this.mGroupA = groupA;
-        this.mGroupB = groupB;
-        this.mGroupC = groupC;
-        this.mGroupD = groupD;
+        this.mGroupA1 = groupA1;
+        this.mGroupA2 = groupA2;
+        this.mGroupB1 = groupB1;
+        this.mGroupB2 = groupB2;
+        this.mGroupC1 = groupC1;
+        this.mGroupC2 = groupC2;
+        this.mGroupD1 = groupD1;
+        this.mGroupD2 = groupD2;
         this.mLowBar = lowBar;
         this.mChallengeOrScale = challengeOrScale;
     }
@@ -158,36 +179,68 @@ public class Team implements Serializable {
         this.mComments = mComments;
     }
 
-    public int getmGroupA() {
-        return mGroupA;
+    public int getmGroupA1() {
+        return mGroupA1;
     }
 
-    public void setmGroupA(int mGroupA) {
-        this.mGroupA = mGroupA;
+    public void setmGroupA1(int mGroupA1) {
+        this.mGroupA1 = mGroupA1;
     }
 
-    public int getmGroupB() {
-        return mGroupB;
+    public int getmGroupA2() {
+        return mGroupA2;
     }
 
-    public void setmGroupB(int mGroupB) {
-        this.mGroupB = mGroupB;
+    public void setmGroupA2(int mGroupA2) {
+        this.mGroupA2 = mGroupA2;
     }
 
-    public int getmGroupC() {
-        return mGroupC;
+    public int getmGroupB1() {
+        return mGroupB1;
     }
 
-    public void setmGroupC(int mGroupC) {
-        this.mGroupC = mGroupC;
+    public void setmGroupB1(int mGroupB1) {
+        this.mGroupB1 = mGroupB1;
     }
 
-    public int getmGroupD() {
-        return mGroupD;
+    public int getmGroupD1() {
+        return mGroupD1;
     }
 
-    public void setmGroupD(int mGroupD) {
-        this.mGroupD = mGroupD;
+    public void setmGroupD1(int mGroupD1) {
+        this.mGroupD1 = mGroupD1;
+    }
+
+    public int getmGroupC2() {
+        return mGroupC2;
+    }
+
+    public void setmGroupC2(int mGroupC2) {
+        this.mGroupC2 = mGroupC2;
+    }
+
+    public int getmGroupC1() {
+        return mGroupC1;
+    }
+
+    public void setmGroupC1(int mGroupC1) {
+        this.mGroupC1 = mGroupC1;
+    }
+
+    public int getmGroupB2() {
+        return mGroupB2;
+    }
+
+    public void setmGroupB2(int mGroupB2) {
+        this.mGroupB2 = mGroupB2;
+    }
+
+    public int getmGroupD2() {
+        return mGroupD2;
+    }
+
+    public void setmGroupD2(int mGroupD2) {
+        this.mGroupD2 = mGroupD2;
     }
 
     public int getmLowBar() {

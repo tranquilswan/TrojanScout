@@ -68,12 +68,12 @@ public class IntroPageFragment extends Fragment {
         }
 
 
-        btnTradeData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TradeData(v);
-            }
-        });
+//        btnTradeData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TradeData(v);
+//            }
+//        });
 
 
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
@@ -180,10 +180,10 @@ public class IntroPageFragment extends Fragment {
     }
 
 
-    public void TradeData(View view) {
-        Intent intent = new Intent(getActivity(), TradeData.class);
-        startActivity(intent);
-    }
+//    public void TradeData(View view) {
+//        Intent intent = new Intent(getActivity(), TradeData.class);
+//        startActivity(intent);
+//    }
 
     public void StartHelpActivity(View view) {
         Intent intent = new Intent(getActivity(), HelpScreen.class);
