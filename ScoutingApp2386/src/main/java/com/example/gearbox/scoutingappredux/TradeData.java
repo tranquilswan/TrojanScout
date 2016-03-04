@@ -167,7 +167,7 @@
 ////                PopulateListViewPaired();
 //                ThreadStartWithType("AcceptThread", null);
 //                View v = null;
-//                StartDiscovery(v);
+//                StartDiscovery(v);//h
 //            }
 //            if (resultCode == Activity.RESULT_CANCELED) {
 //                Toast.makeText(this, "Error occured while enabling. Cannot transfer data", Toast.LENGTH_LONG).show();
