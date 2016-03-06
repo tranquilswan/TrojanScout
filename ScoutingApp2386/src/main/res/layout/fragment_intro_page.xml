@@ -40,6 +40,8 @@
         android:layout_gravity="center_horizontal"
         android:text="Help" />
 
+    <!--gh-->
+
     <ListView
         android:id="@+id/lvwExistingTeams"
         android:layout_width="match_parent"
