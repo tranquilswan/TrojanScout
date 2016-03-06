@@ -63,6 +63,8 @@ public class IntroPageFragment extends Fragment {
 
         final Button btnAddTeam = (Button) view.findViewById(R.id.btnAddTeam);
 
+        final Button btnTeamStats = (Button) view.findViewById(R.id.btnTeamStats);
+
         final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
 
         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION};
@@ -77,6 +79,12 @@ public class IntroPageFragment extends Fragment {
 //                TradeData(v);
 //            }
 //        });
+        btnTeamStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartTeamStatistics(v);
+            }
+        });
 
 
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
@@ -208,6 +216,11 @@ public class IntroPageFragment extends Fragment {
 
     public void StartHelpActivity(View view) {
         Intent intent = new Intent(getActivity(), HelpScreen.class);
+        startActivity(intent);
+    }
+
+    public void StartTeamStatistics(View view) {
+        Intent intent = new Intent(getActivity(), StatisticsActivity.class);
         startActivity(intent);
     }
 
