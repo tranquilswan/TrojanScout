@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Team.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
 
     public DbOpenHelper(Context context) {
@@ -20,11 +20,13 @@ public class DbOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TeamDataSource.CREATE_TABLE);
+        db.execSQL(TeamStatsDataSource.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TeamDataSource.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TeamStatsDataSource.TABLE_NAME);
         onCreate(db);
     }
 }
