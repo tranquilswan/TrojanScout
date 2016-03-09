@@ -47,6 +47,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 String tNum = lvwTeamStatsNumbers.getItemAtPosition(position).toString();
                 String[] tNumSplit = tNum.split(" : ");
                 final Integer teamNum = Integer.parseInt(tNumSplit[0]);//make this an int
+                final String teamName = tNumSplit[1];
 
                 new AlertDialog.Builder(StatisticsActivity.this)
                         .setTitle("Selection")
@@ -64,7 +65,7 @@ public class StatisticsActivity extends AppCompatActivity {
 //                                fm.beginTransaction()
 //                                        .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
 //                                        .commit();
-                                LaunchAddStats(teamNum);
+                                LaunchAddStats(teamNum, teamName);
 
                             }
                         })
@@ -89,8 +90,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private void LaunchAddStats(Integer teamNum) {
+    private void LaunchAddStats(Integer teamNum, String teamName) {
+        Bundle bundle = new Bundle();
+        bundle.putString("teamName", teamName);
+        bundle.putInt("teamNum", teamNum);
         Intent i = new Intent(this, AddStatistics.class);
+        i.putExtras(bundle);
         startActivity(i);
     }
 

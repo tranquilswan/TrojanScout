@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"> <!-- here -->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,11 +18,197 @@
     tools:context="com.example.gearbox.scoutingappredux.AddStatistics"
     tools:showIn="@layout/activity_add_statistics">
 
-    <NumberPicker
-        android:id="@+id/npPicker"
+        <RadioGroup
+            android:id="@+id/rgpAutonomous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radAutonomousStatYes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="Autonomous" />
+
+            <RadioButton
+                android:id="@+id/radAutonomousStatNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="No Autonomous" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgpEndGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radStatsChallenge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="Challenge" />
+
+            <RadioButton
+                android:id="@+id/radStatsScale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="Scale" />
+
+            <RadioButton
+                android:id="@+id/radStatsEndGameNone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="None" />
+
+        </RadioGroup>
+
+        <NumberPicker
+            android:id="@+id/npChivalDeFrise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npTotalShots"
+            android:layout_alignStart="@+id/npTotalShots"
+            android:layout_below="@+id/npTotalShots" />
+
+        <NumberPicker
+            android:id="@+id/npTotalShots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="117dp" />
-</RelativeLayout>
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="240dp" />
+
+        <NumberPicker
+            android:id="@+id/npHighGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/npTotalShots"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp" />
+
+        <NumberPicker
+            android:id="@+id/npLowGoals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/npHighGoals"
+            android:layout_centerHorizontal="true" />
+
+        <NumberPicker
+            android:id="@+id/npDrawBridge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/npChivalDeFrise"
+            android:layout_centerHorizontal="true" />
+
+        <NumberPicker
+            android:id="@+id/npLowBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npHighGoals"
+            android:layout_alignStart="@+id/npHighGoals"
+            android:layout_alignTop="@+id/npDrawBridge" />
+
+        <NumberPicker
+            android:id="@+id/npMoat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npChivalDeFrise"
+            android:layout_alignStart="@+id/npChivalDeFrise"
+            android:layout_below="@+id/npChivalDeFrise" />
+
+        <NumberPicker
+            android:id="@+id/npPortCullis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/npMoat"
+            android:layout_centerHorizontal="true" />
+
+        <NumberPicker
+            android:id="@+id/npRamparts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npLowBar"
+            android:layout_alignStart="@+id/npLowBar"
+            android:layout_alignTop="@+id/npPortCullis" />
+
+        <NumberPicker
+            android:id="@+id/npRockWall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npMoat"
+            android:layout_alignStart="@+id/npMoat"
+            android:layout_below="@+id/npMoat" />
+
+        <NumberPicker
+            android:id="@+id/npSallyPort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/npRockWall"
+            android:layout_centerHorizontal="true" />
+
+        <NumberPicker
+            android:id="@+id/npRoughTerrain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/npRamparts"
+            android:layout_alignStart="@+id/npRamparts"
+            android:layout_alignTop="@+id/npSallyPort" />
+
+        <EditText
+            android:id="@+id/edtStatsComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/npRockWall"
+            android:layout_marginTop="48dp"
+            android:hint="Additional Comments"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:maxLines="30"
+            android:scrollbars="vertical"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvStatsTeamNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="61dp"
+            android:gravity="center"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvStatsTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStatsTeamNum"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textIsSelectable="false" />
+
+    </RelativeLayout>
+</ScrollView>
