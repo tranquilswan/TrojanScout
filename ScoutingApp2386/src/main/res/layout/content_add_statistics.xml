@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="false"
+                android:checked="true"
                 android:text="No Autonomous" />
 
         </RadioGroup>
@@ -51,14 +51,6 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radStatsChallenge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="Challenge" />
-
-            <RadioButton
                 android:id="@+id/radStatsScale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,11 +59,19 @@
                 android:text="Scale" />
 
             <RadioButton
-                android:id="@+id/radStatsEndGameNone"
+                android:id="@+id/radStatsChallenge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
+                android:text="Challenge" />
+
+            <RadioButton
+                android:id="@+id/radStatsEndGameNone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
                 android:text="None" />
 
         </RadioGroup>
@@ -209,6 +209,49 @@
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textIsSelectable="false" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtStatsComments"
+            android:layout_centerHorizontal="true"
+            android:onClick="SaveStats"
+            android:text="Save" />
+
+        <TextView
+            android:id="@+id/DisplayShots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/npTotalShots"
+            android:layout_alignLeft="@+id/npTotalShots"
+            android:layout_alignStart="@+id/npTotalShots"
+            android:layout_marginLeft="10dp"
+            android:text="Shots"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/npLowGoals"
+            android:layout_centerHorizontal="true"
+            android:text="LowGoal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/npLowBar"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/tvStatsTeamName"
+            android:layout_toRightOf="@+id/tvStatsTeamName"
+            android:text="HighGoal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </ScrollView>

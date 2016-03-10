@@ -67,6 +67,29 @@ public class Statistics implements Serializable {
         TotalShots = shots;
     }
 
+    public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
+                      int highGoals, int lowBarCrosses, int lowGoals, String mComments, int moatCrosses,
+                      String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
+                      int sallyPortCrosses, int roughTerrainCrosses, int shots) {
+        AutonomousUsage = autonomousUsage;
+        ChivalDeFriseCrosses = chivalDeFriseCrosses;
+        DrawBridgeCrosses = drawBridgeCrosses;
+        EndGameType = endGameType;
+        HighGoals = highGoals;
+        LowBarCrosses = lowBarCrosses;
+        LowGoals = lowGoals;
+        this.mComments = mComments;
+        MoatCrosses = moatCrosses;
+        this.mTeamName = mTeamName;
+        this.mTeamNum = mTeamNum;
+        PortCullisCrosses = portCullisCrosses;
+        RampartsCrosses = rampartsCrosses;
+        RockWallCrosses = rockWallCrosses;
+        SallyPortCrosses = sallyPortCrosses;
+        RoughTerrainCrosses = roughTerrainCrosses;
+        TotalShots = shots;
+    }
+
     public int getAutonomousUsage() {
         return AutonomousUsage;
     }
