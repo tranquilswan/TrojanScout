@@ -78,7 +78,7 @@
 
 
         <TextView
-            android:id="@+id/tvTeamNum"
+            android:id="@+id/tvStatsTeamNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -89,182 +89,253 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/tvTeamName"
+            android:id="@+id/tvStatsTeamName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTeamNum"
+            android:layout_below="@+id/tvStatsTeamNum"
             android:layout_centerHorizontal="true"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bShots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/rgpEndGame"
             android:layout_marginTop="68dp"
-            android:text="New Button" />
+            android:text="Shots" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bLowGoals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/button"
-            android:layout_alignLeft="@+id/tvTeamName"
-            android:layout_alignStart="@+id/tvTeamName"
-            android:text="New Button" />
+            android:layout_alignBottom="@+id/bShots"
+            android:layout_alignLeft="@+id/tvStatsTeamName"
+            android:layout_alignStart="@+id/tvStatsTeamName"
+            android:text="Low Goal" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/bHighGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/button2"
+            android:layout_alignBottom="@+id/bLowGoals"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="New Button" />
+            android:text="High Goal" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/bChivalDeFrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/button"
+            android:layout_below="@+id/bShots"
             android:layout_marginTop="60dp"
-            android:text="New Button" />
+            android:text="Chival De Frise" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/bMoat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button6"
+            android:layout_above="@+id/bRamparts"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="New Button" />
+            android:text="Moat" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/bRamparts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/button4"
+            android:layout_below="@+id/bChivalDeFrise"
             android:layout_marginTop="58dp"
-            android:text="New Button" />
+            android:text="Ramparts" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/bLowBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/button6"
+            android:layout_alignTop="@+id/bRamparts"
             android:layout_centerHorizontal="true"
-            android:text="New Button" />
+            android:text="Low Bar" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/bSallyPort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/button7"
-            android:text="New Button" />
+            android:layout_alignTop="@+id/bLowBar"
+            android:text="Sally Port" />
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/bPortCullis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/button6"
+            android:layout_alignEnd="@+id/bRamparts"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/button6"
+            android:layout_alignRight="@+id/bRamparts"
             android:layout_marginBottom="46dp"
-            android:text="New Button" />
+            android:text="Port Cullis" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/bRockWall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/button9"
+            android:layout_alignTop="@+id/bPortCullis"
             android:layout_centerHorizontal="true"
-            android:text="New Button" />
+            android:text="Rock Wall" />
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/bRoughTerrain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/button10"
-            android:text="New Button" />
+            android:layout_alignTop="@+id/bRockWall"
+            android:text="Rough Terrain" />
 
         <Button
-            android:id="@+id/button12"
+            android:id="@+id/bDrawBridge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/button2"
-            android:layout_alignStart="@+id/button2"
-            android:layout_alignTop="@+id/button5"
-            android:text="New Button" />
+            android:layout_alignLeft="@+id/bLowGoals"
+            android:layout_alignStart="@+id/bLowGoals"
+            android:layout_alignTop="@+id/bMoat"
+            android:text="Draw Bridge" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tvShots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button2"
+            android:layout_above="@+id/bLowGoals"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="Large Text"
+            android:layout_marginLeft="40dp"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tvHighGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button3"
-            android:layout_alignLeft="@+id/button3"
-            android:layout_alignStart="@+id/button3"
-            android:text="Large Text"
+            android:layout_above="@+id/bHighGoal"
+            android:layout_alignLeft="@+id/bHighGoal"
+            android:layout_alignStart="@+id/bHighGoal"
+            android:layout_marginLeft="42dp"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tvLowGoals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tvTeamName"
-            android:layout_alignRight="@+id/tvTeamName"
-            android:layout_alignTop="@+id/textView8"
-            android:text="Large Text"
+            android:layout_alignEnd="@+id/tvStatsTeamName"
+            android:layout_alignRight="@+id/tvStatsTeamName"
+            android:layout_alignTop="@+id/tvShots"
+            android:layout_marginRight="56dp"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tvChivalDeFrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button12"
+            android:layout_above="@+id/bDrawBridge"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="Large Text"
+            android:layout_marginLeft="58dp"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tvDrawBridge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button12"
-            android:layout_alignLeft="@+id/button12"
-            android:layout_alignStart="@+id/button12"
-            android:text="Large Text"
+            android:layout_above="@+id/bDrawBridge"
+            android:layout_alignLeft="@+id/bDrawBridge"
+            android:layout_alignStart="@+id/bDrawBridge"
+            android:layout_marginLeft="52dp"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tvMoat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView12"
-            android:layout_alignLeft="@+id/button5"
-            android:layout_alignStart="@+id/button5"
-            android:text="Large Text"
+            android:layout_alignBottom="@+id/tvDrawBridge"
+            android:layout_alignLeft="@+id/bMoat"
+            android:layout_alignStart="@+id/bMoat"
+            android:layout_marginLeft="36dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvRampart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bLowBar"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="42dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvLowBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/bLowBar"
+            android:layout_alignRight="@+id/bLowBar"
+            android:layout_alignTop="@+id/tvRampart"
+            android:layout_marginRight="36dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvSallyport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tvLowBar"
+            android:layout_marginRight="46dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvPortCullis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bPortCullis"
+            android:layout_alignEnd="@+id/bPortCullis"
+            android:layout_alignRight="@+id/bPortCullis"
+            android:layout_marginRight="46dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvRockWall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bRockWall"
+            android:layout_marginLeft="48dp"
+            android:layout_toEndOf="@+id/bChivalDeFrise"
+            android:layout_toRightOf="@+id/bChivalDeFrise"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvRoughTerrain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvRockWall"
+            android:layout_toLeftOf="@+id/tvSallyport"
+            android:layout_toStartOf="@+id/tvSallyport"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>

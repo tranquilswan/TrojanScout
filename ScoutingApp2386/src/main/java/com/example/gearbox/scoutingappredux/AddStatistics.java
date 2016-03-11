@@ -1,22 +1,53 @@
 package com.example.gearbox.scoutingappredux;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
+import java.lang.reflect.Field;
+
 public class AddStatistics extends AppCompatActivity {
 
     String teamName;
     int teamNum;
+
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color) {
+        final int count = numberPicker.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = numberPicker.getChildAt(i);
+            if (child instanceof EditText) {
+                try {
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText) child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                } catch (NoSuchFieldException e) {
+                    Log.w("setNumberPickerTextColor", e);
+                } catch (IllegalAccessException e) {
+                    Log.w("setNumberPickerTextColor", e);
+                } catch (IllegalArgumentException e) {
+                    Log.w("setNumberPickerTextColor", e);
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +84,7 @@ public class AddStatistics extends AppCompatActivity {
                 android.widget.NumberPicker myNumberPicker = new android.widget.NumberPicker(getApplicationContext());
                 myNumberPicker.setMaxValue(10);
                 myNumberPicker.setMinValue(0);
+                setNumberPickerTextColor(myNumberPicker, Color.BLACK);
 
                 android.widget.NumberPicker.OnValueChangeListener myValChangedListener = new android.widget.NumberPicker.OnValueChangeListener() {
                     @Override
