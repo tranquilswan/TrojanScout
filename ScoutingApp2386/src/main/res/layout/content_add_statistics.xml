@@ -6,17 +6,17 @@
     android:fillViewport="true"> <!-- here -->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.gearbox.scoutingappredux.AddStatistics"
-    tools:showIn="@layout/activity_add_statistics">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.example.gearbox.scoutingappredux.AddStatistics"
+        tools:showIn="@layout/activity_add_statistics">
 
         <RadioGroup
             android:id="@+id/rgpAutonomous"
@@ -77,110 +77,195 @@
         </RadioGroup>
 
 
-        <EditText
-            android:id="@+id/edtStatsComments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:hint="Additional Comments"
-            android:imeOptions="actionDone"
-            android:inputType="textMultiLine"
-            android:maxLines="30"
-            android:scrollbars="vertical"
-            android:textAlignment="center" />
-
         <TextView
-            android:id="@+id/tvStatsTeamNum"
+            android:id="@+id/tvTeamNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="61dp"
-            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="64dp"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/tvStatsTeamName"
+            android:id="@+id/tvTeamName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvStatsTeamNum"
+            android:layout_below="@+id/tvTeamNum"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
             android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textIsSelectable="false" />
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/button"
-            android:layout_alignRight="@+id/button"
-            android:layout_below="@+id/edtStatsComments"
-            android:layout_marginTop="100dp"
-            android:onClick="SaveStats"
-            android:text="Save" />
-
-        <Button
-            android:id="@+id/bShots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rgpEndGame"
-            android:layout_marginTop="77dp"
-            android:text="Shots" />
-
-        <Button
-            android:id="@+id/bLowGoal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvStatsTeamName"
-            android:layout_alignStart="@+id/tvStatsTeamName"
-            android:layout_alignTop="@+id/bShots"
-            android:layout_marginLeft="8dp"
-            android:text="Low Goal" />
-
-        <Button
-            android:id="@+id/bHighGoal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/bLowGoal"
-            android:layout_toEndOf="@+id/tvStatsTeamName"
-            android:layout_toRightOf="@+id/tvStatsTeamName"
-            android:text="High Goal" />
-
-        <Button
-            android:id="@+id/bChivalDeFrise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/bShots"
-            android:layout_marginTop="69dp"
-            android:text="Chival De Frise" />
-
-        <Button
-            android:id="@+id/bRamparts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/bChivalDeFrise"
-            android:layout_toEndOf="@+id/bLowGoal"
-            android:layout_toRightOf="@+id/bLowGoal"
-            android:text="Ramparts" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtStatsComments"
-            android:layout_toLeftOf="@+id/bRamparts"
-            android:layout_toStartOf="@+id/bRamparts"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/rgpEndGame"
+            android:layout_marginTop="68dp"
             android:text="New Button" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/button"
+            android:layout_alignLeft="@+id/tvTeamName"
+            android:layout_alignStart="@+id/tvTeamName"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/button2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/button"
+            android:layout_marginTop="60dp"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button6"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/button4"
+            android:layout_marginTop="58dp"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/button6"
+            android:layout_centerHorizontal="true"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/button7"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/button6"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/button6"
+            android:layout_marginBottom="46dp"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/button9"
+            android:layout_centerHorizontal="true"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/button10"
+            android:text="New Button" />
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button2"
+            android:layout_alignStart="@+id/button2"
+            android:layout_alignTop="@+id/button5"
+            android:text="New Button" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button3"
+            android:layout_alignLeft="@+id/button3"
+            android:layout_alignStart="@+id/button3"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tvTeamName"
+            android:layout_alignRight="@+id/tvTeamName"
+            android:layout_alignTop="@+id/textView8"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button12"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button12"
+            android:layout_alignLeft="@+id/button12"
+            android:layout_alignStart="@+id/button12"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView12"
+            android:layout_alignLeft="@+id/button5"
+            android:layout_alignStart="@+id/button5"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
 </ScrollView>
