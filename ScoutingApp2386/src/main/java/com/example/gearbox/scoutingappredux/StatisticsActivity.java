@@ -44,11 +44,15 @@ public class StatisticsActivity extends AppCompatActivity {
         lvwTeamStatsNumbers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final String teamName;
                 String tNum = lvwTeamStatsNumbers.getItemAtPosition(position).toString();
                 String[] tNumSplit = tNum.split(" : ");
                 final Integer teamNum = Integer.parseInt(tNumSplit[0]);//make this an int
-                final String teamName = tNumSplit[1];
-
+                if (tNumSplit.length > 1) {
+                    teamName = tNumSplit[1];
+                } else {
+                    teamName = "NONE";
+                }
                 new AlertDialog.Builder(StatisticsActivity.this)
                         .setTitle("Selection")
                         .setMessage("Select Action")
