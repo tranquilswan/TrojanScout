@@ -76,124 +76,12 @@
 
         </RadioGroup>
 
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npChivalDeFrise"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npTotalShots"-->
-        <!--android:layout_alignStart="@+id/npTotalShots"-->
-        <!--android:layout_below="@+id/npTotalShots" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npTotalShots"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_marginLeft="33dp"-->
-        <!--android:layout_marginTop="240dp" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npHighGoals"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignTop="@+id/npTotalShots"-->
-        <!--android:layout_marginEnd="40dp"-->
-        <!--android:layout_marginRight="40dp" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npLowGoals"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignTop="@+id/npHighGoals"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npDrawBridge"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignTop="@+id/npChivalDeFrise"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npLowBar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npHighGoals"-->
-        <!--android:layout_alignStart="@+id/npHighGoals"-->
-        <!--android:layout_alignTop="@+id/npDrawBridge" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npMoat"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npChivalDeFrise"-->
-        <!--android:layout_alignStart="@+id/npChivalDeFrise"-->
-        <!--android:layout_below="@+id/npChivalDeFrise" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npPortCullis"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignTop="@+id/npMoat"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npRamparts"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npLowBar"-->
-        <!--android:layout_alignStart="@+id/npLowBar"-->
-        <!--android:layout_alignTop="@+id/npPortCullis" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npRockWall"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npMoat"-->
-        <!--android:layout_alignStart="@+id/npMoat"-->
-        <!--android:layout_below="@+id/npMoat" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npSallyPort"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignTop="@+id/npRockWall"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
-        <!--<NumberPicker-->
-        <!--android:id="@+id/npRoughTerrain"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/npRamparts"-->
-        <!--android:layout_alignStart="@+id/npRamparts"-->
-        <!--android:layout_alignTop="@+id/npSallyPort" />-->
-
-
-        <!--<com.vi.swipenumberpicker.SwipeNumberPicker-->
-        <!--android:id="@+id/number_picker"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:snp_numberColor="@android:color/white"-->
-        <!--app:snp_arrowColor="@android:color/white"-->
-        <!--app:snp_backgroundColor="@color/colorAccent"-->
-        <!--app:snp_max="1000"-->
-        <!--app:snp_min="50"-->
-        <!--android:layout_below="@+id/rgpEndGame"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_marginLeft="41dp"-->
-        <!--android:layout_marginStart="41dp"-->
-        <!--android:layout_marginTop="41dp" />-->
 
         <EditText
             android:id="@+id/edtStatsComments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnSave"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Additional Comments"
@@ -230,9 +118,10 @@
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="32dp"
+            android:layout_alignEnd="@+id/button"
+            android:layout_alignRight="@+id/button"
+            android:layout_below="@+id/edtStatsComments"
+            android:layout_marginTop="100dp"
             android:onClick="SaveStats"
             android:text="Save" />
 
@@ -269,10 +158,10 @@
             android:id="@+id/bChivalDeFrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/edtStatsComments"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="23dp"
+            android:layout_below="@+id/bShots"
+            android:layout_marginTop="69dp"
             android:text="Chival De Frise" />
 
         <Button
@@ -283,6 +172,15 @@
             android:layout_toEndOf="@+id/bLowGoal"
             android:layout_toRightOf="@+id/bLowGoal"
             android:text="Ramparts" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtStatsComments"
+            android:layout_toLeftOf="@+id/bRamparts"
+            android:layout_toStartOf="@+id/bRamparts"
+            android:text="New Button" />
 
     </RelativeLayout>
 </ScrollView>
