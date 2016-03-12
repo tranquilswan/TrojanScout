@@ -139,18 +139,18 @@ public class AddStatistics extends AppCompatActivity {
         String Comments;
 
 
-//        NumberPicker npTotalShots = (NumberPicker) findViewById(R.id.npTotalShots);
-//        NumberPicker npLowGoals = (NumberPicker) findViewById(R.id.npLowGoals);
-//        NumberPicker npHighGoal = (NumberPicker) findViewById(R.id.npHighGoals);
-//        NumberPicker npChivalDeFrise = (NumberPicker) findViewById(R.id.npChivalDeFrise);
-//        NumberPicker npDrawBridge = (NumberPicker) findViewById(R.id.npDrawBridge);
-//        NumberPicker npLowBar = (NumberPicker) findViewById(R.id.npLowBar);
-//        NumberPicker npMoat = (NumberPicker) findViewById(R.id.npMoat);
-//        NumberPicker npPortCullis = (NumberPicker) findViewById(R.id.npPortCullis);
-//        NumberPicker npRamparts = (NumberPicker) findViewById(R.id.npRamparts);
-//        NumberPicker npRockWall = (NumberPicker) findViewById(R.id.npRockWall);
-//        NumberPicker npSallyPort = (NumberPicker) findViewById(R.id.npSallyPort);
-//        NumberPicker npRoughTerrain = (NumberPicker) findViewById(R.id.npRoughTerrain);
+        final TextView tvShots = (TextView) findViewById(R.id.tvShots);
+        final TextView tvLowGoals = (TextView) findViewById(R.id.tvLowGoals);
+        final TextView tvHighGoal = (TextView) findViewById(R.id.tvHighGoal);
+        final TextView tvRampart = (TextView) findViewById(R.id.tvRampart);
+        final TextView tvDrawBridge = (TextView) findViewById(R.id.tvDrawBridge);
+        final TextView tvChivalDeFrise = (TextView) findViewById(R.id.tvChivalDeFrise);
+        final TextView tvLowBar = (TextView) findViewById(R.id.tvLowBar);
+        final TextView tvRockWall = (TextView) findViewById(R.id.tvRockWall);
+        final TextView tvSallyport = (TextView) findViewById(R.id.tvSallyport);
+        final TextView tvMoat = (TextView) findViewById(R.id.tvMoat);
+        final TextView tvRoughTerrain = (TextView) findViewById(R.id.tvRoughTerrain);
+        final TextView tvPortCullis = (TextView) findViewById(R.id.tvPortCullis);
 
         RadioGroup rgpAutonomous = (RadioGroup) findViewById(R.id.rgpAutonomous);
         RadioGroup rgpEndGame = (RadioGroup) findViewById(R.id.rgpEndGame);
@@ -158,20 +158,21 @@ public class AddStatistics extends AppCompatActivity {
         TextView tvTeamNum = (TextView) findViewById(R.id.tvStatsTeamNum);
         TextView tvTeamName = (TextView) findViewById(R.id.tvStatsTeamName);
 
-        //EditText edtComments = (EditText) findViewById(R.id.edtStatsComments);
+        EditText edtComments = (EditText) findViewById(R.id.edtStatsComments);
 
-//        TotalShots = npTotalShots.getValue();
-//        LowGoals = npLowGoals.getValue();
-//        HighGoals = npHighGoal.getValue();
-//        ChivalDeFrise = npChivalDeFrise.getValue();
-//        DrawBridge = npDrawBridge.getValue();
-//        LowBar = npLowBar.getValue();
-//        Moat = npMoat.getValue();
-//        PortCullis = npPortCullis.getValue();
-//        Ramparts = npRamparts.getValue();
-//        RockWall = npRockWall.getValue();
-//        SallyPort = npSallyPort.getValue();
-//        RoughTerrain = npRoughTerrain.getValue();
+
+        TotalShots = Integer.parseInt(tvShots.getText().toString());
+        LowGoals = Integer.parseInt(tvLowGoals.getText().toString());
+        HighGoals = Integer.parseInt(tvHighGoal.getText().toString());
+        ChivalDeFrise = Integer.parseInt(tvChivalDeFrise.getText().toString());
+        DrawBridge = Integer.parseInt(tvDrawBridge.getText().toString());
+        LowBar = Integer.parseInt(tvLowBar.getText().toString());
+        Moat = Integer.parseInt(tvMoat.getText().toString());
+        PortCullis = Integer.parseInt(tvPortCullis.getText().toString());
+        Ramparts = Integer.parseInt(tvRampart.getText().toString());
+        RockWall = Integer.parseInt(tvRockWall.getText().toString());
+        SallyPort = Integer.parseInt(tvSallyport.getText().toString());
+        RoughTerrain = Integer.parseInt(tvRoughTerrain.getText().toString());
 
         if (rgpEndGame.getCheckedRadioButtonId() == R.id.radStatsChallenge) {
             EndGame = 1;
@@ -190,7 +191,7 @@ public class AddStatistics extends AppCompatActivity {
         TeamNum = Integer.parseInt(tvTeamNum.getText().toString());
         TeamName = tvTeamName.getText().toString();
 
-        //Comments = edtComments.getText().toString();
+        Comments = edtComments.getText().toString();
 
         return null;
 
