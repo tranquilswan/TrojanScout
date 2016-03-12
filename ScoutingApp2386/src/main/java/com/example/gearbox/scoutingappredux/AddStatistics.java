@@ -74,30 +74,109 @@ public class AddStatistics extends AppCompatActivity {
         TextView tvStatsTeamNum = (TextView) findViewById(R.id.tvStatsTeamNum);
         final TextView tvStatsTeamName = (TextView) findViewById(R.id.tvStatsTeamName);
 
+        final TextView tvShots = (TextView) findViewById(R.id.tvShots);
+        final TextView tvLowGoals = (TextView) findViewById(R.id.tvLowGoals);
+        final TextView tvHighGoal = (TextView) findViewById(R.id.tvHighGoal);
+        final TextView tvRampart = (TextView) findViewById(R.id.tvRampart);
+        final TextView tvDrawBridge = (TextView) findViewById(R.id.tvDrawBridge);
+        final TextView tvChivalDeFrise = (TextView) findViewById(R.id.tvChivalDeFrise);
+        final TextView tvLowBar = (TextView) findViewById(R.id.tvLowBar);
+        final TextView tvRockWall = (TextView) findViewById(R.id.tvRockWall);
+        final TextView tvSallyport = (TextView) findViewById(R.id.tvSallyport);
+        final TextView tvMoat = (TextView) findViewById(R.id.tvMoat);
+        final TextView tvRoughTerrain = (TextView) findViewById(R.id.tvRoughTerrain);
+        final TextView tvPortCullis = (TextView) findViewById(R.id.tvPortCullis);
+
 //        SwipeNumberPicker swipeNumberPicker = (SwipeNumberPicker) findViewById(R.id.number_picker);
 //        swipeNumberPicker.setNumberPickerDialogTitle("Chival De Frise");
 
-        Button button = (Button) findViewById(R.id.bShots);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button bShots = (Button) findViewById(R.id.bShots);
+        Button bLowGoals = (Button) findViewById(R.id.bLowGoals);
+        Button bHighGoal = (Button) findViewById(R.id.bHighGoal);
+        Button bLowBar = (Button) findViewById(R.id.bLowBar);
+        Button bChivalDeFrise = (Button) findViewById(R.id.bChivalDeFrise);
+        Button bDrawBridge = (Button) findViewById(R.id.bDrawBridge);
+        Button bMoat = (Button) findViewById(R.id.bMoat);
+        Button bRamparts = (Button) findViewById(R.id.bRamparts);
+        Button bRockWall = (Button) findViewById(R.id.bRockWall);
+        Button bRoughTerrain = (Button) findViewById(R.id.bRoughTerrain);
+        Button bPortCullis = (Button) findViewById(R.id.bPortCullis);
+        Button bSallyPort = (Button) findViewById(R.id.bSallyPort);
+
+        bShots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                android.widget.NumberPicker myNumberPicker = new android.widget.NumberPicker(getApplicationContext());
-                myNumberPicker.setMaxValue(10);
-                myNumberPicker.setMinValue(0);
-                setNumberPickerTextColor(myNumberPicker, Color.BLACK);
-
-                android.widget.NumberPicker.OnValueChangeListener myValChangedListener = new android.widget.NumberPicker.OnValueChangeListener() {
-                    @Override
-                    public void onValueChange(android.widget.NumberPicker picker, int oldVal, int newVal) {
-                        tvStatsTeamName.setText(Integer.toString(newVal));
-                    }
-                };
-
-                myNumberPicker.setOnValueChangedListener(myValChangedListener);
-
-                new AlertDialog.Builder(AddStatistics.this).setView(myNumberPicker).show();
+                LaunchNumberPicker(0, 25, Integer.parseInt(tvShots.getText().toString()), tvShots);
             }
         });
+
+        bLowGoals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 20, Integer.parseInt(tvLowGoals.getText().toString()), tvLowGoals);
+            }
+        });
+        bHighGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 20, Integer.parseInt(tvHighGoal.getText().toString()), tvHighGoal);
+            }
+        });
+        bChivalDeFrise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvChivalDeFrise.getText().toString()), tvChivalDeFrise);
+            }
+        });
+        bDrawBridge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvDrawBridge.getText().toString()), tvDrawBridge);
+            }
+        });
+        bLowBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvLowBar.getText().toString()), tvLowBar);
+            }
+        });
+        bMoat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvMoat.getText().toString()), tvMoat);
+            }
+        });
+        bPortCullis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvPortCullis.getText().toString()), tvPortCullis);
+            }
+        });
+        bRamparts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRampart.getText().toString()), tvRampart);
+            }
+        });
+        bRockWall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRockWall.getText().toString()), tvRockWall);
+            }
+        });
+        bRoughTerrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRoughTerrain.getText().toString()), tvRoughTerrain);
+            }
+        });
+        bSallyPort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvSallyport.getText().toString()), tvSallyport);
+            }
+        });
+
 
 
 //        npTotalShots.setMinValue(0);
@@ -142,6 +221,36 @@ public class AddStatistics extends AppCompatActivity {
         finish();
     }
 
+    public void LaunchNumberPicker(int min, int max, int setVal, final TextView view) {
+
+        android.widget.NumberPicker myNumberPicker = new android.widget.NumberPicker(getApplicationContext());
+        myNumberPicker.setMaxValue(max);
+        myNumberPicker.setMinValue(min);
+        myNumberPicker.setValue(setVal);
+        setNumberPickerTextColor(myNumberPicker, Color.BLACK);
+
+        android.widget.NumberPicker.OnValueChangeListener myValChangedListener = new android.widget.NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(android.widget.NumberPicker picker, int oldVal, int newVal) {
+                view.setText(Integer.toString(newVal));
+
+                final TextView tvLowGoals = (TextView) findViewById(R.id.tvLowGoals);
+                final TextView tvHighGoal = (TextView) findViewById(R.id.tvHighGoal);
+                final TextView tvShots = (TextView) findViewById(R.id.tvShots);
+
+                if ((view.getId() == tvHighGoal.getId() || (view.getId() == tvLowGoals.getId()))) {
+                    int i = Integer.parseInt(tvShots.getText().toString());
+                    i = i + (newVal - oldVal);
+                    tvShots.setText(Integer.toString(i));
+                }
+            }
+        };
+
+        myNumberPicker.setOnValueChangedListener(myValChangedListener);
+
+        new AlertDialog.Builder(AddStatistics.this).setView(myNumberPicker).show();
+    }
+
 
     public Statistics getInputsFromUi() {
         int TotalShots;
@@ -182,7 +291,7 @@ public class AddStatistics extends AppCompatActivity {
         TextView tvTeamNum = (TextView) findViewById(R.id.tvStatsTeamNum);
         TextView tvTeamName = (TextView) findViewById(R.id.tvStatsTeamName);
 
-        EditText edtComments = (EditText) findViewById(R.id.edtStatsComments);
+        //EditText edtComments = (EditText) findViewById(R.id.edtStatsComments);
 
 //        TotalShots = npTotalShots.getValue();
 //        LowGoals = npLowGoals.getValue();
@@ -214,7 +323,7 @@ public class AddStatistics extends AppCompatActivity {
         TeamNum = Integer.parseInt(tvTeamNum.getText().toString());
         TeamName = tvTeamName.getText().toString();
 
-        Comments = edtComments.getText().toString();
+        //Comments = edtComments.getText().toString();
 
         return null;
 
