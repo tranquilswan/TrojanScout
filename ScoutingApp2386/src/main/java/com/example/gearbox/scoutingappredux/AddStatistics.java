@@ -103,6 +103,94 @@ public class AddStatistics extends AppCompatActivity {
         Button bPortCullis = (Button) findViewById(R.id.bPortCullis);
         Button bSallyPort = (Button) findViewById(R.id.bSallyPort);
 
+        bShots.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 25, Integer.parseInt(tvShots.getText().toString()), tvShots);
+                return true;
+            }
+        });
+
+        bLowGoals.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 20, Integer.parseInt(tvLowGoals.getText().toString()), tvLowGoals);
+                return true;
+            }
+        });
+        bHighGoal.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 20, Integer.parseInt(tvHighGoal.getText().toString()), tvHighGoal);
+                return true;
+            }
+        });
+        bChivalDeFrise.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvChivalDeFrise.getText().toString()), tvChivalDeFrise);
+                return true;
+            }
+        });
+        bDrawBridge.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvDrawBridge.getText().toString()), tvDrawBridge);
+                return true;
+            }
+        });
+        bLowBar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvLowBar.getText().toString()), tvLowBar);
+                return true;
+            }
+        });
+        bMoat.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvMoat.getText().toString()), tvMoat);
+                return true;
+            }
+        });
+        bPortCullis.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvPortCullis.getText().toString()), tvPortCullis);
+                return true;
+            }
+        });
+        bRamparts.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRampart.getText().toString()), tvRampart);
+                return true;
+            }
+        });
+        bRockWall.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRockWall.getText().toString()), tvRockWall);
+                return true;
+            }
+        });
+        bRoughTerrain.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvRoughTerrain.getText().toString()), tvRoughTerrain);
+                return true;
+            }
+        });
+        bSallyPort.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 10, Integer.parseInt(tvSallyport.getText().toString()), tvSallyport);
+                return true;
+            }
+        });
+
+
+
         bShots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +264,6 @@ public class AddStatistics extends AppCompatActivity {
                 LaunchNumberPicker(0, 10, Integer.parseInt(tvSallyport.getText().toString()), tvSallyport);
             }
         });
-
 
 
 //        npTotalShots.setMinValue(0);
