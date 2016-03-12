@@ -382,6 +382,7 @@
                 android:id="@+id/bSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="SaveStats"
                 android:text="Save" />
 
         </LinearLayout>

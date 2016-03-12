@@ -193,7 +193,8 @@ public class AddStatistics extends AppCompatActivity {
 
         Comments = edtComments.getText().toString();
 
-        return null;
+        return new Statistics(Autonomous, ChivalDeFrise, DrawBridge, EndGame, HighGoals, LowBar, LowGoals, Comments,
+                Moat, TeamName, TeamNum, PortCullis, Ramparts, RockWall, SallyPort, RoughTerrain, TotalShots);
 
 
     }
