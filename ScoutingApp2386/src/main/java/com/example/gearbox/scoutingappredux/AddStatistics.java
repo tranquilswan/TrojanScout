@@ -118,6 +118,7 @@ public class AddStatistics extends AppCompatActivity {
         new AlertDialog.Builder(AddStatistics.this).setView(myNumberPicker).show();
     }
 
+    //VOID COMMENT
 
     public Statistics getInputsFromUi() {
         int TotalShots;
