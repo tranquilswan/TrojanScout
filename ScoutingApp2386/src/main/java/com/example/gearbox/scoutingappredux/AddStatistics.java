@@ -200,6 +200,7 @@ public class AddStatistics extends AppCompatActivity {
     }
 
     public void InitiateUILogic() {
+        //VOID COMMENT
         final TextView tvShots = (TextView) findViewById(R.id.tvShots);
         final TextView tvLowGoals = (TextView) findViewById(R.id.tvLowGoals);
         final TextView tvHighGoal = (TextView) findViewById(R.id.tvHighGoal);
