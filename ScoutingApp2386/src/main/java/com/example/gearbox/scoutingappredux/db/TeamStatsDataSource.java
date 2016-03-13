@@ -53,6 +53,8 @@ public class TeamStatsDataSource {
     public static final int END_GAME_TYPE_COLUMN_POSITION = 16;
     public static final String AUTONOMOUS_USAGE_COLUMN = "AutonomousUsage";
     public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 17;
+    public static final String MATCH_ID_COLUMN = "MatchID";
+    public static final int MATCH_ID_COLUMN_POSITION = 18;
 
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
@@ -73,7 +75,10 @@ public class TeamStatsDataSource {
                     ROCK_WALL_CROSSES_COLUMN + " INTEGER, " +
                     LOW_BAR_CROSSES_COLUMN + " INTEGER, " +
                     END_GAME_TYPE_COLUMN + " INTEGER, " +
+                    MATCH_ID_COLUMN + " INTEGER, " +
                     AUTONOMOUS_USAGE_COLUMN + " INTEGER )";
+
+
     private SQLiteOpenHelper mDbOpenHelper;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -85,6 +90,17 @@ public class TeamStatsDataSource {
 
     public long saveTeam(Statistics stats) {
         mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        int count = 0;
+        Cursor rawCursor
+                = mDatabase.query(TABLE_NAME,
+                null,
+                TEAM_NUM_COLUMN + " = " + stats.getmTeamNum(),
+                null, null, null, TEAM_NUM_COLUMN);
+
+        count = rawCursor.getCount();
+
+        int MatchID = count + 1;
 
         ContentValues cv = new ContentValues();
 
@@ -105,6 +121,7 @@ public class TeamStatsDataSource {
         cv.put(LOW_BAR_CROSSES_COLUMN, stats.getLowBarCrosses());
         cv.put(END_GAME_TYPE_COLUMN, stats.getEndGameType());
         cv.put(AUTONOMOUS_USAGE_COLUMN, stats.getAutonomousUsage());
+        cv.put(MATCH_ID_COLUMN, MatchID);
 
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
@@ -170,18 +187,19 @@ public class TeamStatsDataSource {
             int defLowBarCrosses = cursor.getInt(LOW_BAR_CROSSES_COLUMN_POSITION);
             int endGameType = cursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
             int autonomousUsage = cursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
+            int MatchID = cursor.getInt(MATCH_ID_COLUMN_POSITION);
 
             stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
                     highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
-                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots));
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, MatchID));
         }
         cursor.close();
         mDatabase.close();
         return stats;
     }
 
-    public Statistics getTeam(int teamNum) {
-        Statistics stats = null;
+    public List<Statistics> getTeam(int teamNum) {
+        ArrayList<Statistics> stats = new ArrayList<>();
         mDatabase = mDbOpenHelper.getReadableDatabase();
         //Cursor rawCursor = null;
         //String queryString = "SELECT * FROM Team WHERE teamNum = " + teamNum + ";";
@@ -209,9 +227,52 @@ public class TeamStatsDataSource {
             int defLowBarCrosses = rawCursor.getInt(LOW_BAR_CROSSES_COLUMN_POSITION);
             int endGameType = rawCursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
             int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
+            int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
+
+            stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
+                    highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID));
+        }
+
+        rawCursor.close();
+        mDatabase.close();
+
+        return stats;
+    }
+
+    public Statistics getTeam(int teamNum, int MatchID) {
+        Statistics stats = null;
+        mDatabase = mDbOpenHelper.getReadableDatabase();
+        //Cursor rawCursor = null;
+        //String queryString = "SELECT * FROM Team WHERE teamNum = " + teamNum + ";";
+        Cursor rawCursor
+                = mDatabase.query(TABLE_NAME,
+                null,
+                TEAM_NUM_COLUMN + " = " + teamNum + " AND " + MATCH_ID_COLUMN + " = " + MatchID,
+                null, null, null, TEAM_NUM_COLUMN);
+        while (rawCursor.moveToNext()) {
+            long id = rawCursor.getLong(ID_COLUMN_POSITION);
+//            int teamNum = rawCursor.getInt(TEAM_NUM_COLUMN_POSITION);
+            String teamName = rawCursor.getString(TEAM_NAME_COLUMN_POSITION);
+            String comments = rawCursor.getString(COMMENTS_COLUMN_POSITION);
+            int totalShots = rawCursor.getInt(TOTAL_SHOTS_COLUMN_POSITION);
+            int highGoals = rawCursor.getInt(HIGH_GOALS_COLUMN_POSITION);
+            int lowGoals = rawCursor.getInt(LOW_GOALS_COLUMN_POSITION);
+            int defPortCullisCrosses = rawCursor.getInt(PORT_CULLIS_CROSSES_COLUMN_POSITION);
+            int defChivalDeFriseCrosses = rawCursor.getInt(CHIVAL_DE_FRISE_CROSSES_COLUMN_POSITION);
+            int defRampartsCrosses = rawCursor.getInt(RAMPARTS_CROSSES_COLUMN_POSITION);
+            int defRockWallCrosses = rawCursor.getInt(ROCK_WALL_CROSSES_COLUMN_POSITION);
+            int defRoughTerrainCrosses = rawCursor.getInt(ROUGH_TERRAIN_CROSSES_COLUMN_POSITION);
+            int defSallyPortCrosses = rawCursor.getInt(SALLY_PORT_CROSSES_COLUMN_POSITION);
+            int defDrawBridgeCrosses = rawCursor.getInt(DRAW_BRIDGE_CROSSES_COLUMN_POSITION);
+            int defMoatCrosses = rawCursor.getInt(MOAT_CROSSES_COLUMN_POSITION);
+            int defLowBarCrosses = rawCursor.getInt(LOW_BAR_CROSSES_COLUMN_POSITION);
+            int endGameType = rawCursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
+            int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
+            int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
             stats = new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
                     highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
-                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots);
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID);
         }
 
         rawCursor.close();

@@ -43,10 +43,12 @@ public class Statistics implements Serializable {
 
     private int AutonomousUsage;
 
+    private int MatchID;
+
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
                       int highGoals, int lowBarCrosses, int lowGoals, String mComments, long mDBid, int moatCrosses,
                       String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
-                      int sallyPortCrosses, int roughTerrainCrosses, int shots) {
+                      int sallyPortCrosses, int roughTerrainCrosses, int shots, int MatchID) {
         AutonomousUsage = autonomousUsage;
         ChivalDeFriseCrosses = chivalDeFriseCrosses;
         DrawBridgeCrosses = drawBridgeCrosses;
@@ -65,6 +67,8 @@ public class Statistics implements Serializable {
         SallyPortCrosses = sallyPortCrosses;
         RoughTerrainCrosses = roughTerrainCrosses;
         TotalShots = shots;
+        this.MatchID = MatchID;
+
     }
 
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
@@ -88,6 +92,14 @@ public class Statistics implements Serializable {
         SallyPortCrosses = sallyPortCrosses;
         RoughTerrainCrosses = roughTerrainCrosses;
         TotalShots = shots;
+    }
+
+    public int getMatchID() {
+        return MatchID;
+    }
+
+    public void setMatchID(int matchID) {
+        MatchID = matchID;
     }
 
     public int getAutonomousUsage() {
