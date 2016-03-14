@@ -39,11 +39,11 @@ public class AddStatistics extends AppCompatActivity {
                     numberPicker.invalidate();
                     return true;
                 } catch (NoSuchFieldException e) {
-                    Log.w("setNumberPickerTextColo", e);
+                    Log.w("setNumberPickerTextColr", e);
                 } catch (IllegalAccessException e) {
                     Log.w("setNumberPickerTextColr", e);
                 } catch (IllegalArgumentException e) {
-                    Log.w("setNumberPickerTextColo", e);
+                    Log.w("setNumberPickerTextColr", e);
                 }
             }
         }
