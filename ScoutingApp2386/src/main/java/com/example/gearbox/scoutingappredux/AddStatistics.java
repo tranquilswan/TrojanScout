@@ -1,5 +1,6 @@
 package com.example.gearbox.scoutingappredux;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -75,11 +76,27 @@ public class AddStatistics extends AppCompatActivity {
     }
 
     public void SaveStats(View view) {
-        Statistics stats = getInputsFromUi();
-        TeamStatsDataSource tsds = new TeamStatsDataSource(getApplicationContext());
-        tsds.saveTeam(stats);
-        Toast.makeText(this, "Stats for team " + teamNum + " added to database.", Toast.LENGTH_SHORT).show();
-        finish();
+        new android.app.AlertDialog.Builder(AddStatistics.this)
+                .setTitle("Confirm")
+                .setMessage("Are you sure?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Statistics stats = getInputsFromUi();
+                        TeamStatsDataSource tsds = new TeamStatsDataSource(getApplicationContext());
+                        tsds.saveTeam(stats);
+                        Toast.makeText(getApplicationContext(), "Stats for team " + teamNum + " added to database.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .setNeutralButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+
+
     }
 
     public void IncrementTextViewValue(TextView view) {

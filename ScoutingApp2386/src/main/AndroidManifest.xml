@@ -35,16 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-        <!--android:name=".TradeData"-->
-        <!--android:label="@string/title_activity_trade_data"-->
-        <!--android:parentActivityName=".MainActivity"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@style/AppTheme.NoActionBar">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.PARENT_ACTIVITY"-->
-        <!--android:value="com.example.gearbox.scoutingappredux.MainActivity" />-->
-        <!--</activity>-->
+        <!-- <activity -->
+        <!-- android:name=".TradeData" -->
+        <!-- android:label="@string/title_activity_trade_data" -->
+        <!-- android:parentActivityName=".MainActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.PARENT_ACTIVITY" -->
+        <!-- android:value="com.example.gearbox.scoutingappredux.MainActivity" /> -->
+        <!-- </activity> -->
         <activity
             android:name=".HelpScreen"
             android:label="@string/title_activity_help_screen"
@@ -73,6 +73,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gearbox.scoutingappredux.StatisticsActivity" />
+        </activity>
+        <activity
+            android:name=".ViewStatisticsActivity"
+            android:label="@string/title_activity_view_statistics"
+            android:parentActivityName=".AddStatistics"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.gearbox.scoutingappredux.AddStatistics" />
         </activity>
     </application>
 

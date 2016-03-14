@@ -51,10 +51,10 @@ public class TeamStatsDataSource {
     public static final int LOW_BAR_CROSSES_COLUMN_POSITION = 15;
     public static final String END_GAME_TYPE_COLUMN = "EndGameType";
     public static final int END_GAME_TYPE_COLUMN_POSITION = 16;
-    public static final String AUTONOMOUS_USAGE_COLUMN = "AutonomousUsage";
-    public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 17;
     public static final String MATCH_ID_COLUMN = "MatchID";
-    public static final int MATCH_ID_COLUMN_POSITION = 18;
+    public static final int MATCH_ID_COLUMN_POSITION = 17;
+    public static final String AUTONOMOUS_USAGE_COLUMN = "AutonomousUsage";
+    public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 18;
 
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
@@ -279,6 +279,22 @@ public class TeamStatsDataSource {
         mDatabase.close();
 
         return stats;
+    }
+
+    public int getCount(int teamNum) {
+
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        int count = 0;
+        Cursor rawCursor
+                = mDatabase.query(TABLE_NAME,
+                null,
+                TEAM_NUM_COLUMN + " = " + teamNum,
+                null, null, null, TEAM_NUM_COLUMN);
+
+        count = rawCursor.getCount();
+
+        return count;
     }
 
     public void deleteTeam(int teamNumber) {

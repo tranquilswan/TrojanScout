@@ -76,7 +76,7 @@ public class StatisticsActivity extends AppCompatActivity {
                         .setNeutralButton("View Stats", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                LaunchViewStats(teamNum, teamName);
                             }
                         })
                         .setNegativeButton("Delete Stats", new DialogInterface.OnClickListener() {
@@ -99,6 +99,15 @@ public class StatisticsActivity extends AppCompatActivity {
         bundle.putString("teamName", teamName);
         bundle.putInt("teamNum", teamNum);
         Intent i = new Intent(this, AddStatistics.class);
+        i.putExtras(bundle);
+        startActivity(i);
+    }
+
+    private void LaunchViewStats(Integer teamNum, String teamName) {
+        Bundle bundle = new Bundle();
+        bundle.putString("teamName", teamName);
+        bundle.putInt("teamNum", teamNum);
+        Intent i = new Intent(this, ViewStatisticsActivity.class);
         i.putExtras(bundle);
         startActivity(i);
     }
