@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.gearbox.scoutingappredux.Statistics;
 
@@ -132,30 +133,19 @@ public class TeamStatsDataSource {
         return teamId;
     }
 
-    public long updateTeam(Statistics stats) {
+    public long updateMatchID(int teamNum, int oldMatchID, int newMatchID) {
         mDatabase = mDbOpenHelper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
 
         //cv.put(TEAM_NUM_COLUMN, team.getmTeamNum());
-        cv.put(TEAM_NAME_COLUMN, stats.getmTeamName());
-        cv.put(COMMENTS_COLUMN, stats.getmComments());
-        cv.put(TOTAL_SHOTS_COLUMN, stats.getTotalShots());
-        cv.put(LOW_GOALS_COLUMN, stats.getLowGoals());
-        cv.put(HIGH_GOALS_COLUMN, stats.getHighGoals());
-        cv.put(PORT_CULLIS_CROSSES_COLUMN, stats.getPortCullisCrosses());
-        cv.put(CHIVAL_DE_FRISE_CROSSES_COLUMN, stats.getChivalDeFriseCrosses());
-        cv.put(RAMPARTS_CROSSES_COLUMN, stats.getRampartsCrosses());
-        cv.put(MOAT_CROSSES_COLUMN, stats.getMoatCrosses());
-        cv.put(DRAW_BRIDGE_CROSSES_COLUMN, stats.getDrawBridgeCrosses());
-        cv.put(SALLY_PORT_CROSSES_COLUMN, stats.getSallyPortCrosses());
-        cv.put(ROUGH_TERRAIN_CROSSES_COLUMN, stats.getRoughTerrainCrosses());
-        cv.put(ROCK_WALL_CROSSES_COLUMN, stats.getRoughTerrainCrosses());
-        cv.put(LOW_BAR_CROSSES_COLUMN, stats.getLowBarCrosses());
-        cv.put(END_GAME_TYPE_COLUMN, stats.getEndGameType());
-        cv.put(AUTONOMOUS_USAGE_COLUMN, stats.getAutonomousUsage());
+        cv.put(MATCH_ID_COLUMN, newMatchID);
 
-        long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?", new String[]{Integer.toString(stats.getmTeamNum())});
+
+        long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?" + " AND " + MATCH_ID_COLUMN + " = ?"
+                , new String[]{Integer.toString(teamNum), Integer.toString(oldMatchID)});
+
+        mDatabase.close();
 
         return teamId;
     }
@@ -208,6 +198,7 @@ public class TeamStatsDataSource {
                 null,
                 TEAM_NUM_COLUMN + " = " + teamNum,
                 null, null, null, TEAM_NUM_COLUMN);
+
         while (rawCursor.moveToNext()) {
             long id = rawCursor.getLong(ID_COLUMN_POSITION);
 //            int teamNum = rawCursor.getInt(TEAM_NUM_COLUMN_POSITION);
@@ -293,6 +284,8 @@ public class TeamStatsDataSource {
                 null, null, null, TEAM_NUM_COLUMN);
 
         count = rawCursor.getCount();
+        rawCursor.close();
+        mDatabase.close();
 
         return count;
     }
@@ -302,10 +295,24 @@ public class TeamStatsDataSource {
         mDatabase.delete(TABLE_NAME, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
     }
 
-    public void deleteTeam(int teamNumber, int matchID) {
+    public void deleteTeam(int teamNumber, int matchID, List<Statistics> stats1) {
         mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        if (!mDatabase.isOpen()) Log.w("DB stats not open", "Database Problem");
+
+        List<Statistics> stats = stats1;
         mDatabase.delete(TABLE_NAME, "teamNum = ?" + " AND " + "MatchID = ?",
                 new String[]{Integer.toString(teamNumber), Integer.toString(matchID)});
+
+
+        int i;
+
+        for (i = (matchID); i < stats.size(); i++) {
+            Statistics statistics = stats.get(i);
+            int oldMatchID = statistics.getMatchID();
+            int newMatchID = oldMatchID - 1;
+            updateMatchID(teamNumber, oldMatchID, newMatchID);
+        }
     }
 
 

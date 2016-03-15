@@ -3,22 +3,54 @@ package com.example.gearbox.scoutingappredux;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsActivity extends AppCompatActivity {
+
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color) {
+        final int count = numberPicker.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = numberPicker.getChildAt(i);
+            if (child instanceof EditText) {
+                try {
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText) child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                } catch (NoSuchFieldException e) {
+                    Log.w("setNumberPickerTextColr", e);
+                } catch (IllegalAccessException e) {
+                    Log.w("setNumberPickerTextColr", e);
+                } catch (IllegalArgumentException e) {
+                    Log.w("setNumberPickerTextColr", e);
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +118,15 @@ public class StatisticsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 TeamStatsDataSource tsds = new TeamStatsDataSource(StatisticsActivity.this);
-                                tsds.deleteTeam(teamNum);
-                                Toast.makeText(StatisticsActivity.this, " Stats for team " + Integer.toString(teamNum)
-                                        + " Successfully Deleted", Toast.LENGTH_SHORT).show();
-                                finish();
+                                List<Statistics> statisticses = new ArrayList<Statistics>();
+                                statisticses = tsds.getTeam(teamNum);
+                                String[] array = new String[statisticses.size()];
+                                int i;
+                                for (i = 0; i < statisticses.size(); i++) {
+                                    array[i] = Integer.toString(statisticses.get(i).getMatchID());
+                                }
+                                LaunchNumberPicker(1, tsds.getCount(teamNum), 1, teamNum, array);
+
                             }
                         }).show();
 
@@ -123,6 +160,54 @@ public class StatisticsActivity extends AppCompatActivity {
         List<Team> team = tds.getTeams();
         ArrayAdapter<Team> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, team);
         lvw.setAdapter(adapter);
+    }
+
+    public NumberPicker LaunchNumberPicker(int min, int max, int setVal, final int teamNum, String[] array) {
+
+        final android.widget.NumberPicker myNumberPicker = new android.widget.NumberPicker(getApplicationContext());
+        myNumberPicker.setMaxValue(max);
+        myNumberPicker.setMinValue(min);
+        myNumberPicker.setValue(setVal);
+        myNumberPicker.setDisplayedValues(array);
+        setNumberPickerTextColor(myNumberPicker, Color.BLACK);
+
+        android.widget.NumberPicker.OnValueChangeListener myValChangedListener = new android.widget.NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(android.widget.NumberPicker picker, int oldVal, int newVal) {
+            }
+        };
+
+        myNumberPicker.setOnValueChangedListener(myValChangedListener);
+
+        new android.support.v7.app.AlertDialog.Builder(StatisticsActivity.this)
+                .setView(myNumberPicker)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new android.app.AlertDialog.Builder(StatisticsActivity.this)
+                                .setTitle("Confirm")
+                                .setMessage("Are you sure? MATCH# " + myNumberPicker.getValue())
+                                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        TeamStatsDataSource tsds = new TeamStatsDataSource(StatisticsActivity.this);
+                                        tsds.deleteTeam(teamNum, myNumberPicker.getValue(), tsds.getTeam(teamNum));
+                                        Toast.makeText(StatisticsActivity.this, " Stats for team " + Integer.toString(teamNum)
+                                                + " Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                }).show();
+                    }
+                })
+                .show();
+
+        return myNumberPicker;
     }
 
 }

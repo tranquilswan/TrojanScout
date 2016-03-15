@@ -41,8 +41,11 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         final int matches = tsds.getCount(teamNum);
         int i;
         List<String> list = new ArrayList<>();
-        for (i = 1; i <= matches; i++) {
-            list.add(Integer.toString(i));
+        List<Statistics> sList = new ArrayList<>();
+        sList = tsds.getTeam(teamNum);
+
+        for (i = 0; i < sList.size(); i++) {
+            list.add(Integer.toString(sList.get(i).getMatchID()));
         }
 
         if (matches > 1) {
@@ -121,9 +124,12 @@ public class ViewStatisticsActivity extends AppCompatActivity {
 
         if (itemText.equals("Average")) {
 
+            List<Statistics> statList = new ArrayList<>();
+            statList = tsds.getTeam(teamNum);
+
             int counter;
-            for (counter = 1; counter <= matches; counter++) {
-                Statistics teamStats = tsds.getTeam(teamNum, counter);
+            for (counter = 0; counter < statList.size(); counter++) {
+                Statistics teamStats = statList.get(counter);
 
                 Shots = Shots + teamStats.getTotalShots();
                 LowGoals = LowGoals + teamStats.getLowGoals();
@@ -137,7 +143,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
                 RockWall = RockWall + teamStats.getRockWallCrosses();
                 RoughTerrain = RoughTerrain + teamStats.getRoughTerrainCrosses();
                 DrawBridge = DrawBridge + teamStats.getDrawBridgeCrosses();
-                Comments = Comments + teamStats.getmComments() + "\n\n";
+                Comments = Comments + teamStats.getmComments() + "\n";
 
                 if (teamStats.getTotalShots() != 0) {
                     Accuracy = Accuracy + ((((float) teamStats.getLowGoals() + (float) teamStats.getHighGoals()) / (float) teamStats.getTotalShots()) * 100);
