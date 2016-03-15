@@ -110,7 +110,13 @@ public class StatisticsActivity extends AppCompatActivity {
                         .setNeutralButton("View Stats", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                TeamStatsDataSource tsds = new TeamStatsDataSource(StatisticsActivity.this);
+                                if (tsds.getCount(teamNum) != 0)
                                 LaunchViewStats(teamNum, teamName);
+
+                                else {
+                                    Toast.makeText(StatisticsActivity.this, "No Data Exists", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .setNegativeButton("Delete Stats", new DialogInterface.OnClickListener() {
@@ -119,13 +125,18 @@ public class StatisticsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 TeamStatsDataSource tsds = new TeamStatsDataSource(StatisticsActivity.this);
                                 List<Statistics> statisticses = new ArrayList<Statistics>();
-                                statisticses = tsds.getTeam(teamNum);
-                                String[] array = new String[statisticses.size()];
-                                int i;
-                                for (i = 0; i < statisticses.size(); i++) {
-                                    array[i] = Integer.toString(statisticses.get(i).getMatchID());
+                                if (tsds.getCount(teamNum) != 0) {
+                                    statisticses = tsds.getTeam(teamNum);
+                                    String[] array = new String[statisticses.size()];
+                                    int i;
+                                    for (i = 0; i < statisticses.size(); i++) {
+                                        array[i] = Integer.toString(statisticses.get(i).getMatchID());
+                                    }
+                                    LaunchNumberPicker(1, tsds.getCount(teamNum), 1, teamNum, array);
+                                } else {
+                                    Toast.makeText(StatisticsActivity.this, "No Data Exists", Toast.LENGTH_SHORT).show();
                                 }
-                                LaunchNumberPicker(1, tsds.getCount(teamNum), 1, teamNum, array);
+
 
                             }
                         }).show();

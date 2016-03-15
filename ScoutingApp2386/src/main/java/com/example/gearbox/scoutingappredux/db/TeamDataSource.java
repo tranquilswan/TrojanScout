@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class TeamDataSource {
     public static final String TABLE_NAME = "Team";
+    public static final String TABLE_NAME_STATISTICS = "TeamStats";
     public static final String ID_COLUMN = "_ID";
     public static final int ID_COLUMN_POSITION = 0;
     public static final String TEAM_NUM_COLUMN = "teamNum";
@@ -236,5 +237,6 @@ public class TeamDataSource {
     public void deleteTeam(int teamNumber){
         mDatabase = mDbOpenHelper.getWritableDatabase();
         mDatabase.delete(TABLE_NAME, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
+        mDatabase.delete(TABLE_NAME_STATISTICS, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
     }
 }
