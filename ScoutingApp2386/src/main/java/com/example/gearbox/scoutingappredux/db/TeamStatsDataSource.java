@@ -302,5 +302,11 @@ public class TeamStatsDataSource {
         mDatabase.delete(TABLE_NAME, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
     }
 
+    public void deleteTeam(int teamNumber, int matchID) {
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+        mDatabase.delete(TABLE_NAME, "teamNum = ?" + " AND " + "MatchID = ?",
+                new String[]{Integer.toString(teamNumber), Integer.toString(matchID)});
+    }
+
 
 }

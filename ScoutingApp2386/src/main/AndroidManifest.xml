@@ -78,6 +78,7 @@
             android:name=".ViewStatisticsActivity"
             android:label="@string/title_activity_view_statistics"
             android:parentActivityName=".AddStatistics"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

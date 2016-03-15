@@ -11,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
+import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.util.List;
 
@@ -83,7 +85,11 @@ public class StatisticsActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                TeamStatsDataSource tsds = new TeamStatsDataSource(StatisticsActivity.this);
+                                tsds.deleteTeam(teamNum);
+                                Toast.makeText(StatisticsActivity.this, " Stats for team " + Integer.toString(teamNum)
+                                        + " Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         }).show();
 
