@@ -1,5 +1,6 @@
 package com.example.gearbox.scoutingappredux;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -274,6 +275,16 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             tvComments.setText("Comments: " + Comments);
 
         }
+    }
+
+    public void LaunchPitInfo(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("action", "View");
+        bundle.putInt("teamNum", teamNum);
+
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
 }

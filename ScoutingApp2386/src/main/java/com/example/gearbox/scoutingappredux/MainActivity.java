@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (verCode < minVersionThreshold) {
                 new AlertDialog.Builder(this)
                         .setTitle("Wrong App Version")
+                        .setCancelable(false)
                         .setMessage("The current app version is below the minimum required version. Please update the app")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -78,9 +79,31 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
 
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG).commit();
-        setContentView(R.layout.activity_main);
+        if (getIntent().hasExtra("action")) {
+            String action = getIntent().getExtras().getString("action");
+            int teamNum = getIntent().getExtras().getInt("teamNum");
+
+            if (action.equals("View")) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("updateTeam", "update");
+                bundle.putInt("teamNum", teamNum);
+
+                AddTeamFragment atf = new AddTeamFragment();
+                atf.setArguments(bundle);
+
+                android.app.FragmentManager fm = getFragmentManager();
+                fm.beginTransaction()
+                        .replace(R.id.fragContainer, atf, AddTeamFragment.TAG)
+                        .commit();
+                setContentView(R.layout.activity_main);
+            }
+        } else {
+            FragmentManager fm = getFragmentManager();
+            fm.beginTransaction().replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG).commit();
+            setContentView(R.layout.activity_main);
+        }
+
     }
 
     @Override

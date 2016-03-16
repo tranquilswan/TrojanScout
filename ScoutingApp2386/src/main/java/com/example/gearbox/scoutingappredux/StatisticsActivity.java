@@ -192,6 +192,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         new android.support.v7.app.AlertDialog.Builder(StatisticsActivity.this)
                 .setView(myNumberPicker)
+                .setTitle("Select Match# to Delete")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

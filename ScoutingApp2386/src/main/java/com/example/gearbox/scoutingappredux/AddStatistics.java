@@ -132,7 +132,10 @@ public class AddStatistics extends AppCompatActivity {
 
         myNumberPicker.setOnValueChangedListener(myValChangedListener);
 
-        new AlertDialog.Builder(AddStatistics.this).setView(myNumberPicker).show();
+        new AlertDialog.Builder(AddStatistics.this).
+                setView(myNumberPicker)
+                .setTitle("Change Value")
+                .show();
     }
 
     //VOID COMMENT

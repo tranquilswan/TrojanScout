@@ -120,6 +120,7 @@ public class AddTeamFragment extends Fragment {
         Bundle infoBund = getArguments();
         String updateFlag = infoBund.getString("updateTeam");
         if (updateFlag.equals("update")) {
+
             int teamNum = infoBund.getInt("teamNum");
 
             edtTeamNum.setText(Integer.toString(teamNum));
