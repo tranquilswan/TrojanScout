@@ -26,6 +26,13 @@
         android:text="Statistics" />
 
     <Button
+        android:id="@+id/btnWeights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="StartWeightsActivity"
+        android:text="Weights" />
+
+    <Button
         android:id="@+id/btnViewTeams"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

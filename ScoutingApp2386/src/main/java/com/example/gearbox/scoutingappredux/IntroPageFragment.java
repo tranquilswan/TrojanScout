@@ -122,6 +122,14 @@ public class IntroPageFragment extends Fragment {
             }
         });
 
+        Button btnWeights = (Button) view.findViewById(R.id.btnWeights);
+        btnWeights.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartWeightsActivity(v);
+            }
+        });
+
         lvwListTeams.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -221,6 +229,11 @@ public class IntroPageFragment extends Fragment {
 
     public void StartTeamStatistics(View view) {
         Intent intent = new Intent(getActivity(), StatisticsActivity.class);
+        startActivity(intent);
+    }
+
+    public void StartWeightsActivity(View view) {
+        Intent intent = new Intent(getActivity(), Weights.class);
         startActivity(intent);
     }
 
