@@ -10,4 +10,5 @@
     <string name="title_activity_add_statistics">AddStatistics</string>
     <string name="title_activity_view_statistics">ViewStatisticsActivity</string>
     <string name="title_activity_weights">Weights</string>
+    <string name="title_activity_rankings">Rankings</string>
 </resources>

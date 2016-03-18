@@ -104,6 +104,15 @@ public class IntroPageFragment extends Fragment {
         final ListView lvwListTeams = (ListView) view.findViewById(R.id.lvwExistingTeams);
 
         btnViewTeam = (Button) view.findViewById(R.id.btnViewTeams);
+        Button btnRankings = (Button) view.findViewById(R.id.btnRankings);
+
+        btnRankings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Rankings.class);
+                startActivity(i);
+            }
+        });
         btnViewTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

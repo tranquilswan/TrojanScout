@@ -94,6 +94,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gearbox.scoutingappredux.MainActivity" />
         </activity>
+        <activity
+            android:name=".Rankings"
+            android:label="@string/title_activity_rankings"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.gearbox.scoutingappredux.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
