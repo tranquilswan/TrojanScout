@@ -46,15 +46,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvAutonomousWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_weight="3"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
                 android:id="@+id/tvChallengeWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,13 +72,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bAutonomousWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="Autonomous" />
-
-            <Button
                 android:id="@+id/bChallengeWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,13 +96,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvVoidWeight"
+                android:id="@+id/tvAutonomousWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:layout_weight="3"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
 
             <TextView
                 android:id="@+id/tvLowGoalsWeight"
@@ -147,12 +132,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bVoidWeight"
+                android:id="@+id/bAutonomousWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:backgroundTint="#e4e42c"
-                android:text="Void" />
+                android:text="Autonomous" />
 
             <Button
                 android:id="@+id/bLowGoalsWeight"
@@ -386,6 +370,7 @@
                 android:id="@+id/bExportCSV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="true"
                 android:onClick="GenerateCSV"
                 android:text="Generate CSV File" />
 

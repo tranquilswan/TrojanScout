@@ -5,10 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.gearbox.scoutingappredux.Statistics;
+import com.opencsv.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +60,8 @@ public class TeamStatsDataSource {
     public static final int MATCH_ID_COLUMN_POSITION = 17;
     public static final String AUTONOMOUS_USAGE_COLUMN = "AutonomousUsage";
     public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 18;
+    public static final String SCORE_COLUMN = "Score";
+    public static final int SCORE_COLUMN_POSITION = 19;
 
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
@@ -77,7 +83,8 @@ public class TeamStatsDataSource {
                     LOW_BAR_CROSSES_COLUMN + " INTEGER, " +
                     END_GAME_TYPE_COLUMN + " INTEGER, " +
                     MATCH_ID_COLUMN + " INTEGER, " +
-                    AUTONOMOUS_USAGE_COLUMN + " INTEGER )";
+                    AUTONOMOUS_USAGE_COLUMN + " INTEGER, " +
+                    SCORE_COLUMN + " INTEGER )";
 
 
     private SQLiteOpenHelper mDbOpenHelper;
@@ -123,6 +130,7 @@ public class TeamStatsDataSource {
         cv.put(END_GAME_TYPE_COLUMN, stats.getEndGameType());
         cv.put(AUTONOMOUS_USAGE_COLUMN, stats.getAutonomousUsage());
         cv.put(MATCH_ID_COLUMN, MatchID);
+        cv.put(SCORE_COLUMN, stats.getScore());
 
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
@@ -144,6 +152,23 @@ public class TeamStatsDataSource {
 
         long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?" + " AND " + MATCH_ID_COLUMN + " = ?"
                 , new String[]{Integer.toString(teamNum), Integer.toString(oldMatchID)});
+
+        mDatabase.close();
+
+        return teamId;
+    }
+
+    public long updateScore(int teamNum, int MatchID, int score) {
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+        //cv.put(TEAM_NUM_COLUMN, team.getmTeamNum());
+        cv.put(SCORE_COLUMN, score);
+
+
+        long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?" + " AND " + MATCH_ID_COLUMN + " = ?"
+                , new String[]{Integer.toString(teamNum), Integer.toString(MatchID)});
 
         mDatabase.close();
 
@@ -178,10 +203,11 @@ public class TeamStatsDataSource {
             int endGameType = cursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
             int autonomousUsage = cursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int MatchID = cursor.getInt(MATCH_ID_COLUMN_POSITION);
+            int Score = cursor.getInt(SCORE_COLUMN_POSITION);
 
             stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
                     highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
-                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, MatchID));
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, MatchID, Score));
         }
         cursor.close();
         mDatabase.close();
@@ -219,10 +245,11 @@ public class TeamStatsDataSource {
             int endGameType = rawCursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
             int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
+            int Score = rawCursor.getInt(SCORE_COLUMN_POSITION);
 
             stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
                     highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
-                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID));
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID, Score));
         }
 
         rawCursor.close();
@@ -261,9 +288,10 @@ public class TeamStatsDataSource {
             int endGameType = rawCursor.getInt(END_GAME_TYPE_COLUMN_POSITION);
             int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
+            int Score = rawCursor.getInt(SCORE_COLUMN_POSITION);
             stats = new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
                     highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
-                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID);
+                    defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID, Score);
         }
 
         rawCursor.close();
@@ -313,6 +341,39 @@ public class TeamStatsDataSource {
             int newMatchID = oldMatchID - 1;
             updateMatchID(teamNumber, oldMatchID, newMatchID);
         }
+    }
+
+    public void GenerateCSV() {
+
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+        File dbFile = new File(db.getPath());
+        File exportDir = new File(Environment.getExternalStorageDirectory() + File.separator + "ScoutingCSV");
+        if (!exportDir.exists()) {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "StatisticsExport" + System.currentTimeMillis() + ".csv");
+        try {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            Cursor curCSV = db.rawQuery("SELECT * FROM TeamStats", null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while (curCSV.moveToNext()) {
+                //Which column you want to exprort
+                String arrStr[] = {curCSV.getString(0), curCSV.getString(1), curCSV.getString(2),
+                        curCSV.getString(3), curCSV.getString(4), curCSV.getString(5), curCSV.getString(6)
+                        , curCSV.getString(7), curCSV.getString(8), curCSV.getString(9), curCSV.getString(10)
+                        , curCSV.getString(11), curCSV.getString(12), curCSV.getString(13), curCSV.getString(14)
+                        , curCSV.getString(15), curCSV.getString(16), curCSV.getString(17), curCSV.getString(18)
+                        , curCSV.getString(19)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+        } catch (Exception sqlEx) {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
+        }
+
     }
 
 

@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 
 public class AddStatistics extends AppCompatActivity {
 
+    final static int SCORE_DEFAULT = 0;
     String teamName;
     int teamNum;
 
@@ -215,7 +216,7 @@ public class AddStatistics extends AppCompatActivity {
         Comments = edtComments.getText().toString();
 
         return new Statistics(Autonomous, ChivalDeFrise, DrawBridge, EndGame, HighGoals, LowBar, LowGoals, Comments,
-                Moat, TeamName, TeamNum, PortCullis, Ramparts, RockWall, SallyPort, RoughTerrain, TotalShots);
+                Moat, TeamName, TeamNum, PortCullis, Ramparts, RockWall, SallyPort, RoughTerrain, TotalShots, SCORE_DEFAULT);
 
 
     }

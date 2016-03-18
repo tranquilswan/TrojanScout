@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class AddTeamFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_add_team, container, false);
 
         btnTakePicture = (Button) view.findViewById(R.id.btnTakePicture);
-        EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
+        final EditText edtTeamNum = (EditText) view.findViewById(R.id.edtTeamNum);
         final Button btnSaveTeam = (Button) view.findViewById(R.id.btnSaveTeam);
         Button btnMainMenu = (Button) view.findViewById(R.id.btnMainMenu);
         ImageView imgThumbnail = (ImageView) view.findViewById(R.id.imgThumbnail);
@@ -318,13 +319,19 @@ public class AddTeamFragment extends Fragment {
 
                         TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
 
-                        teamDS.saveTeam(team);
+                        if (!teamDS.CheckIfTeamExists(Integer.toString(team.getmTeamNum()))) {
 
-                        Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
+                            teamDS.saveTeam(team);
 
-                        fm.beginTransaction()
-                                .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
-                                .commit();
+                            Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " added to database", Toast.LENGTH_SHORT).show();
+
+                            fm.beginTransaction()
+                                    .replace(R.id.fragContainer, new IntroPageFragment(), IntroPageFragment.TAG)
+                                    .commit();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Team " + team.getmTeamNum() + " already exists in Database", Toast.LENGTH_SHORT).show();
+                            MovePicture(outputFileLoc.getAbsolutePath(), team.getmTeamNum());
+                        }
                     } else {
                         Toast.makeText(getActivity(), "Please take a robot picture", Toast.LENGTH_SHORT).show();
                     }
@@ -510,7 +517,7 @@ public class AddTeamFragment extends Fragment {
         //The directory path can be used to save in the db...
 
         EditText edtTeamNum = (EditText) getView().findViewById(R.id.edtTeamNum);
-        String fileName = edtTeamNum.getText().toString() + ".jpg";
+        String fileName = edtTeamNum.getText().toString() + "-" + System.currentTimeMillis() + ".jpg";
 
 
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -539,4 +546,21 @@ public class AddTeamFragment extends Fragment {
 
         }
     }
+
+    private void MovePicture(String fileLoc, int teamNum) {
+        String finalFileName = Integer.toString(teamNum) + "-" + System.currentTimeMillis() + ".jpg";
+        File SourceFile = new File(fileLoc);
+        File FinalDirectory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImagesDeletedBackup");
+        File finalFile = new File(FinalDirectory, finalFileName);
+
+        if (!FinalDirectory.isDirectory()) FinalDirectory.mkdirs();
+
+        if (SourceFile.renameTo(finalFile)) {
+            Log.v(TAG, "Move file successful.");
+        } else {
+            Log.v(TAG, "Move file failed.");
+        }
+
+    }
+
 }
