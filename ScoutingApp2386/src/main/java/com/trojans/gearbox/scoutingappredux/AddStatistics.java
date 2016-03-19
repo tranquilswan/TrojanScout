@@ -21,7 +21,7 @@ import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 import java.lang.reflect.Field;
 
 public class AddStatistics extends AppCompatActivity {
-
+    //VOID COMMENT 19 March 2016
     final static int SCORE_DEFAULT = 0;
     String teamName;
     int teamNum;
