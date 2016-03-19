@@ -239,4 +239,16 @@ public class TeamDataSource {
         mDatabase.delete(TABLE_NAME, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
         mDatabase.delete(TABLE_NAME_STATISTICS, "teamNum = ?", new String[]{Integer.toString(teamNumber)});
     }
+
+    public boolean CheckIfTeamExists(String teamNum) {
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+        String Query = "Select * from " + TABLE_NAME + " where " + TEAM_NUM_COLUMN + " = " + teamNum;
+        Cursor cursor = mDatabase.rawQuery(Query, null);
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
 }

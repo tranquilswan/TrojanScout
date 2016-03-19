@@ -22,49 +22,49 @@
         android:text="Scouting App Trojans 2386"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="28dp"
-        android:text="Help"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <!--<TextView-->
+    <!--android:id="@+id/textView2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/textView"-->
+    <!--android:layout_marginTop="28dp"-->
+    <!--android:text="Help"-->
+    <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="12dp"
-        android:text="1) Use Add Team button to add a new team to the database."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <!--<TextView-->
+    <!--android:id="@+id/textView3"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/textView2"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:text="1) Use Add Team button to add a new team to the database."-->
+    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="12dp"
-        android:text="2) Use the View Teams button to view the teams in the datatbase. Hold on a team number to view or update the data."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <!--<TextView-->
+    <!--android:id="@+id/textView4"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/textView3"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:text="2) Use the View Teams button to view the teams in the datatbase. Hold on a team number to view or update the data."-->
+    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="12dp"
-        android:text="3) Use the trade data button to send or recieve database data from another device. Images will not be transferred."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <!--<TextView-->
+    <!--android:id="@+id/textView5"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/textView4"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:text="3) Use the trade data button to send or recieve database data from another device. Images will not be transferred."-->
+    <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
     <TextView
         android:id="@+id/textView6"
@@ -72,7 +72,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView5"
         android:layout_marginTop="35dp"
         android:text="About"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -87,6 +86,16 @@
         android:layout_marginTop="12dp"
         android:text="Made by Trojans 2386: Burlington Central High School. "
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bDeleteBackupImages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:onClick="DeleteBackupImages"
+        android:text="Delete Backup Images" />
 
 
 </RelativeLayout>

@@ -87,6 +87,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         TextView tvRockRough = (TextView) findViewById(R.id.tvRockRough);
         TextView tvDraw = (TextView) findViewById(R.id.tvDraw);
         TextView tvComments = (TextView) findViewById(R.id.tvStatsViewComments);
+        TextView tvScore = (TextView) findViewById(R.id.tvScore);
 
         float Accuracy = 0f;
         float Misses = 0f;
@@ -105,6 +106,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         float RockWall = 0;
         float RoughTerrain = 0;
         float DrawBridge = 0;
+        float Score = 0;
         String AccuracyAsString = "";
 
         int AccuracyInteger;
@@ -121,6 +123,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         int RockWallInteger;
         int RoughTerrainInteger;
         int DrawBridgeInteger;
+        int ScoreInteger;
 
 
         if (itemText.equals("Average")) {
@@ -132,6 +135,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             for (counter = 0; counter < statList.size(); counter++) {
                 Statistics teamStats = statList.get(counter);
 
+                Score = Score + teamStats.getScore();
                 Shots = Shots + teamStats.getTotalShots();
                 LowGoals = LowGoals + teamStats.getLowGoals();
                 HighGoals = HighGoals + teamStats.getHighGoals();
@@ -166,6 +170,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             RockWall = RockWall / matches;
             RoughTerrain = RoughTerrain / matches;
             DrawBridge = DrawBridge / matches;
+            Score = Score / matches;
 
 
             if (Accuracy == 0f) {
@@ -191,6 +196,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             RockWallInteger = Math.round(RockWall);
             RoughTerrainInteger = Math.round(RoughTerrain);
             DrawBridgeInteger = Math.round(DrawBridge);
+            ScoreInteger = Math.round(Score);
 
             tvAccuracy.setText("Accuracy: " + AccuracyAsString + "  Misses: " + Integer.toString(MissesInteger));
             tvAutoAndEnd.setText("Autonomous: NA" + "  EndGame: NA");
@@ -202,6 +208,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             tvRockRough.setText("Rock Wall: " + RockWallInteger + "  Rough Terrain: " + RoughTerrainInteger);
             tvDraw.setText("DrawBridge: " + DrawBridgeInteger);
             tvComments.setText("Comments: " + Comments);
+            tvScore.setText("Score : " + ScoreInteger);
 
         } else {
             Statistics teamStats = tsds.getTeam(this.teamNum, Integer.parseInt(itemText));
@@ -220,6 +227,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             RoughTerrain = teamStats.getRoughTerrainCrosses();
             DrawBridge = teamStats.getDrawBridgeCrosses();
             Comments = teamStats.getmComments();
+            Score = teamStats.getScore();
 
 
             if (Shots != 0) {
@@ -262,6 +270,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             RockWallInteger = Math.round(RockWall);
             RoughTerrainInteger = Math.round(RoughTerrain);
             DrawBridgeInteger = Math.round(DrawBridge);
+            ScoreInteger = Math.round(Score);
 
             tvAccuracy.setText("Accuracy: " + AccuracyAsString + "  Misses: " + Integer.toString(MissesInteger));
             tvAutoAndEnd.setText("Autonomous: " + Autonomous + "  EndGame: " + EndGame);
@@ -273,6 +282,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             tvRockRough.setText("Rock Wall: " + RockWallInteger + "  Rough Terrain: " + RoughTerrainInteger);
             tvDraw.setText("DrawBridge: " + DrawBridgeInteger);
             tvComments.setText("Comments: " + Comments);
+            tvScore.setText("Score : " + ScoreInteger);
 
         }
     }
@@ -284,6 +294,11 @@ public class ViewStatisticsActivity extends AppCompatActivity {
 
         Intent i = new Intent(this, MainActivity.class);
         i.putExtras(bundle);
+        startActivity(i);
+    }
+
+    public void LaunchRankings(View view) {
+        Intent i = new Intent(this, Rankings.class);
         startActivity(i);
     }
 

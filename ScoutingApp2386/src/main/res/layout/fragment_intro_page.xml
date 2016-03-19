@@ -13,17 +13,26 @@
         android:text="Add Team" />
 
     <Button
-        android:id="@+id/btnTradeData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Trade Data" />
-
-    <Button
         android:id="@+id/btnTeamStats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Statistics" />
+
+    <Button
+        android:id="@+id/btnWeights"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="StartWeightsActivity"
+        android:text="Weights" />
+
+    <Button
+        android:id="@+id/btnRankings"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Rankings" />
 
     <Button
         android:id="@+id/btnViewTeams"

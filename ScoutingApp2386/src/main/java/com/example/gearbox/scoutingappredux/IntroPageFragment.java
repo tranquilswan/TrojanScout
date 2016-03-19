@@ -65,7 +65,7 @@ public class IntroPageFragment extends Fragment {
 
         final Button btnTeamStats = (Button) view.findViewById(R.id.btnTeamStats);
 
-        final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
+        //final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
 
         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION};
         if (!hasPermissions(getActivity(), PERMISSIONS)) {
@@ -104,6 +104,15 @@ public class IntroPageFragment extends Fragment {
         final ListView lvwListTeams = (ListView) view.findViewById(R.id.lvwExistingTeams);
 
         btnViewTeam = (Button) view.findViewById(R.id.btnViewTeams);
+        Button btnRankings = (Button) view.findViewById(R.id.btnRankings);
+
+        btnRankings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Rankings.class);
+                startActivity(i);
+            }
+        });
         btnViewTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +128,14 @@ public class IntroPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StartHelpActivity(v);
+            }
+        });
+
+        Button btnWeights = (Button) view.findViewById(R.id.btnWeights);
+        btnWeights.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartWeightsActivity(v);
             }
         });
 
@@ -159,8 +176,9 @@ public class IntroPageFragment extends Fragment {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 TeamDataSource tds = new TeamDataSource(getActivity());
+                                                Team t = tds.getTeam(teamNum);
                                                 tds.deleteTeam(teamNum);
-                                                MovePicture(teamNum);
+                                                MovePicture(t.getmPicLoc(), teamNum);
                                                 IntroPageFragment ipf = new IntroPageFragment();
                                                 fm.beginTransaction().replace(R.id.fragContainer, ipf, IntroPageFragment.TAG)
                                                         .commit();
@@ -184,16 +202,15 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    private void MovePicture(Integer teamNum) {
-        String fileName = teamNum.toString() + ".jpg";
-        File SourceDirectory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImages");
+    private void MovePicture(String fileLoc, int teamNum) {
+        String finalFileName = Integer.toString(teamNum) + "-" + System.currentTimeMillis() + ".jpg";
+        File SourceFile = new File(fileLoc);
         File FinalDirectory = new File(Environment.getExternalStorageDirectory() + File.separator + "RobotImagesDeletedBackup");
-        File sourceFile = new File(SourceDirectory, fileName);
-        File finalFile = new File(FinalDirectory, fileName);
+        File finalFile = new File(FinalDirectory, finalFileName);
 
         if (!FinalDirectory.isDirectory()) FinalDirectory.mkdirs();
 
-        if (sourceFile.renameTo(finalFile)) {
+        if (SourceFile.renameTo(finalFile)) {
             Log.v(TAG, "Move file successful.");
         } else {
             Log.v(TAG, "Move file failed.");
@@ -221,6 +238,11 @@ public class IntroPageFragment extends Fragment {
 
     public void StartTeamStatistics(View view) {
         Intent intent = new Intent(getActivity(), StatisticsActivity.class);
+        startActivity(intent);
+    }
+
+    public void StartWeightsActivity(View view) {
+        Intent intent = new Intent(getActivity(), Weights.class);
         startActivity(intent);
     }
 

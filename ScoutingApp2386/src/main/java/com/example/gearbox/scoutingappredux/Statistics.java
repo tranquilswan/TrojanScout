@@ -45,10 +45,12 @@ public class Statistics implements Serializable {
 
     private int MatchID;
 
+    private int Score;
+
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
                       int highGoals, int lowBarCrosses, int lowGoals, String mComments, long mDBid, int moatCrosses,
                       String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
-                      int sallyPortCrosses, int roughTerrainCrosses, int shots, int MatchID) {
+                      int sallyPortCrosses, int roughTerrainCrosses, int shots, int MatchID, int score) {
         AutonomousUsage = autonomousUsage;
         ChivalDeFriseCrosses = chivalDeFriseCrosses;
         DrawBridgeCrosses = drawBridgeCrosses;
@@ -68,13 +70,14 @@ public class Statistics implements Serializable {
         RoughTerrainCrosses = roughTerrainCrosses;
         TotalShots = shots;
         this.MatchID = MatchID;
+        this.Score = score;
 
     }
 
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
                       int highGoals, int lowBarCrosses, int lowGoals, String mComments, int moatCrosses,
                       String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
-                      int sallyPortCrosses, int roughTerrainCrosses, int shots) {
+                      int sallyPortCrosses, int roughTerrainCrosses, int shots, int score) {
         AutonomousUsage = autonomousUsage;
         ChivalDeFriseCrosses = chivalDeFriseCrosses;
         DrawBridgeCrosses = drawBridgeCrosses;
@@ -196,6 +199,14 @@ public class Statistics implements Serializable {
 
     public void setmTeamNum(int mTeamNum) {
         this.mTeamNum = mTeamNum;
+    }
+
+    public int getScore() {
+        return Score;
+    }
+
+    public void setScore(int score) {
+        Score = score;
     }
 
     public int getPortCullisCrosses() {
