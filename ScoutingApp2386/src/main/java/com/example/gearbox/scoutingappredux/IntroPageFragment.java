@@ -65,7 +65,7 @@ public class IntroPageFragment extends Fragment {
 
         final Button btnTeamStats = (Button) view.findViewById(R.id.btnTeamStats);
 
-        final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
+        //final Button btnTradeData = (Button) view.findViewById(R.id.btnTradeData);
 
         String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA, android.Manifest.permission.ACCESS_FINE_LOCATION};
         if (!hasPermissions(getActivity(), PERMISSIONS)) {

@@ -1,12 +1,16 @@
 package com.example.gearbox.scoutingappredux;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
 import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
@@ -76,22 +80,39 @@ public class Rankings extends AppCompatActivity {
         Log.v("Rankings", lhm.toString());
 
 
-        ListView lvRankings = (ListView) findViewById(R.id.lvRankings);
+        final ListView lvRankings = (ListView) findViewById(R.id.lvRankings);
         TextView tvDisplay100 = (TextView) findViewById(R.id.tvDisplay100);
         lvRankings.setEmptyView(tvDisplay100);
 
-        List<Integer> keyList = new ArrayList<Integer>(lhm.keySet());
+        final List<Integer> keyList = new ArrayList<Integer>(lhm.keySet());
         List<Integer> valueList = new ArrayList<Integer>(lhm.values());
         List<String> adapterList = new ArrayList<>();
 
 
-        int er;
-        for (er = 0; er < keyList.size(); er++) {
-            adapterList.add((er + 1) + "  Team # " + keyList.get(er) + "       Score : " + valueList.get(er));
+        int iterator;
+        for (iterator = 0; iterator < keyList.size(); iterator++) {
+            adapterList.add((iterator + 1) + " | " + "  Team # |  " + keyList.get(iterator) + "      | Score : " + valueList.get(iterator));
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, adapterList);
         lvRankings.setAdapter(adapter);
+
+        lvRankings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tNum = lvRankings.getItemAtPosition(position).toString();
+                String[] tNumSplit = tNum.split(" | ");
+                final Integer teamNum = Integer.parseInt(tNumSplit[8]);//make this an int
+                TeamStatsDataSource tsds = new TeamStatsDataSource(getApplicationContext());
+                if (tsds.getTeam(teamNum, 1) != null) {
+                    String teamName = tsds.getTeam(teamNum, 1).getmTeamName();
+                    LaunchViewStats(teamNum, teamName);
+                } else {
+                    Toast.makeText(Rankings.this, "Team Stats Do NOT Exist", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 
@@ -124,6 +145,15 @@ public class Rankings extends AppCompatActivity {
 
         }
         return sortedMap;
+    }
+
+    private void LaunchViewStats(Integer teamNum, String teamName) {
+        Bundle bundle = new Bundle();
+        bundle.putString("teamName", teamName);
+        bundle.putInt("teamNum", teamNum);
+        Intent i = new Intent(this, ViewStatisticsActivity.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
 }

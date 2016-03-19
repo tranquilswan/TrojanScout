@@ -28,6 +28,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.gearbox.scoutingappredux.db.TeamDataSource;
+import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.io.File;
 
@@ -240,6 +241,8 @@ public class AddTeamFragment extends Fragment {
                     Team team = createTeam();
                     TeamDataSource teamDS = new TeamDataSource(getActivity().getApplicationContext());
                     teamDS.updateTeam(team);
+                    TeamStatsDataSource teamStatsDataSource = new TeamStatsDataSource(getActivity().getApplicationContext());
+                    teamStatsDataSource.updateTeamName(team.getmTeamName(), team.getmTeamNum());
 
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()

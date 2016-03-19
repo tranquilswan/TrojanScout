@@ -175,6 +175,23 @@ public class TeamStatsDataSource {
         return teamId;
     }
 
+    public long updateTeamName(String teamName, int teamNum) {
+        mDatabase = mDbOpenHelper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+        //cv.put(TEAM_NUM_COLUMN, team.getmTeamNum());
+        cv.put(TEAM_NAME_COLUMN, teamName);
+
+
+        long teamId = mDatabase.update(TABLE_NAME, cv, TEAM_NUM_COLUMN + " = ?"
+                , new String[]{Integer.toString(teamNum)});
+
+        mDatabase.close();
+
+        return teamId;
+    }
+
     //Could be unstable
     public List<Statistics> getTeams() {
         ArrayList<Statistics> stats = new ArrayList<>();
@@ -368,6 +385,23 @@ public class TeamStatsDataSource {
                         , curCSV.getString(19)};
                 csvWrite.writeNext(arrStr);
             }
+//            SharedPreferences prefs = getSharedPreferences("Weights", MODE_PRIVATE);
+//            int ChallengeWeight = prefs.getInt("ChallengeWeight", 0);
+//            int AutonomousWeight = prefs.getInt("AutonomousWeight", 0);
+//            int ScaleWeight = prefs.getInt("ScaleWeight", 0);
+//            int LowGoalWeight = prefs.getInt("LowGoalWeight", 0);
+//            int HighGoalWeight = prefs.getInt("HighGoalWeight", 0);
+//            int ChivalDeFriseWeight = prefs.getInt("ChivalDeFriseWeight", 0);
+//            int MoatWeight = prefs.getInt("MoatWeight", 0);
+//            int RampartsWeight = prefs.getInt("RampartsWeight", 0);
+//            int LowBarWeight = prefs.getInt("LowBarWeight", 0);
+//            int SallyPortWeight = prefs.getInt("SallyPortWeight", 0);
+//            int PortCullisWeight = prefs.getInt("PortCullisWeight", 0);
+//            int RockWallWeight = prefs.getInt("RockWallWeight", 0);
+//            int RoughTerrainWeight = prefs.getInt("RoughTerrainWeight", 0);
+//            int DrawBridgeWeight = prefs.getInt("DrawBridgeWeight", 0);
+//            String arrStrHeadings[] = {"Weights" , };
+//            String arrStr[] = {};
             csvWrite.close();
             curCSV.close();
         } catch (Exception sqlEx) {
@@ -375,6 +409,5 @@ public class TeamStatsDataSource {
         }
 
     }
-
 
 }

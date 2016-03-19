@@ -270,6 +270,8 @@ public class Weights extends AppCompatActivity {
             Button bGenerateCSV = (Button) findViewById(R.id.bExportCSV);
             bGenerateCSV.setEnabled(true);
             Toast.makeText(getApplicationContext(), "Scores Calculated and Saved in DB", Toast.LENGTH_SHORT).show();
+
+
         } else {
             Toast.makeText(getApplicationContext(), "Balance is not 0", Toast.LENGTH_SHORT).show();
         }

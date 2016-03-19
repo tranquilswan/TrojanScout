@@ -297,4 +297,9 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void LaunchRankings(View view) {
+        Intent i = new Intent(this, Rankings.class);
+        startActivity(i);
+    }
+
 }
