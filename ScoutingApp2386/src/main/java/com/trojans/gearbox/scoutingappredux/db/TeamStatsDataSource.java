@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux.db;
+package com.trojans.gearbox.scoutingappredux.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.gearbox.scoutingappredux.Statistics;
 import com.opencsv.CSVWriter;
+import com.trojans.gearbox.scoutingappredux.Statistics;
 
 import java.io.File;
 import java.io.FileWriter;

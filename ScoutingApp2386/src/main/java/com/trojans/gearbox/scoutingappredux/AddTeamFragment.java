@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 
 import android.app.Activity;
@@ -27,8 +27,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.io.File;
 

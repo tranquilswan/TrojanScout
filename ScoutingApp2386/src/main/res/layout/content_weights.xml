@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.example.gearbox.scoutingappredux.AddStatistics"
+        tools:context="com.trojans.gearbox.scoutingappredux.AddStatistics"
         tools:showIn="@layout/activity_add_statistics">
 
         <LinearLayout

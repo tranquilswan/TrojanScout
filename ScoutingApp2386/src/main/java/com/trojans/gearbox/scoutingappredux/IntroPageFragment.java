@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 
 import android.app.AlertDialog;
@@ -21,7 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.gearbox.scoutingappredux.db.TeamDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamDataSource;
 
 import java.io.File;
 import java.util.List;

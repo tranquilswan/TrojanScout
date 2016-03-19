@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.util.ArrayList;
 import java.util.Collections;
