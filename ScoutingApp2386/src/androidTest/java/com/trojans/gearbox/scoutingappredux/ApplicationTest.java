@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

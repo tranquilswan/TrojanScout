@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.gearbox.scoutingappredux.IntroPageFragment">
+    tools:context="com.trojans.gearbox.scoutingappredux.IntroPageFragment">
 
     <Button
         android:id="@+id/btnAddTeam"

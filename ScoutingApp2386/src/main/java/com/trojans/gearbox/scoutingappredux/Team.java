@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import java.io.Serializable;
 //xfgx

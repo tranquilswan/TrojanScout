@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux.db;
+package com.trojans.gearbox.scoutingappredux.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

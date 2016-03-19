@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,8 +18,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.TeamDataSource;
-import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

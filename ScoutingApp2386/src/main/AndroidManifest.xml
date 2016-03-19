@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gearbox.scoutingappredux">
+    package="com.trojans.gearbox.scoutingappredux">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.trojans.gearbox.scoutingappredux.MainActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -46,63 +46,63 @@
         <!-- android:value="com.example.gearbox.scoutingappredux.MainActivity" /> -->
         <!-- </activity> -->
         <activity
-            android:name=".HelpScreen"
+            android:name="com.trojans.gearbox.scoutingappredux.HelpScreen"
             android:label="@string/title_activity_help_screen"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.MainActivity" />
+                android:value="com.trojans.gearbox.scoutingappredux.MainActivity" />
         </activity>
         <activity
-            android:name=".StatisticsActivity"
+            android:name="com.trojans.gearbox.scoutingappredux.StatisticsActivity"
             android:label="@string/title_activity_statistics"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.MainActivity" />
+                android:value="com.trojans.gearbox.scoutingappredux.MainActivity" />
         </activity>
         <activity
-            android:name=".AddStatistics"
+            android:name="com.trojans.gearbox.scoutingappredux.AddStatistics"
             android:label="@string/title_activity_add_statistics"
-            android:parentActivityName=".StatisticsActivity"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.StatisticsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.StatisticsActivity" />
+                android:value="com.trojans.gearbox.scoutingappredux.StatisticsActivity" />
         </activity>
         <activity
-            android:name=".ViewStatisticsActivity"
+            android:name="com.trojans.gearbox.scoutingappredux.ViewStatisticsActivity"
             android:label="@string/title_activity_view_statistics"
-            android:parentActivityName=".AddStatistics"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.AddStatistics"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.AddStatistics" />
+                android:value="com.trojans.gearbox.scoutingappredux.AddStatistics" />
         </activity>
         <activity
-            android:name=".Weights"
+            android:name="com.trojans.gearbox.scoutingappredux.Weights"
             android:label="@string/title_activity_weights"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.MainActivity" />
+                android:value="com.trojans.gearbox.scoutingappredux.MainActivity" />
         </activity>
         <activity
-            android:name=".Rankings"
+            android:name="com.trojans.gearbox.scoutingappredux.Rankings"
             android:label="@string/title_activity_rankings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.trojans.gearbox.scoutingappredux.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.gearbox.scoutingappredux.MainActivity" />
+                android:value="com.trojans.gearbox.scoutingappredux.MainActivity" />
         </activity>
     </application>
 

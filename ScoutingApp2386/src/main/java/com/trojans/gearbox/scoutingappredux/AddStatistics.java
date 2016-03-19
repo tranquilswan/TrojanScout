@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.lang.reflect.Field;
 

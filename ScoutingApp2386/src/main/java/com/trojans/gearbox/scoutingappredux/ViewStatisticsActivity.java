@@ -1,4 +1,4 @@
-package com.example.gearbox.scoutingappredux;
+package com.trojans.gearbox.scoutingappredux;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.gearbox.scoutingappredux.db.TeamStatsDataSource;
+import com.trojans.gearbox.scoutingappredux.db.TeamStatsDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
