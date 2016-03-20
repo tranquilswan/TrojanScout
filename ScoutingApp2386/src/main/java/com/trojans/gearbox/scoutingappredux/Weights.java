@@ -97,7 +97,7 @@ public class Weights extends AppCompatActivity {
         final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
         final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
 
-        tvLowGoalsWeight.setText(Integer.toString(AutonomousWeight));
+        tvLowGoalsWeight.setText(Integer.toString(LowGoalWeight));
         tvHighGoalWeight.setText(Integer.toString(HighGoalWeight));
         tvRampartWeight.setText(Integer.toString(RampartsWeight));
         tvDrawBridgeWeight.setText(Integer.toString(DrawBridgeWeight));
