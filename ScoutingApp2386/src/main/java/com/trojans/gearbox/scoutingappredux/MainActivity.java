@@ -2,6 +2,7 @@ package com.trojans.gearbox.scoutingappredux;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -18,7 +19,13 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "IntroPageFragment";
+
+    public static Context contextOfApplication;
 //    private final int REQUEST_ENABLE_BT = 1;
+
+    public static Context getContextOfApplication() {
+        return contextOfApplication;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        contextOfApplication = getApplicationContext();
 
         final int minVersionThreshold = 2;
 

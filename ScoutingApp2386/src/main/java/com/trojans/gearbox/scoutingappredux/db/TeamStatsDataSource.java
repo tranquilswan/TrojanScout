@@ -2,6 +2,7 @@ package com.trojans.gearbox.scoutingappredux.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,6 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.opencsv.CSVWriter;
+import com.trojans.gearbox.scoutingappredux.MainActivity;
 import com.trojans.gearbox.scoutingappredux.Statistics;
 
 import java.io.File;
@@ -385,29 +387,59 @@ public class TeamStatsDataSource {
                         , curCSV.getString(19)};
                 csvWrite.writeNext(arrStr);
             }
-//            SharedPreferences prefs = getSharedPreferences("Weights", MODE_PRIVATE);
-//            int ChallengeWeight = prefs.getInt("ChallengeWeight", 0);
-//            int AutonomousWeight = prefs.getInt("AutonomousWeight", 0);
-//            int ScaleWeight = prefs.getInt("ScaleWeight", 0);
-//            int LowGoalWeight = prefs.getInt("LowGoalWeight", 0);
-//            int HighGoalWeight = prefs.getInt("HighGoalWeight", 0);
-//            int ChivalDeFriseWeight = prefs.getInt("ChivalDeFriseWeight", 0);
-//            int MoatWeight = prefs.getInt("MoatWeight", 0);
-//            int RampartsWeight = prefs.getInt("RampartsWeight", 0);
-//            int LowBarWeight = prefs.getInt("LowBarWeight", 0);
-//            int SallyPortWeight = prefs.getInt("SallyPortWeight", 0);
-//            int PortCullisWeight = prefs.getInt("PortCullisWeight", 0);
-//            int RockWallWeight = prefs.getInt("RockWallWeight", 0);
-//            int RoughTerrainWeight = prefs.getInt("RoughTerrainWeight", 0);
-//            int DrawBridgeWeight = prefs.getInt("DrawBridgeWeight", 0);
-//            String arrStrHeadings[] = {"Weights" , };
-//            String arrStr[] = {};
+
+
+            Context applicationContext = MainActivity.getContextOfApplication();
+            SharedPreferences prefs = applicationContext.getSharedPreferences("Weights", Context.MODE_PRIVATE);
+
+
+            int ChallengeWeight = prefs.getInt("ChallengeWeight", 0);
+            int AutonomousWeight = prefs.getInt("AutonomousWeight", 0);
+            int ScaleWeight = prefs.getInt("ScaleWeight", 0);
+            int LowGoalWeight = prefs.getInt("LowGoalWeight", 0);
+            int HighGoalWeight = prefs.getInt("HighGoalWeight", 0);
+            int ChivalDeFriseWeight = prefs.getInt("ChivalDeFriseWeight", 0);
+            int MoatWeight = prefs.getInt("MoatWeight", 0);
+            int RampartsWeight = prefs.getInt("RampartsWeight", 0);
+            int LowBarWeight = prefs.getInt("LowBarWeight", 0);
+            int SallyPortWeight = prefs.getInt("SallyPortWeight", 0);
+            int PortCullisWeight = prefs.getInt("PortCullisWeight", 0);
+            int RockWallWeight = prefs.getInt("RockWallWeight", 0);
+            int RoughTerrainWeight = prefs.getInt("RoughTerrainWeight", 0);
+            int DrawBridgeWeight = prefs.getInt("DrawBridgeWeight", 0);
+
+
+            String arrStrHeadings[] = {"ChallengeWeight", "AutonomousWeight", "ScaleWeight", "LowGoalWeight", "HighGoalWeight",
+                    "ChivalDeFriseWeight", "MoatWeight", "RampartsWeight", "LowBarWeight", "SallyPortWeight", "PortCullisWeight",
+                    "RockWallWeight", "RoughTerrainWeight", "DrawBridgeWeight"};
+
+            String arrStr[] = {Integer.toString(ChallengeWeight), Integer.toString(AutonomousWeight),
+                    Integer.toString(ScaleWeight),
+                    Integer.toString(LowGoalWeight),
+                    Integer.toString(HighGoalWeight), Integer.toString(ChivalDeFriseWeight), Integer.toString(MoatWeight),
+                    Integer.toString(RampartsWeight),
+                    Integer.toString(LowBarWeight),
+                    Integer.toString(SallyPortWeight),
+                    Integer.toString(PortCullisWeight),
+                    Integer.toString(RockWallWeight),
+                    Integer.toString(RoughTerrainWeight), Integer.toString(DrawBridgeWeight)};
+
+
+            String emptyLine[] = {""};
+
+            csvWrite.writeNext(emptyLine);
+            csvWrite.writeNext(emptyLine);
+            csvWrite.writeNext(arrStrHeadings);
+            csvWrite.writeNext(arrStr);
+
             csvWrite.close();
+
             curCSV.close();
         } catch (Exception sqlEx) {
             Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
         }
 
     }
+
 
 }
