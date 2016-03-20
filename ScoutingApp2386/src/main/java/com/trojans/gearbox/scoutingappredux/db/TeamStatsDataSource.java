@@ -426,9 +426,13 @@ public class TeamStatsDataSource {
 
 
             String emptyLine[] = {""};
+            String deviceName = android.os.Build.MODEL;
+            String deviceMan = android.os.Build.MANUFACTURER;
+            String phoneName[] = {deviceMan + deviceName};
 
             csvWrite.writeNext(emptyLine);
             csvWrite.writeNext(emptyLine);
+            csvWrite.writeNext(phoneName);
             csvWrite.writeNext(arrStrHeadings);
             csvWrite.writeNext(arrStr);
 
