@@ -122,7 +122,7 @@ public class Weights extends AppCompatActivity {
 
     public void CalculateScores(View view) {
 
-        if (balance == 0) {
+        if (balance == 0 || balance == 100) {
 
             int AutonomousWeight;
             int ChallengeWeight;
@@ -275,6 +275,46 @@ public class Weights extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Balance is not 0", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void ResetWeights(View view) {
+
+        final TextView tvBalanceWeights = (TextView) findViewById(R.id.tvBalanceWeights);
+        final TextView tvLowGoalsWeight = (TextView) findViewById(R.id.tvLowGoalsWeight);
+        final TextView tvHighGoalWeight = (TextView) findViewById(R.id.tvHighGoalWeight);
+        final TextView tvRampartWeight = (TextView) findViewById(R.id.tvRampartWeight);
+        final TextView tvDrawBridgeWeight = (TextView) findViewById(R.id.tvDrawBridgeWeight);
+        final TextView tvChivalDeFriseWeight = (TextView) findViewById(R.id.tvChivalDeFriseWeight);
+        final TextView tvLowBarWeight = (TextView) findViewById(R.id.tvLowBarWeight);
+        final TextView tvRockWallWeight = (TextView) findViewById(R.id.tvRockWallWeight);
+        final TextView tvSallyportWeight = (TextView) findViewById(R.id.tvSallyportWeight);
+        final TextView tvMoatWeight = (TextView) findViewById(R.id.tvMoatWeight);
+        final TextView tvRoughTerrainWeight = (TextView) findViewById(R.id.tvRoughTerrainWeight);
+        final TextView tvPortCullisWeight = (TextView) findViewById(R.id.tvPortCullisWeight);
+        final TextView tvAutonomousWeight = (TextView) findViewById(R.id.tvAutonomousWeight);
+        final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
+        final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
+
+        balance = 100;
+        tvBalanceWeights.setText("Balance : " + Integer.toString(balance));
+        final int ZERO_WEIGHT = 0;
+
+        tvLowGoalsWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvHighGoalWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvRampartWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvDrawBridgeWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvChivalDeFriseWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvLowBarWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvRockWallWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvSallyportWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvMoatWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvRoughTerrainWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvPortCullisWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvAutonomousWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvChallengeWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvScaleWeight.setText(Integer.toString(ZERO_WEIGHT));
+
+
     }
 
     public void InitiateUILogic() {

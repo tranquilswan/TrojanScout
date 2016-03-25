@@ -359,6 +359,24 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/bResetWeights"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#ffeb3b"
+                android:onClick="ResetWeights"
+                android:text="Reset" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/bCalculateScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
