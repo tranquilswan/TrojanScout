@@ -144,6 +144,7 @@ public class AddStatistics extends AppCompatActivity {
     public Statistics getInputsFromUi() {
         int TotalShots;
         int LowGoals;
+        int BlockedShots;
         int HighGoals;
         int ChivalDeFrise;
         int DrawBridge;
@@ -173,6 +174,7 @@ public class AddStatistics extends AppCompatActivity {
         final TextView tvMoat = (TextView) findViewById(R.id.tvMoat);
         final TextView tvRoughTerrain = (TextView) findViewById(R.id.tvRoughTerrain);
         final TextView tvPortCullis = (TextView) findViewById(R.id.tvPortCullis);
+        final TextView tvBlockedShots = (TextView) findViewById(R.id.tvBlockedShots);
 
         RadioGroup rgpAutonomous = (RadioGroup) findViewById(R.id.rgpAutonomous);
         RadioGroup rgpEndGame = (RadioGroup) findViewById(R.id.rgpEndGame);
@@ -195,6 +197,7 @@ public class AddStatistics extends AppCompatActivity {
         RockWall = Integer.parseInt(tvRockWall.getText().toString());
         SallyPort = Integer.parseInt(tvSallyport.getText().toString());
         RoughTerrain = Integer.parseInt(tvRoughTerrain.getText().toString());
+        BlockedShots = Integer.parseInt(tvBlockedShots.getText().toString());
 
         if (rgpEndGame.getCheckedRadioButtonId() == R.id.radStatsChallenge) {
             EndGame = 1;
@@ -215,7 +218,7 @@ public class AddStatistics extends AppCompatActivity {
 
         Comments = edtComments.getText().toString();
 
-        return new Statistics(Autonomous, ChivalDeFrise, DrawBridge, EndGame, HighGoals, LowBar, LowGoals, Comments,
+        return new Statistics(Autonomous, ChivalDeFrise, DrawBridge, EndGame, HighGoals, LowBar, LowGoals, BlockedShots, Comments,
                 Moat, TeamName, TeamNum, PortCullis, Ramparts, RockWall, SallyPort, RoughTerrain, TotalShots, SCORE_DEFAULT);
 
 
@@ -235,7 +238,7 @@ public class AddStatistics extends AppCompatActivity {
         final TextView tvMoat = (TextView) findViewById(R.id.tvMoat);
         final TextView tvRoughTerrain = (TextView) findViewById(R.id.tvRoughTerrain);
         final TextView tvPortCullis = (TextView) findViewById(R.id.tvPortCullis);
-
+        final TextView tvBlockedShots = (TextView) findViewById(R.id.tvBlockedShots);
 
         Button bShots = (Button) findViewById(R.id.bShots);
         Button bLowGoals = (Button) findViewById(R.id.bLowGoals);
@@ -249,6 +252,7 @@ public class AddStatistics extends AppCompatActivity {
         Button bRoughTerrain = (Button) findViewById(R.id.bRoughTerrain);
         Button bPortCullis = (Button) findViewById(R.id.bPortCullis);
         Button bSallyPort = (Button) findViewById(R.id.bSallyPort);
+        Button bBlockedShots = (Button) findViewById(R.id.bBlockedShots);
 
         bShots.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -262,6 +266,13 @@ public class AddStatistics extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 LaunchNumberPicker(0, 20, Integer.parseInt(tvLowGoals.getText().toString()), tvLowGoals);
+                return true;
+            }
+        });
+        bBlockedShots.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, 20, Integer.parseInt(tvBlockedShots.getText().toString()), tvBlockedShots);
                 return true;
             }
         });
@@ -349,6 +360,12 @@ public class AddStatistics extends AppCompatActivity {
             public void onClick(View v) {
                 IncrementTextViewValue(tvLowGoals);
                 IncrementTextViewValue(tvShots);
+            }
+        });
+        bBlockedShots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IncrementTextViewValue(tvBlockedShots);
             }
         });
         bHighGoal.setOnClickListener(new View.OnClickListener() {

@@ -79,7 +79,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
 
         TextView tvAccuracy = (TextView) findViewById(R.id.tvAccuracy);
         TextView tvAutoAndEnd = (TextView) findViewById(R.id.tvAutoAndEnd);
-        TextView tvShotsDisplay = (TextView) findViewById(R.id.tvShotsDisplay);
+        TextView tvShotsAndBlocksDisplay = (TextView) findViewById(R.id.tvShotsDisplay);
         TextView tvLowHighDisplay = (TextView) findViewById(R.id.tvLowHighDisplay);
         TextView tvChivalMoatDisplay = (TextView) findViewById(R.id.tvChivalMoatDisplay);
         TextView tvRampsartsLowBarDisplay = (TextView) findViewById(R.id.tvRampsartsLowBarDisplay);
@@ -96,6 +96,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         String Comments = "";
         float Shots = 0;
         float LowGoals = 0;
+        float BlockedShots = 0;
         float HighGoals = 0;
         float ChivalDeFrise = 0;
         float Moat = 0;
@@ -113,6 +114,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
         int MissesInteger;
         int ShotsInteger;
         int LowGoalsInteger;
+        int BlockedInteger;
         int HighGoalsInteger;
         int ChivalDeFriseInteger;
         int MoatInteger;
@@ -138,6 +140,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
                 Score = Score + teamStats.getScore();
                 Shots = Shots + teamStats.getTotalShots();
                 LowGoals = LowGoals + teamStats.getLowGoals();
+                BlockedShots = BlockedShots + teamStats.getBlockedShots();
                 HighGoals = HighGoals + teamStats.getHighGoals();
                 ChivalDeFrise = ChivalDeFrise + teamStats.getChivalDeFriseCrosses();
                 Moat = Moat + teamStats.getMoatCrosses();
@@ -160,6 +163,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
 
             Shots = Shots / matches;
             LowGoals = LowGoals / matches;
+            BlockedShots = BlockedShots / matches;
             HighGoals = HighGoals / matches;
             ChivalDeFrise = ChivalDeFrise / matches;
             Moat = Moat / matches;
@@ -187,6 +191,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             LowGoalsInteger = Math.round(LowGoals);
             HighGoalsInteger = Math.round(HighGoals);
             ShotsInteger = Math.round(Shots);
+            BlockedInteger = Math.round(BlockedShots);
             ChivalDeFriseInteger = Math.round(ChivalDeFrise);
             MoatInteger = Math.round(Moat);
             RampartsInteger = Math.round(Ramparts);
@@ -200,7 +205,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
 
             tvAccuracy.setText("Accuracy: " + AccuracyAsString + "  Misses: " + Integer.toString(MissesInteger));
             tvAutoAndEnd.setText("Autonomous: NA" + "  EndGame: NA");
-            tvShotsDisplay.setText("Shots: " + Integer.toString(ShotsInteger));
+            tvShotsAndBlocksDisplay.setText("Shots: " + Integer.toString(ShotsInteger) + "  Blocked Shots: " + BlockedInteger);
             tvLowHighDisplay.setText("Low Goals: " + LowGoalsInteger + "  High Goals: " + HighGoalsInteger);
             tvChivalMoatDisplay.setText("Chival De Frise: " + ChivalDeFriseInteger + "  Moat: " + MoatInteger);
             tvRampsartsLowBarDisplay.setText("Ramparts: " + RampartsInteger + "  LowBar: " + LowBarInteger);
@@ -228,6 +233,7 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             DrawBridge = teamStats.getDrawBridgeCrosses();
             Comments = teamStats.getmComments();
             Score = teamStats.getScore();
+            BlockedShots = teamStats.getBlockedShots();
 
 
             if (Shots != 0) {
@@ -271,10 +277,11 @@ public class ViewStatisticsActivity extends AppCompatActivity {
             RoughTerrainInteger = Math.round(RoughTerrain);
             DrawBridgeInteger = Math.round(DrawBridge);
             ScoreInteger = Math.round(Score);
+            BlockedInteger = Math.round(BlockedShots);
 
             tvAccuracy.setText("Accuracy: " + AccuracyAsString + "  Misses: " + Integer.toString(MissesInteger));
             tvAutoAndEnd.setText("Autonomous: " + Autonomous + "  EndGame: " + EndGame);
-            tvShotsDisplay.setText("Shots: " + Integer.toString(ShotsInteger));
+            tvShotsAndBlocksDisplay.setText("Shots: " + Integer.toString(ShotsInteger) + "  BLocked Shots : " + Integer.toString(BlockedInteger));
             tvLowHighDisplay.setText("Low Goals: " + LowGoalsInteger + "  High Goals: " + HighGoalsInteger);
             tvChivalMoatDisplay.setText("Chival De Frise: " + ChivalDeFriseInteger + "  Moat: " + MoatInteger);
             tvRampsartsLowBarDisplay.setText("Ramparts: " + RampartsInteger + "  LowBar: " + LowBarInteger);

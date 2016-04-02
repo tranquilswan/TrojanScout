@@ -38,32 +38,34 @@ public class TeamStatsDataSource {
     public static final int LOW_GOALS_COLUMN_POSITION = 5;
     public static final String HIGH_GOALS_COLUMN = "HighGoals";
     public static final int HIGH_GOALS_COLUMN_POSITION = 6;
+    public static final String BLOCKED_SHOTS_COLUMN = "BlockedShots";
+    public static final int BLOCKED_SHOTS_COLUMN_POSITION = 7;
     public static final String PORT_CULLIS_CROSSES_COLUMN = "PortCullisCrosses";
-    public static final int PORT_CULLIS_CROSSES_COLUMN_POSITION = 7;
+    public static final int PORT_CULLIS_CROSSES_COLUMN_POSITION = 8;
     public static final String CHIVAL_DE_FRISE_CROSSES_COLUMN = "ChivalDeFriseCrosses";
-    public static final int CHIVAL_DE_FRISE_CROSSES_COLUMN_POSITION = 8;
+    public static final int CHIVAL_DE_FRISE_CROSSES_COLUMN_POSITION = 9;
     public static final String RAMPARTS_CROSSES_COLUMN = "RampartsCrosses";
-    public static final int RAMPARTS_CROSSES_COLUMN_POSITION = 9;
+    public static final int RAMPARTS_CROSSES_COLUMN_POSITION = 10;
     public static final String MOAT_CROSSES_COLUMN = "MoatCrosses";
-    public static final int MOAT_CROSSES_COLUMN_POSITION = 10;
+    public static final int MOAT_CROSSES_COLUMN_POSITION = 11;
     public static final String DRAW_BRIDGE_CROSSES_COLUMN = "DrawBridgeCrosses";
-    public static final int DRAW_BRIDGE_CROSSES_COLUMN_POSITION = 11;
+    public static final int DRAW_BRIDGE_CROSSES_COLUMN_POSITION = 12;
     public static final String SALLY_PORT_CROSSES_COLUMN = "SallyPortCrosses";
-    public static final int SALLY_PORT_CROSSES_COLUMN_POSITION = 12;
+    public static final int SALLY_PORT_CROSSES_COLUMN_POSITION = 13;
     public static final String ROUGH_TERRAIN_CROSSES_COLUMN = "RoughTerrainCrosses";
-    public static final int ROUGH_TERRAIN_CROSSES_COLUMN_POSITION = 13;
+    public static final int ROUGH_TERRAIN_CROSSES_COLUMN_POSITION = 14;
     public static final String ROCK_WALL_CROSSES_COLUMN = "RockWallCrosses";
-    public static final int ROCK_WALL_CROSSES_COLUMN_POSITION = 14;
+    public static final int ROCK_WALL_CROSSES_COLUMN_POSITION = 15;
     public static final String LOW_BAR_CROSSES_COLUMN = "LowBarCrosses";
-    public static final int LOW_BAR_CROSSES_COLUMN_POSITION = 15;
+    public static final int LOW_BAR_CROSSES_COLUMN_POSITION = 16;
     public static final String END_GAME_TYPE_COLUMN = "EndGameType";
-    public static final int END_GAME_TYPE_COLUMN_POSITION = 16;
+    public static final int END_GAME_TYPE_COLUMN_POSITION = 17;
     public static final String MATCH_ID_COLUMN = "MatchID";
-    public static final int MATCH_ID_COLUMN_POSITION = 17;
+    public static final int MATCH_ID_COLUMN_POSITION = 18;
     public static final String AUTONOMOUS_USAGE_COLUMN = "AutonomousUsage";
-    public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 18;
+    public static final int AUTONOMOUS_USAGE_COLUMN_POSITION = 19;
     public static final String SCORE_COLUMN = "Score";
-    public static final int SCORE_COLUMN_POSITION = 19;
+    public static final int SCORE_COLUMN_POSITION = 20;
 
     public static final String CREATE_TABLE =
             "create table " + TABLE_NAME + " (" +
@@ -74,6 +76,7 @@ public class TeamStatsDataSource {
                     TOTAL_SHOTS_COLUMN + " INTEGER, " +
                     LOW_GOALS_COLUMN + " INTEGER, " +
                     HIGH_GOALS_COLUMN + " INTEGER, " +
+                    BLOCKED_SHOTS_COLUMN + " INTEGER, " +
                     PORT_CULLIS_CROSSES_COLUMN + " INTEGER, " +
                     CHIVAL_DE_FRISE_CROSSES_COLUMN + " INTEGER, " +
                     RAMPARTS_CROSSES_COLUMN + " INTEGER, " +
@@ -133,6 +136,7 @@ public class TeamStatsDataSource {
         cv.put(AUTONOMOUS_USAGE_COLUMN, stats.getAutonomousUsage());
         cv.put(MATCH_ID_COLUMN, MatchID);
         cv.put(SCORE_COLUMN, stats.getScore());
+        cv.put(BLOCKED_SHOTS_COLUMN, stats.getBlockedShots());
 
 
         long teamId = mDatabase.insert(TABLE_NAME, null, cv);
@@ -223,9 +227,10 @@ public class TeamStatsDataSource {
             int autonomousUsage = cursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int MatchID = cursor.getInt(MATCH_ID_COLUMN_POSITION);
             int Score = cursor.getInt(SCORE_COLUMN_POSITION);
+            int blockedShots = cursor.getInt(BLOCKED_SHOTS_COLUMN_POSITION);
 
             stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
-                    highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
+                    highGoals, defLowBarCrosses, lowGoals, blockedShots, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
                     defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, MatchID, Score));
         }
         cursor.close();
@@ -265,9 +270,9 @@ public class TeamStatsDataSource {
             int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
             int Score = rawCursor.getInt(SCORE_COLUMN_POSITION);
-
+            int blockedShots = rawCursor.getInt(BLOCKED_SHOTS_COLUMN_POSITION);
             stats.add(new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
-                    highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
+                    highGoals, defLowBarCrosses, lowGoals, blockedShots, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
                     defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID, Score));
         }
 
@@ -308,8 +313,9 @@ public class TeamStatsDataSource {
             int autonomousUsage = rawCursor.getInt(AUTONOMOUS_USAGE_COLUMN_POSITION);
             int matchID = rawCursor.getInt(MATCH_ID_COLUMN_POSITION);
             int Score = rawCursor.getInt(SCORE_COLUMN_POSITION);
+            int blockedShots = rawCursor.getInt(BLOCKED_SHOTS_COLUMN_POSITION);
             stats = new Statistics(autonomousUsage, defChivalDeFriseCrosses, defDrawBridgeCrosses, endGameType,
-                    highGoals, defLowBarCrosses, lowGoals, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
+                    highGoals, defLowBarCrosses, lowGoals, blockedShots, comments, id, defMoatCrosses, teamName, teamNum, defPortCullisCrosses,
                     defRampartsCrosses, defRockWallCrosses, defSallyPortCrosses, defRoughTerrainCrosses, totalShots, matchID, Score);
         }
 
@@ -384,7 +390,7 @@ public class TeamStatsDataSource {
                         , curCSV.getString(7), curCSV.getString(8), curCSV.getString(9), curCSV.getString(10)
                         , curCSV.getString(11), curCSV.getString(12), curCSV.getString(13), curCSV.getString(14)
                         , curCSV.getString(15), curCSV.getString(16), curCSV.getString(17), curCSV.getString(18)
-                        , curCSV.getString(19)};
+                        , curCSV.getString(19), curCSV.getString(20)};
                 csvWrite.writeNext(arrStr);
             }
 
@@ -407,11 +413,12 @@ public class TeamStatsDataSource {
             int RockWallWeight = prefs.getInt("RockWallWeight", 0);
             int RoughTerrainWeight = prefs.getInt("RoughTerrainWeight", 0);
             int DrawBridgeWeight = prefs.getInt("DrawBridgeWeight", 0);
+            int BlockedShotsWeight = prefs.getInt("BlockedShotsWeight", 0);
 
 
             String arrStrHeadings[] = {"ChallengeWeight", "AutonomousWeight", "ScaleWeight", "LowGoalWeight", "HighGoalWeight",
                     "ChivalDeFriseWeight", "MoatWeight", "RampartsWeight", "LowBarWeight", "SallyPortWeight", "PortCullisWeight",
-                    "RockWallWeight", "RoughTerrainWeight", "DrawBridgeWeight"};
+                    "RockWallWeight", "RoughTerrainWeight", "DrawBridgeWeight", "BlockedShotsWeight"};
 
             String arrStr[] = {Integer.toString(ChallengeWeight), Integer.toString(AutonomousWeight),
                     Integer.toString(ScaleWeight),
@@ -422,7 +429,7 @@ public class TeamStatsDataSource {
                     Integer.toString(SallyPortWeight),
                     Integer.toString(PortCullisWeight),
                     Integer.toString(RockWallWeight),
-                    Integer.toString(RoughTerrainWeight), Integer.toString(DrawBridgeWeight)};
+                    Integer.toString(RoughTerrainWeight), Integer.toString(DrawBridgeWeight), Integer.toString(BlockedShotsWeight)};
 
 
             String emptyLine[] = {""};

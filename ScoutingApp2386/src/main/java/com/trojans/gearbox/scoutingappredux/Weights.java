@@ -81,6 +81,7 @@ public class Weights extends AppCompatActivity {
         int RockWallWeight = prefs.getInt("RockWallWeight", 0);
         int RoughTerrainWeight = prefs.getInt("RoughTerrainWeight", 0);
         int DrawBridgeWeight = prefs.getInt("DrawBridgeWeight", 0);
+        int BlockedShotsWeight = prefs.getInt("BlockedShotsWeight", 0);
 
         final TextView tvLowGoalsWeight = (TextView) findViewById(R.id.tvLowGoalsWeight);
         final TextView tvHighGoalWeight = (TextView) findViewById(R.id.tvHighGoalWeight);
@@ -96,6 +97,7 @@ public class Weights extends AppCompatActivity {
         final TextView tvAutonomousWeight = (TextView) findViewById(R.id.tvAutonomousWeight);
         final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
         final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
+        final TextView tvBlockedShotsWeight = (TextView) findViewById(R.id.tvBlockedShotsWeight);
 
         tvLowGoalsWeight.setText(Integer.toString(LowGoalWeight));
         tvHighGoalWeight.setText(Integer.toString(HighGoalWeight));
@@ -111,10 +113,11 @@ public class Weights extends AppCompatActivity {
         tvAutonomousWeight.setText(Integer.toString(AutonomousWeight));
         tvChallengeWeight.setText(Integer.toString(ChallengeWeight));
         tvScaleWeight.setText(Integer.toString(ScaleWeight));
+        tvBlockedShotsWeight.setText(Integer.toString(BlockedShotsWeight));
 
         balance = 100 - (ChallengeWeight + AutonomousWeight + ScaleWeight + LowGoalWeight + HighGoalWeight +
                 ChivalDeFriseWeight + MoatWeight + RampartsWeight + LowBarWeight + SallyPortWeight + PortCullisWeight +
-                RockWallWeight + RoughTerrainWeight + DrawBridgeWeight);
+                RockWallWeight + RoughTerrainWeight + DrawBridgeWeight + BlockedShotsWeight);
 
         TextView tvBalanceWeights = (TextView) findViewById(R.id.tvBalanceWeights);
         tvBalanceWeights.setText("Balance : " + Integer.toString(balance));
@@ -138,6 +141,7 @@ public class Weights extends AppCompatActivity {
             int RockWallWeight;
             int RoughTerrainWeight;
             int DrawBridgeWeight;
+            int BlockedShotsWeight;
 
             int AutonomousValue;
             int ChallengeValue;
@@ -153,6 +157,7 @@ public class Weights extends AppCompatActivity {
             int RockWallValue;
             int RoughTerrainValue;
             int DrawBridgeValue;
+            int BlockedShotsValue;
 
             final TextView tvLowGoalsWeight = (TextView) findViewById(R.id.tvLowGoalsWeight);
             final TextView tvHighGoalWeight = (TextView) findViewById(R.id.tvHighGoalWeight);
@@ -168,6 +173,7 @@ public class Weights extends AppCompatActivity {
             final TextView tvAutonomousWeight = (TextView) findViewById(R.id.tvAutonomousWeight);
             final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
             final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
+            final TextView tvBlockedShotsWeight = (TextView) findViewById(R.id.tvBlockedShotsWeight);
 
             //Getting All The Weights
             ChallengeWeight = Integer.parseInt(tvChallengeWeight.getText().toString());
@@ -184,6 +190,7 @@ public class Weights extends AppCompatActivity {
             RoughTerrainWeight = Integer.parseInt(tvRoughTerrainWeight.getText().toString());
             DrawBridgeWeight = Integer.parseInt(tvDrawBridgeWeight.getText().toString());
             AutonomousWeight = Integer.parseInt(tvAutonomousWeight.getText().toString());
+            BlockedShotsWeight = Integer.parseInt(tvBlockedShotsWeight.getText().toString());
 
             SharedPreferences.Editor editor = getSharedPreferences("Weights", MODE_PRIVATE).edit();
             editor.putInt("ChallengeWeight", ChallengeWeight);
@@ -200,6 +207,7 @@ public class Weights extends AppCompatActivity {
             editor.putInt("RoughTerrainWeight", RoughTerrainWeight);
             editor.putInt("DrawBridgeWeight", DrawBridgeWeight);
             editor.putInt("AutonomousWeight", AutonomousWeight);
+            editor.putInt("BlockedShotsWeight", BlockedShotsWeight);
             editor.apply();
 
             //Getting All TeamNumbrs
@@ -228,6 +236,7 @@ public class Weights extends AppCompatActivity {
 
                     LowGoalValue = statistics.getLowGoals();
                     HighGoalValue = statistics.getHighGoals();
+                    BlockedShotsValue = statistics.getBlockedShots();
                     ChivalDeFriseValue = statistics.getChivalDeFriseCrosses();
                     MoatValue = statistics.getMoatCrosses();
                     RampartsValue = statistics.getRampartsCrosses();
@@ -258,7 +267,8 @@ public class Weights extends AppCompatActivity {
                             + (LowBarValue * LowBarWeight) + (SallyPortValue * SallyPortWeight)
                             + (PortCullisValue * PortCullisWeight)
                             + ((RockWallValue * RockWallWeight) + (RoughTerrainValue * RoughTerrainWeight)
-                            + (DrawBridgeValue * DrawBridgeWeight)));
+                            + (DrawBridgeValue * DrawBridgeWeight)
+                            + (BlockedShotsValue * BlockedShotsWeight)));
 
 //                    Toast.makeText(getApplicationContext(), "Score for team: " + teamnum + " MatchId: " + matchID +
 //                            " is " + Integer.toString(SCORE), Toast.LENGTH_SHORT).show();
@@ -294,6 +304,7 @@ public class Weights extends AppCompatActivity {
         final TextView tvAutonomousWeight = (TextView) findViewById(R.id.tvAutonomousWeight);
         final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
         final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
+        final TextView tvBlockedShotsWeight = (TextView) findViewById(R.id.tvBlockedShotsWeight);
 
         balance = 100;
         tvBalanceWeights.setText("Balance : " + Integer.toString(balance));
@@ -313,7 +324,8 @@ public class Weights extends AppCompatActivity {
         tvAutonomousWeight.setText(Integer.toString(ZERO_WEIGHT));
         tvChallengeWeight.setText(Integer.toString(ZERO_WEIGHT));
         tvScaleWeight.setText(Integer.toString(ZERO_WEIGHT));
-
+        tvAutonomousWeight.setText(Integer.toString(ZERO_WEIGHT));
+        tvBlockedShotsWeight.setText(Integer.toString(ZERO_WEIGHT));
 
     }
 
@@ -332,6 +344,7 @@ public class Weights extends AppCompatActivity {
         final TextView tvAutonomousWeight = (TextView) findViewById(R.id.tvAutonomousWeight);
         final TextView tvChallengeWeight = (TextView) findViewById(R.id.tvChallengeWeight);
         final TextView tvScaleWeight = (TextView) findViewById(R.id.tvScaleWeight);
+        final TextView tvBlockedShotsWeight = (TextView) findViewById(R.id.tvBlockedShotsWeight);
 
 
         Button bLowGoalsWeight = (Button) findViewById(R.id.bLowGoalsWeight);
@@ -348,11 +361,20 @@ public class Weights extends AppCompatActivity {
         Button bAutonomousWeight = (Button) findViewById(R.id.bAutonomousWeight);
         Button bChallengeWeight = (Button) findViewById(R.id.bChallengeWeight);
         Button bScaleWeight = (Button) findViewById(R.id.bScaleWeight);
+        Button bBlockedShotsWeight = (Button) findViewById(R.id.bBlockedShotsWeight);
 
         bAutonomousWeight.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 LaunchNumberPicker(0, Integer.parseInt(tvAutonomousWeight.getText().toString()) + balance, Integer.parseInt(tvAutonomousWeight.getText().toString()), tvAutonomousWeight);
+                return true;
+            }
+        });
+
+        bBlockedShotsWeight.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LaunchNumberPicker(0, Integer.parseInt(tvBlockedShotsWeight.getText().toString()) + balance, Integer.parseInt(tvBlockedShotsWeight.getText().toString()), tvBlockedShotsWeight);
                 return true;
             }
         });
@@ -464,6 +486,13 @@ public class Weights extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 IncrementTextViewValue(tvChallengeWeight);
+            }
+        });
+
+        bBlockedShotsWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IncrementTextViewValue(tvBlockedShotsWeight);
             }
         });
 

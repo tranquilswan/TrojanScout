@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         contextOfApplication = getApplicationContext();
 
-        final int minVersionThreshold = 2;
+        final int minVersionThreshold = 4;
 
 
         try {

@@ -21,6 +21,8 @@ public class Statistics implements Serializable {
 
     private int HighGoals;
 
+    private int BlockedShots;
+
     private int PortCullisCrosses;
 
     private int ChivalDeFriseCrosses;
@@ -48,7 +50,7 @@ public class Statistics implements Serializable {
     private int Score;
 
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
-                      int highGoals, int lowBarCrosses, int lowGoals, String mComments, long mDBid, int moatCrosses,
+                      int highGoals, int lowBarCrosses, int lowGoals, int blockedShots, String mComments, long mDBid, int moatCrosses,
                       String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
                       int sallyPortCrosses, int roughTerrainCrosses, int shots, int MatchID, int score) {
         AutonomousUsage = autonomousUsage;
@@ -71,11 +73,11 @@ public class Statistics implements Serializable {
         TotalShots = shots;
         this.MatchID = MatchID;
         this.Score = score;
-
+        this.BlockedShots = blockedShots;
     }
 
     public Statistics(int autonomousUsage, int chivalDeFriseCrosses, int drawBridgeCrosses, int endGameType,
-                      int highGoals, int lowBarCrosses, int lowGoals, String mComments, int moatCrosses,
+                      int highGoals, int lowBarCrosses, int lowGoals, int blockedShots, String mComments, int moatCrosses,
                       String mTeamName, int mTeamNum, int portCullisCrosses, int rampartsCrosses, int rockWallCrosses,
                       int sallyPortCrosses, int roughTerrainCrosses, int shots, int score) {
         AutonomousUsage = autonomousUsage;
@@ -95,6 +97,7 @@ public class Statistics implements Serializable {
         SallyPortCrosses = sallyPortCrosses;
         RoughTerrainCrosses = roughTerrainCrosses;
         TotalShots = shots;
+        this.BlockedShots = blockedShots;
     }
 
     public int getMatchID() {
@@ -247,6 +250,14 @@ public class Statistics implements Serializable {
 
     public void setRoughTerrainCrosses(int roughTerrainCrosses) {
         RoughTerrainCrosses = roughTerrainCrosses;
+    }
+
+    public int getBlockedShots() {
+        return BlockedShots;
+    }
+
+    public void setBlockedShots(int blockedShots) {
+        BlockedShots = blockedShots;
     }
 
     public int getTotalShots() {
