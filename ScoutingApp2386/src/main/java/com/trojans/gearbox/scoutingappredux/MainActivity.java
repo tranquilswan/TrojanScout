@@ -65,26 +65,28 @@ public class MainActivity extends AppCompatActivity {
 
         String deviceMan = android.os.Build.MANUFACTURER;
         if (deviceMan.toLowerCase().equals("samsung")) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Third Party Camera App")
-                    .setMessage("It appears that you have a Samsung Device." +
-                            " For proper functioning it is recommended for you to use a third party camera app." +
-                            " Do you want to install it?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" +
-                                    "net.sourceforge.opencamera&hl=en")));
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            dialog.cancel();
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+            if (!isPackageInstalled("net.sourceforge.opencamera", this)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Third Party Camera App")
+                        .setMessage("It appears that you have a Samsung Device." +
+                                " For proper functioning it is recommended that you use a third party camera app." +
+                                " Do you want to install it?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" +
+                                        "net.sourceforge.opencamera&hl=en")));
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                dialog.cancel();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
         }
 
         if (getIntent().hasExtra("action")) {
@@ -112,6 +114,16 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
         }
 
+    }
+
+    private boolean isPackageInstalled(String packagename, Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
     @Override

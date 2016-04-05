@@ -593,7 +593,8 @@ public class Weights extends AppCompatActivity {
     public void GenerateCSV(View view) {
 
         TeamStatsDataSource teamStatsDataSource = new TeamStatsDataSource(this);
-        teamStatsDataSource.GenerateCSV();
+        TeamDataSource teamDataSource = new TeamDataSource(this);
+        teamStatsDataSource.GenerateCSV(teamStatsDataSource, teamDataSource);
         Toast.makeText(getApplicationContext(), "File Generated", Toast.LENGTH_SHORT).show();
         finish();
 

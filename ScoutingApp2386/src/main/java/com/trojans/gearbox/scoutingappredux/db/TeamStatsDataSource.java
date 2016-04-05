@@ -1,5 +1,6 @@
 package com.trojans.gearbox.scoutingappredux.db;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,10 +13,15 @@ import android.util.Log;
 import com.opencsv.CSVWriter;
 import com.trojans.gearbox.scoutingappredux.MainActivity;
 import com.trojans.gearbox.scoutingappredux.Statistics;
+import com.trojans.gearbox.scoutingappredux.Team;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -368,7 +374,7 @@ public class TeamStatsDataSource {
         }
     }
 
-    public void GenerateCSV() {
+    public void GenerateCSV(TeamStatsDataSource teamStatsDataSource, TeamDataSource teamDataSource) {
 
         SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
         File dbFile = new File(db.getPath());
@@ -433,15 +439,20 @@ public class TeamStatsDataSource {
 
 
             String emptyLine[] = {""};
-            String deviceName = android.os.Build.MODEL;
+            String deviceModel = android.os.Build.MODEL;
+            BluetoothAdapter myDevice = BluetoothAdapter.getDefaultAdapter();
+            String deviceName = myDevice.getName();
             String deviceMan = android.os.Build.MANUFACTURER;
-            String phoneName[] = {deviceMan + deviceName};
+            String phoneName[] = {"Device Info:", deviceMan, deviceName, deviceModel};
 
+            csvWrite.writeNext(emptyLine);
+            csvWrite.writeNext(arrStrHeadings);
+            csvWrite.writeNext(arrStr);
             csvWrite.writeNext(emptyLine);
             csvWrite.writeNext(emptyLine);
             csvWrite.writeNext(phoneName);
-            csvWrite.writeNext(arrStrHeadings);
-            csvWrite.writeNext(arrStr);
+
+            WriteAverageScoreRankings(teamStatsDataSource, teamDataSource, csvWrite);
 
             csvWrite.close();
 
@@ -452,5 +463,100 @@ public class TeamStatsDataSource {
 
     }
 
+    private void WriteAverageScoreRankings(TeamStatsDataSource tsdsInput, TeamDataSource tdsInput, CSVWriter csvWrite) {
+        HashMap<String, Double> map = new HashMap<>();
+        TeamDataSource tds = tdsInput;
+        TeamStatsDataSource tsds = tsdsInput;
 
+        List<Team> teams = new ArrayList<>();
+        teams = tds.getTeams();
+        List<Integer> teamnums = new ArrayList<>();
+        int i;
+
+        for (i = 0; i < teams.size(); i++) {
+            teamnums.add(teams.get(i).getmTeamNum());
+        }
+
+        int x;
+
+        for (x = 0; x < teamnums.size(); x++) {
+
+            int teamnum = teamnums.get(x);
+            int q;
+            float SCORE = 0;
+            double AverageScore;
+
+            for (q = 1; q <= tsds.getCount(teamnum); q++) {
+
+                Statistics statistics = tsds.getTeam(teamnum, q);
+                int matchID = statistics.getMatchID();
+
+                SCORE = SCORE + statistics.getScore();
+            }
+
+            AverageScore = SCORE / tsds.getCount(teamnum);
+            //int AverageScoreInteger = Math.round(AverageScore);
+
+            map.put(Integer.toString(teamnum), (double) Math.round(AverageScore));
+        }
+
+
+        LinkedHashMap<Integer, Integer> lhm = new LinkedHashMap<>();
+        lhm = sortHashMapByValues(map);
+        Log.v("Rankings", lhm.toString());
+
+
+        final List<Integer> keyList = new ArrayList<Integer>(lhm.keySet());
+        List<Integer> valueList = new ArrayList<Integer>(lhm.values());
+        List<String> adapterList = new ArrayList<>();
+
+        //KEY HERE ARE TEAM NUMBERS
+
+        String emptyLine[] = {""};
+        String TitleRankings[] = {"AVERAGE RANKINGS"};
+        csvWrite.writeNext(emptyLine);
+        csvWrite.writeNext(emptyLine);
+        csvWrite.writeNext(emptyLine);
+        csvWrite.writeNext(TitleRankings);
+        String[] arrStrHeadings = {"Team#", "Average Score"};
+        csvWrite.writeNext(arrStrHeadings);
+
+        int iterator;
+        for (iterator = 0; iterator < keyList.size(); iterator++) {
+            String[] arrWrite = {String.valueOf(keyList.get(iterator)), String.valueOf(valueList.get(iterator))};
+            csvWrite.writeNext(arrWrite);
+        }
+    }
+
+
+    public LinkedHashMap sortHashMapByValues(HashMap passedMap) {
+        List mapKeys = new ArrayList(passedMap.keySet());
+        List mapValues = new ArrayList(passedMap.values());
+        Collections.sort(mapValues, Collections.reverseOrder());
+        Collections.sort(mapKeys, Collections.reverseOrder());
+
+        LinkedHashMap sortedMap = new LinkedHashMap();
+
+        Iterator valueIt = mapValues.iterator();
+        while (valueIt.hasNext()) {
+            Object val = valueIt.next();
+            Iterator keyIt = mapKeys.iterator();
+
+            while (keyIt.hasNext()) {
+                Object key = keyIt.next();
+                String comp1 = passedMap.get(key).toString();
+                String comp2 = val.toString();
+
+                if (comp1.equals(comp2)) {
+                    passedMap.remove(key);
+                    mapKeys.remove(key);
+                    sortedMap.put(key, val);
+                    break;
+                }
+
+            }
+
+        }
+        return sortedMap;
+    }
 }
