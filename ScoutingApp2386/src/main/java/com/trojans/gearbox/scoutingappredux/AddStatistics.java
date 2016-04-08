@@ -79,15 +79,20 @@ public class AddStatistics extends AppCompatActivity {
     public void SaveStats(View view) {
         new android.app.AlertDialog.Builder(AddStatistics.this)
                 .setTitle("Confirm")
-                .setMessage("Are you sure?")
+                .setMessage("Are you sure? Match cannot be deleted later.")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Statistics stats = getInputsFromUi();
                         TeamStatsDataSource tsds = new TeamStatsDataSource(getApplicationContext());
-                        tsds.saveTeam(stats);
-                        Toast.makeText(getApplicationContext(), "Stats for team " + teamNum + " added to database.", Toast.LENGTH_SHORT).show();
-                        finish();
+                        if (stats.getTotalShots() >= (stats.getHighGoals() + stats.getLowGoals())) {
+                            tsds.saveTeam(stats);
+                            Toast.makeText(getApplicationContext(), "Stats for team " + teamNum + " added to database.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Shots irregularity. Make sure info is correct", Toast.LENGTH_SHORT).show();
+
+                        }
                     }
                 })
                 .setNeutralButton("NO", new DialogInterface.OnClickListener() {
